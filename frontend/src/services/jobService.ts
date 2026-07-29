@@ -10,7 +10,7 @@ export interface Job {
   job_description: string
   salary:          string
   job_platform:    'linkedin' | 'indeed' | 'jobstreet' | 'hiredly'
-  status:          'applied' | 'interview' | 'offer' | 'rejected'
+  status:          'saved' | 'applied' | 'interview' | 'offer' | 'rejected'
   active_status:   number
   created_at:      string
   updated_at:      string

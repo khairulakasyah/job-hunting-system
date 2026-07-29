@@ -17,7 +17,7 @@ class StoreJobRequest extends FormRequest
             'company_name'    => ['required', 'string', 'max:255'],
             'job_title'       => ['required', 'string', 'max:255'],
             'location'        => ['required', 'string', 'max:255'],
-            'status'          => ['sometimes', 'in:applied,interview,offer,rejected'],
+            'status'          => ['sometimes', 'in:saved,applied,interview,offer,rejected'],
             'url'             => ['nullable', 'url', 'max:500'],
             'job_description' => ['nullable', 'string'],
             'salary'          => ['nullable', 'string', 'max:255'],

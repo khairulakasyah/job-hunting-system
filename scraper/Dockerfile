@@ -6,9 +6,10 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+# Install Chromium AND its system dependencies
+RUN playwright install --with-deps chromium
 
-RUN playwright install chromium
+COPY . .
 
 EXPOSE 5000
 

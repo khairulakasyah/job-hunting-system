@@ -14,7 +14,9 @@ class ScrapeController extends Controller
             'url' => ['required', 'url'],
         ]);
 
-        $response = Http::timeout(30)->post('http://127.0.0.1:5000/scrape', [
+        $scraperUrl = config('services.scraper.url', 'http://scraper:5000');
+
+        $response = Http::timeout(30)->post("{$scraperUrl}/scrape", [
             'url' => $request->url,
         ]);
 
@@ -37,7 +39,7 @@ class ScrapeController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Job data scraped successfully.',
-            'data'    => $data['data'],
+            'data' => $data['data'],
         ]);
     }
 }

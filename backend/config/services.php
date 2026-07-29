@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'scraper' => [
+        'url' => env('SCRAPER_SERVICE_URL', 'http://scraper:5000'),
+    ],
+
 ];

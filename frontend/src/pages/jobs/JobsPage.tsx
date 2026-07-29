@@ -8,10 +8,11 @@ import { DeleteModal }  from './DeleteModal'
 import { Pagination }   from '@/components/ui/Pagination'
 import { StatusBadge }  from '@/components/ui/StatusBadge'
 
-type StatusFilter = '' | 'applied' | 'interview' | 'offer' | 'rejected'
+type StatusFilter = '' | 'saved' | 'applied' | 'interview' | 'offer' | 'rejected'
 
 const statusFilters: { label: string; value: StatusFilter }[] = [
   { label: 'All',       value: ''          },
+  { label: 'Saved',     value: 'saved'     },
   { label: 'Applied',   value: 'applied'   },
   { label: 'Interview', value: 'interview' },
   { label: 'Offer',     value: 'offer'     },

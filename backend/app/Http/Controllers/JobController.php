@@ -42,11 +42,29 @@ class JobController extends Controller
     {
         $job = $request->user()->jobs()->create($request->validated());
 
-        // Auto-insert saved stage with today's date
+        $today = now()->toDateString();
+        $appliedDate = $request->applied_date ?? $today;
+
+        // Always insert saved
         $job->timelines()->create([
             'stage' => 'saved',
-            'stage_date' => now()->toDateString(),
+            'stage_date' => $today,
         ]);
+
+        // If status is applied (or any stage beyond saved), also insert applied
+        $statusStageMap = [
+            'applied' => 'applied',
+            'interview' => 'interview',
+            'offer' => 'offer',
+            'rejected' => 'rejected',
+        ];
+
+        if (isset($statusStageMap[$request->status]) && $request->status !== 'saved') {
+            $job->timelines()->create([
+                'stage' => $statusStageMap[$request->status],
+                'stage_date' => $appliedDate,
+            ]);
+        }
 
         return response()->json([
             'success' => true,

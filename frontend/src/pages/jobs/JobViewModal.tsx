@@ -176,8 +176,9 @@ export function JobViewModal({ isOpen, onClose, onEdit, onDelete, job }: JobView
     currentStageLabel === 'rejected'       ? 'rejected'  :
     currentStageLabel === 'interview'      ||
     currentStageLabel === 'technical_test' ||
-    currentStageLabel === 'hr_interview'   ? 'interview' : 'applied'
-  ) as 'applied' | 'interview' | 'offer' | 'rejected'
+    currentStageLabel === 'hr_interview'   ? 'interview' :
+    currentStageLabel === 'saved'          ? 'saved'     : 'applied'
+  ) as 'saved' | 'applied' | 'interview' | 'offer' | 'rejected'
 
   if (!job) return null
 

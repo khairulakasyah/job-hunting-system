@@ -1,10 +1,14 @@
-type Status = 'applied' | 'interview' | 'offer' | 'rejected'
+type Status = 'saved' | 'applied' | 'interview' | 'offer' | 'rejected'
 
 interface StatusBadgeProps {
   status: Status
 }
 
 const config: Record<Status, { label: string; classes: string }> = {
+  saved: {
+    label:   'Saved',
+    classes: 'bg-slate-500/10 text-slate-400 border-slate-500/20',
+  },
   applied: {
     label:   'Applied',
     classes: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
@@ -24,7 +28,7 @@ const config: Record<Status, { label: string; classes: string }> = {
 }
 
 export function StatusBadge({ status }: StatusBadgeProps) {
-  const { label, classes } = config[status]
+  const { label, classes } = config[status] ?? config['saved']
   return (
     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${classes}`}>
       <span className="w-1.5 h-1.5 rounded-full bg-current mr-1.5 opacity-70" />

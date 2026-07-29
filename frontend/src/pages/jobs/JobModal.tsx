@@ -25,10 +25,11 @@ const emptyForm: JobFormData = {
 }
 
 const statusOptions = [
-  { value: 'applied', label: 'Applied' },
+  { value: 'saved',     label: 'Saved'     },
+  { value: 'applied',   label: 'Applied'   },
   { value: 'interview', label: 'Interview' },
-  { value: 'offer', label: 'Offer' },
-  { value: 'rejected', label: 'Rejected' },
+  { value: 'offer',     label: 'Offer'     },
+  { value: 'rejected',  label: 'Rejected'  },
 ]
 
 const platformOptions = [

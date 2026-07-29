@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/var/www
+    depends_on:
+      - postgres
+      - scraper
+
+  scraper:
+    build: ./scraper
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./scraper:/app
+
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: jobhunter
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
