@@ -5,23 +5,25 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreJobRequest;
 use App\Http\Requests\UpdateJobRequest;
 use App\Models\Job;
+use App\Models\JobTimeline;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class JobController extends Controller
 {
     public function index(Request $request): JsonResponse
     {
         $query = $request->user()->jobs()
-            ->where('active_status', 2)
+            ->where('active_status', Job::ACTIVE)
             ->latest();
 
         if ($request->filled('search')) {
-            $search = $request->search;
+            $search = mb_strtolower($request->search);
             $query->where(function ($q) use ($search) {
-                $q->where('company_name', 'ilike', "%{$search}%")
-                    ->orWhere('job_title', 'ilike', "%{$search}%")
-                    ->orWhere('location', 'ilike', "%{$search}%");
+                $q->whereRaw('LOWER(company_name) LIKE ?', ["%{$search}%"])
+                    ->orWhereRaw('LOWER(job_title) LIKE ?', ["%{$search}%"])
+                    ->orWhereRaw('LOWER(location) LIKE ?', ["%{$search}%"]);
             });
         }
 
@@ -29,7 +31,21 @@ class JobController extends Controller
             $query->where('status', $request->status);
         }
 
-        $jobs = $query->paginate(10);
+        if ($request->filled('platform')) {
+            $platforms = explode(',', $request->platform);
+            $query->whereIn('job_platform', $platforms);
+        }
+
+        if ($request->filled('date_from')) {
+            $query->whereDate('created_at', '>=', $request->date_from);
+        }
+
+        if ($request->filled('date_to')) {
+            $query->whereDate('created_at', '<=', $request->date_to);
+        }
+
+        $perPage = min(max((int) ($request->per_page ?? 10), 1), 100);
+        $jobs = $query->paginate($perPage);
 
         return response()->json([
             'success' => true,
@@ -116,8 +132,8 @@ class JobController extends Controller
             ], 403);
         }
 
-        // Soft delete — set active_status to 1
-        $job->update(['active_status' => 1]);
+        // Soft delete � set active_status to 1
+        $job->delete();
 
         return response()->json([
             'success' => true,
@@ -125,9 +141,124 @@ class JobController extends Controller
         ]);
     }
 
+    public function kanban(Request $request): JsonResponse
+    {
+        $jobs = $request->user()->jobs()
+            ->where('active_status', Job::ACTIVE)
+            ->latest()
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Jobs retrieved successfully.',
+            'data' => $jobs,
+        ]);
+    }
+
+    public function updateStatus(Request $request, Job $job): JsonResponse
+    {
+        if ($request->user()->id !== $job->user_id) {
+            return response()->json(['success' => false, 'message' => 'Permission denied.'], 403);
+        }
+
+        $request->validate([
+            'status' => ['required', 'string', 'in:saved,applied,interview,offer,rejected'],
+        ]);
+
+        $status = $request->status;
+        $job->update(['status' => $status]);
+
+        $timelineStage = $status === 'saved' ? 'saved' : ($status === 'interview' ? 'interview' : $status);
+        $job->timelines()->updateOrCreate(
+            ['stage' => $timelineStage],
+            ['stage_date' => now()->toDateString()]
+        );
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Status updated successfully.',
+            'data' => $job,
+        ]);
+    }
+
+    public function bulkDelete(Request $request): JsonResponse
+    {
+        $request->validate(['ids' => 'required|array', 'ids.*' => 'integer|exists:jobs,id']);
+
+        $request->user()->jobs()->whereIn('id', $request->ids)->delete();
+
+        return response()->json(['success' => true, 'message' => 'Jobs deleted successfully.']);
+    }
+
+    public function bulkUpdateStatus(Request $request): JsonResponse
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'integer|exists:jobs,id',
+            'status' => 'required|string|in:saved,applied,interview,offer,rejected',
+        ]);
+
+        $request->user()->jobs()->whereIn('id', $request->ids)->update(['status' => $request->status]);
+
+        return response()->json(['success' => true, 'message' => 'Status updated successfully.']);
+    }
+
+    public function export(Request $request): StreamedResponse
+    {
+        $jobs = $request->user()->jobs()
+            ->where('active_status', Job::ACTIVE)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $headers = ['Company Name', 'Job Title', 'Location', 'Salary', 'Platform', 'Status', 'Applied Date', 'URL', 'Created At'];
+        $filename = 'jobs-export-' . now()->format('Y-m-d') . '.csv';
+
+        $callback = function () use ($headers, $jobs) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $headers);
+
+            foreach ($jobs as $job) {
+                fputcsv($file, [
+                    $job->company_name,
+                    $job->job_title,
+                    $job->location,
+                    $job->salary,
+                    $job->job_platform,
+                    $job->status,
+                    $job->applied_date?->format('Y-m-d') ?? '',
+                    $job->url,
+                    $job->created_at->format('Y-m-d H:i:s'),
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return new StreamedResponse($callback, 200, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+        ]);
+    }
+
+    public function platforms(Request $request): JsonResponse
+    {
+        $platforms = $request->user()->jobs()
+            ->where('active_status', Job::ACTIVE)
+            ->whereNotNull('job_platform')
+            ->distinct()
+            ->pluck('job_platform')
+            ->sort()
+            ->values();
+
+        return response()->json([
+            'success' => true,
+            'data' => $platforms,
+        ]);
+    }
+
     public function stats(Request $request): JsonResponse
     {
-        $jobs = $request->user()->jobs()->where('active_status', 2);
+        $jobs = $request->user()->jobs()->where('active_status', Job::ACTIVE);
 
         return response()->json([
             'success' => true,
@@ -141,7 +272,4 @@ class JobController extends Controller
             ],
         ]);
     }
-
-
-
 }

@@ -3,15 +3,25 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Mail, ArrowLeft, ArrowRight } from 'lucide-react'
 import { Button, Input } from '@/components/ui'
+import { authService } from '@/services/authService'
+import { toast } from 'sonner'
 
 export function ForgotPasswordPage() {
+  const [email, setEmail] = useState('')
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    setTimeout(() => { setLoading(false); setSent(true) }, 1000)
+    try {
+      await authService.forgotPassword(email)
+      setSent(true)
+    } catch {
+      toast.error(err.response?.data?.message || 'Failed to send reset link.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -29,7 +39,7 @@ export function ForgotPasswordPage() {
           <div className="w-8 h-8 rounded-lg bg-orbit-primary flex items-center justify-center">
             <span className="text-white font-bold text-sm">O</span>
           </div>
-          <span className="text-slate-100 font-semibold">Orbit</span>
+          <span className="text-slate-100 font-semibold">Job Hunter</span>
         </div>
 
         {!sent ? (
@@ -42,6 +52,8 @@ export function ForgotPasswordPage() {
               <Input
                 label="Email address"
                 type="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
                 placeholder="you@company.com"
                 prefix={<Mail className="w-3.5 h-3.5" />}
                 required
@@ -60,9 +72,6 @@ export function ForgotPasswordPage() {
             <p className="text-slate-500 text-sm mb-8">
               We've sent a password reset link to your email. It expires in 30 minutes.
             </p>
-            <Button variant="outline" size="lg" className="w-full">
-              Open Email App
-            </Button>
           </motion.div>
         )}
 

@@ -7,14 +7,14 @@ import type { StatCardData } from '@/types'
 const colorMap = {
   primary: {
     icon: 'bg-orbit-primary/15 text-orbit-primary-light',
-    chart: '#7C3AED',
-    gradient: 'rgba(124, 58, 237, 0.15)',
+    chart: '#4F46E5',
+    gradient: 'rgba(79, 70, 229, 0.15)',
     positive: 'text-violet-400',
   },
   accent: {
     icon: 'bg-orbit-accent/15 text-orbit-accent-light',
-    chart: '#06B6D4',
-    gradient: 'rgba(6, 182, 212, 0.15)',
+    chart: '#0D9488',
+    gradient: 'rgba(13, 148, 136, 0.15)',
     positive: 'text-cyan-400',
   },
   success: {

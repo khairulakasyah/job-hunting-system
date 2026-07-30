@@ -13,10 +13,15 @@ class JobTimeline extends Model
         'job_id',
         'stage',
         'stage_date',
+        'event_type',
+        'scheduled_at',
+        'location',
+        'meeting_link',
     ];
 
     protected $casts = [
         'stage_date' => 'date',
+        'scheduled_at' => 'datetime',
     ];
 
     public function job()

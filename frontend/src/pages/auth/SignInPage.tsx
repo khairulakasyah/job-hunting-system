@@ -23,7 +23,7 @@ export function SignInPage() {
     try {
       await login(email, password)
       navigate('/dashboard')
-    } catch (err: any) {
+    } catch {
       const message = err.response?.data?.message || 'Login failed. Please try again.'
       setError(message)
     } finally {
@@ -46,10 +46,10 @@ export function SignInPage() {
             <svg viewBox="0 0 32 32" fill="none" className="w-5 h-5">
               <circle cx="16" cy="16" r="4" fill="white" />
               <ellipse cx="16" cy="16" rx="11" ry="5" stroke="white" strokeWidth="1.5" strokeOpacity="0.7" transform="rotate(-30 16 16)" />
-              <circle cx="23" cy="11" r="2" fill="#06B6D4" />
+              <circle cx="23" cy="11" r="2" fill="#0D9488" />
             </svg>
           </div>
-          <span className="text-slate-100 font-semibold text-xl tracking-tight">Orbit</span>
+          <span className="text-slate-100 font-semibold text-xl tracking-tight">Job Hunter</span>
         </div>
 
         <div>
@@ -93,7 +93,7 @@ export function SignInPage() {
             <div className="w-8 h-8 rounded-lg bg-orbit-primary flex items-center justify-center">
               <span className="text-white font-bold text-sm">O</span>
             </div>
-            <span className="text-slate-100 font-semibold text-lg">Orbit</span>
+            <span className="text-slate-100 font-semibold text-lg">Job Hunter</span>
           </div>
 
           <h1 className="text-2xl font-bold text-slate-100 mb-1">Welcome back</h1>

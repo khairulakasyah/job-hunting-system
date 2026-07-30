@@ -16,7 +16,7 @@ function OrbitLogo({ collapsed }: { collapsed: boolean }) {
           <svg viewBox="0 0 32 32" fill="none" className="w-5 h-5">
             <circle cx="16" cy="16" r="4" fill="white" />
             <ellipse cx="16" cy="16" rx="11" ry="5" stroke="white" strokeWidth="1.5" strokeOpacity="0.7" transform="rotate(-30 16 16)" />
-            <circle cx="23" cy="11" r="2" fill="#06B6D4" />
+            <circle cx="23" cy="11" r="2" fill="#0D9488" />
           </svg>
         </div>
       </div>
@@ -30,7 +30,7 @@ function OrbitLogo({ collapsed }: { collapsed: boolean }) {
             className="overflow-hidden"
           >
             <span className="text-slate-100 font-semibold text-lg tracking-tight whitespace-nowrap">
-              Orbit
+              Job Hunter
             </span>
           </motion.div>
         )}
@@ -139,6 +139,7 @@ function NavItemLink({
   return (
     <NavLink
       to={item.href!}
+      end={item.href === '/jobs'}
       onClick={onNavClick}
       className={({ isActive: routerActive }) => {
         const active = routerActive || isActive

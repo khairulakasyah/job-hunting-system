@@ -27,7 +27,7 @@ const quickLinks = [
   {
     icon: Zap,
     title: 'Changelog',
-    description: "What's new in the latest version of Orbit",
+    description: "What's new in the latest version of Job Hunter",
     badge: 'v1.0',
     color: 'text-amber-400',
     bg: 'bg-orbit-warning/10',
@@ -35,7 +35,7 @@ const quickLinks = [
   {
     icon: MessageSquare,
     title: 'Community',
-    description: 'Ask questions, share ideas, and connect with other Orbit users',
+    description: 'Ask questions, share ideas, and connect with other Job Hunter users',
     badge: undefined,
     color: 'text-emerald-400',
     bg: 'bg-orbit-success/10',
@@ -44,7 +44,7 @@ const quickLinks = [
 
 const faqs = [
   {
-    q: 'How do I connect Orbit to my own API?',
+    q: 'How do I connect Job Hunter to my own API?',
     a: 'Check the `docs/api-integration/` folder in the project root. It contains structured markdown files (overview, authentication, AI chat, dashboard API) designed to be pasted directly into Claude or ChatGPT so an AI can generate the integration code for you. Start with `overview.md`.',
   },
   {
@@ -64,12 +64,12 @@ const faqs = [
     a: 'See `docs/api-integration/ai-chat.md`. It contains a complete example for streaming responses from the Claude API (recommended) or OpenAI. The key is to route requests through your backend — never call AI APIs directly from the browser since it exposes your API key.',
   },
   {
-    q: 'Is Orbit free to use commercially?',
-    a: 'Yes. Orbit is released under the MIT License, which allows free use for personal and commercial projects. You can build products with it, sell products built on it, and modify it however you like. Attribution is appreciated but not required.',
+    q: 'Is Job Hunter free to use commercially?',
+    a: 'Yes. Job Hunter is released under the MIT License, which allows free use for personal and commercial projects. You can build products with it, sell products built on it, and modify it however you like. Attribution is appreciated but not required.',
   },
   {
     q: 'How do I add more chart types?',
-    a: 'Orbit uses Recharts. You can import any Recharts component (BarChart, RadialBarChart, ScatterChart, etc.) directly in your page files. All chart components accept our theme colors via CSS custom properties. See the Dashboard page source for examples.',
+    a: 'Job Hunter uses Recharts. You can import any Recharts component (BarChart, RadialBarChart, ScatterChart, etc.) directly in your page files. All chart components accept our theme colors via CSS custom properties. See the Dashboard page source for examples.',
   },
   {
     q: 'How do I deploy this template?',
@@ -128,7 +128,7 @@ export function HelpPage() {
       <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}>
         <h1 className="text-2xl font-bold text-slate-100">Help & Documentation</h1>
         <p className="text-slate-500 text-sm mt-1">
-          Everything you need to get the most out of Orbit
+          Everything you need to get the most out of Job Hunter
         </p>
       </motion.div>
 

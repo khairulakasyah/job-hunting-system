@@ -163,7 +163,7 @@ export function ChatPage() {
             </Button>
           </div>
           <button
-            onClick={() => setShowConvList(false)}
+            onClick={() => setShowConvList(false)} aria-label="Close conversation list"
             className="md:hidden p-1.5 text-slate-500 hover:text-slate-300 rounded-lg hover:bg-white/5 transition-colors"
           >
             <X className="w-4 h-4" />
@@ -207,7 +207,7 @@ export function ChatPage() {
         <div className="h-14 border-b border-orbit-border px-4 flex items-center gap-3 bg-orbit-surface/60 backdrop-blur-xl flex-shrink-0">
           {/* Mobile conv list toggle */}
           <button
-            onClick={() => setShowConvList(true)}
+            onClick={() => setShowConvList(true)} aria-label="Open conversation list"
             className="md:hidden p-1.5 text-slate-400 hover:text-slate-200 hover:bg-white/5 rounded-lg transition-colors"
           >
             <Menu className="w-4 h-4" />
@@ -217,8 +217,8 @@ export function ChatPage() {
             <Sparkles className="w-4 h-4 text-orbit-primary-light" />
           </div>
           <div className="min-w-0">
-            <p className="text-sm font-semibold text-slate-200 truncate">Orbit AI</p>
-            <p className="text-[11px] text-slate-500 hidden sm:block">Business intelligence assistant</p>
+            <p className="text-sm font-semibold text-slate-200 truncate">Job Hunter AI</p>
+            <p className="text-[11px] text-slate-500 hidden sm:block">Job hunting assistant</p>
           </div>
           <div className="ml-auto relative flex-shrink-0">
             <button
@@ -296,8 +296,13 @@ export function ChatPage() {
                   <span className="text-[11px] text-slate-600">{msg.timestamp}</span>
                   {msg.role === 'assistant' && (
                     <div className="flex items-center gap-1">
-                      {[Copy, ThumbsUp, ThumbsDown, RefreshCw].map((Icon, i) => (
-                        <button key={i} className="p-1 text-slate-700 hover:text-slate-400 transition-colors rounded">
+                      {[
+                        { icon: Copy, label: 'Copy message' },
+                        { icon: ThumbsUp, label: 'Like response' },
+                        { icon: ThumbsDown, label: 'Dislike response' },
+                        { icon: RefreshCw, label: 'Regenerate response' },
+                      ].map(({ icon: Icon, label }, i) => (
+                        <button key={i} aria-label={label} className="p-1 text-slate-700 hover:text-slate-400 transition-colors rounded">
                           <Icon className="w-3 h-3" />
                         </button>
                       ))}
@@ -324,7 +329,7 @@ export function ChatPage() {
         {/* Input area — always pinned to bottom */}
         <div className="border-t border-orbit-border p-4 bg-orbit-surface/60 backdrop-blur-xl flex-shrink-0">
           <div className="flex items-end gap-3 bg-orbit-surface2 border border-orbit-border rounded-2xl px-4 py-3 focus-within:border-orbit-primary/50 transition-colors">
-            <button className="text-slate-500 hover:text-slate-300 transition-colors mb-0.5 hidden sm:block">
+            <button aria-label="Attach file" className="text-slate-500 hover:text-slate-300 transition-colors mb-0.5 hidden sm:block">
               <Paperclip className="w-4 h-4" />
             </button>
             <textarea
@@ -344,6 +349,7 @@ export function ChatPage() {
             <button
               onClick={handleSend}
               disabled={!input.trim() || isTyping}
+              aria-label="Send message"
               className={cn(
                 'p-2 rounded-xl transition-all flex-shrink-0',
                 input.trim() && !isTyping

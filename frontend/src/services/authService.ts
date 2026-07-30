@@ -9,6 +9,15 @@ export interface User {
   id: number
   name: string
   email: string
+  resume_url?: string | null
+  portfolio_url?: string | null
+  linkedin_url?: string | null
+  github_url?: string | null
+  preferred_platform?: string | null
+  preferred_location?: string | null
+  salary_expectation?: string | null
+  target_role?: string | null
+  onboarding_completed?: boolean
 }
 
 export interface AuthResponse {
@@ -29,12 +38,28 @@ export interface RegisterData {
 export interface UpdateProfileData {
   name: string
   email: string
+  resume_url?: string | null
+  portfolio_url?: string | null
+  linkedin_url?: string | null
+  github_url?: string | null
+  preferred_platform?: string | null
+  preferred_location?: string | null
+  salary_expectation?: string | null
+  target_role?: string | null
+  onboarding_completed?: boolean
 }
 
 export interface ChangePasswordData {
   current_password: string
   new_password: string
   new_password_confirmation: string
+}
+
+export interface ResetPasswordData {
+  token: string
+  email: string
+  password: string
+  password_confirmation: string
 }
 
 export const authService = {
@@ -64,5 +89,13 @@ export const authService = {
 
   async changePassword(data: ChangePasswordData): Promise<void> {
     await api.put('/change-password', data)
+  },
+
+  async forgotPassword(email: string): Promise<void> {
+    await api.post('/forgot-password', { email })
+  },
+
+  async resetPassword(data: ResetPasswordData): Promise<void> {
+    await api.post('/reset-password', data)
   },
 }

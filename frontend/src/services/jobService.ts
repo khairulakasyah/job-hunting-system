@@ -9,7 +9,7 @@ export interface Job {
   url:             string
   job_description: string
   salary:          string
-  job_platform:    'linkedin' | 'indeed' | 'jobstreet' | 'hiredly'
+  job_platform:    string
   status:          'saved' | 'applied' | 'interview' | 'offer' | 'rejected'
   active_status:   number
   created_at:      string
@@ -24,8 +24,8 @@ export interface JobFormData {
   url:             string
   job_description: string
   salary:          string
-  job_platform:    'linkedin' | 'indeed' | 'jobstreet' | 'hiredly'
-  status:          'applied' | 'interview' | 'offer' | 'rejected'
+  job_platform:    string
+  status:          'saved' | 'applied' | 'interview' | 'offer' | 'rejected'
   applied_date:    string
 }
 
@@ -60,23 +60,27 @@ export interface ScrapedJob {
 
 
 export const jobService = {
-//   async getAll(page = 1, search = '', status = ''): Promise<PaginatedJobs> {
-//     const params = new URLSearchParams()
-//     params.append('page', String(page))
-//     if (search) params.append('search', search)
-//     if (status) params.append('status', status)
-//     const response = await api.get(`/jobs?${params.toString()}`)
-//     return response.data.data
-//   },
-
-  async getAll(page = 1, search = '', status = '', limit?: number): Promise<PaginatedJobs> {
+  async getAll(page = 1, search = '', status = '', limit?: number, platform?: string, date_from?: string, date_to?: string, perPage = 10): Promise<PaginatedJobs> {
     const params = new URLSearchParams()
     params.append('page', String(page))
+    params.append('per_page', String(perPage))
     if (search) params.append('search', search)
     if (status) params.append('status', status)
     if (limit) params.append('limit', String(limit))
+    if (platform) params.append('platform', platform)
+    if (date_from) params.append('date_from', date_from)
+    if (date_to) params.append('date_to', date_to)
     const response = await api.get(`/jobs?${params.toString()}`)
     return response.data.data
+  },
+
+  async getKanban(): Promise<Job[]> {
+    const response = await api.get('/jobs/kanban')
+    return response.data.data
+  },
+
+  async updateStatus(id: number, status: string): Promise<void> {
+    await api.patch(`/jobs/${id}/status`, { status })
   },
 
   async getOne(id: number): Promise<Job> {
@@ -101,6 +105,24 @@ export const jobService = {
   async getStats(): Promise<JobStats> {
     const response = await api.get('/jobs/stats')
     return response.data.data
+  },
+
+  async getPlatforms(): Promise<string[]> {
+    const response = await api.get('/jobs/platforms')
+    return response.data.data
+  },
+
+  async bulkDelete(ids: number[]): Promise<void> {
+    await api.post('/jobs/bulk-delete', { ids })
+  },
+
+  async bulkUpdateStatus(ids: number[], status: string): Promise<void> {
+    await api.patch('/jobs/bulk-status', { ids, status })
+  },
+
+  async exportCsv(): Promise<Blob> {
+    const response = await api.get('/jobs/export', { responseType: 'blob' })
+    return response.data
   },
 
   async scrape(url: string): Promise<ScrapedJob> {

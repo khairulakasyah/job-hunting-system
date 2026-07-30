@@ -12,7 +12,7 @@ export const initialMessages: ChatMessage[] = [
   {
     id: '1',
     role: 'assistant',
-    content: 'Hello! I\'m your Orbit AI assistant. I can help you analyze your business metrics, generate reports, identify trends, and answer questions about your data. What would you like to explore today?',
+    content: 'Hello! I\'m your Job Hunter AI assistant. I can help you track applications, prepare for interviews, and optimize your job search strategy. What would you like to explore today?',
     timestamp: '10:00 AM',
   },
   {

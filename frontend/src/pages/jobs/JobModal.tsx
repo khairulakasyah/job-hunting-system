@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Briefcase, Link, Loader2, ArrowRight, AlertCircle } from 'lucide-react'
 import { jobService, Job, JobFormData } from '@/services/jobService'
+import { useAuth } from '@/contexts/AuthContext'
 
 interface JobModalProps {
   isOpen: boolean
@@ -19,7 +20,7 @@ const emptyForm: JobFormData = {
   url: '',
   job_description: '',
   salary: '',
-  job_platform: 'linkedin',
+  job_platform: '',
   status: 'applied',
   applied_date: new Date().toISOString().split('T')[0], // today
 }
@@ -32,17 +33,10 @@ const statusOptions = [
   { value: 'rejected',  label: 'Rejected'  },
 ]
 
-const platformOptions = [
-  { value: 'linkedin', label: 'LinkedIn' },
-  { value: 'jobstreet', label: 'Jobstreet' },
-  { value: 'indeed', label: 'Indeed' },
-  { value: 'hiredly', label: 'Hiredly' },
-]
-
 const inputClass = 'w-full bg-orbit-surface2 border border-orbit-border rounded-lg px-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-orbit-primary transition-colors'
 const labelClass = 'block text-xs font-medium text-slate-400 mb-1.5'
 
-function detectPlatform(url: string): JobFormData['job_platform'] {
+function detectPlatform(url: string): string {
   if (url.includes('linkedin')) return 'linkedin'
   if (url.includes('jobstreet')) return 'jobstreet'
   if (url.includes('indeed')) return 'indeed'
@@ -51,6 +45,7 @@ function detectPlatform(url: string): JobFormData['job_platform'] {
 }
 
 export function JobModal({ isOpen, onClose, onSaved, job }: JobModalProps) {
+  const { user } = useAuth()
   const [step, setStep] = useState<Step>('url')
   const [urlInput, setUrlInput] = useState('')
   const [scrapeError, setScrapeError] = useState('')
@@ -59,6 +54,12 @@ export function JobModal({ isOpen, onClose, onSaved, job }: JobModalProps) {
   const [error, setError] = useState('')
   const isEditing = !!job
   const [rescraping, setRescraping] = useState(false)
+  const [availablePlatforms, setAvailablePlatforms] = useState<string[]>([])
+
+  useEffect(() => {
+    jobService.getPlatforms().then(setAvailablePlatforms).catch(() => {})
+  }, [])
+
   // Reset on open
   useEffect(() => {
     if (!isOpen) return
@@ -77,10 +78,16 @@ export function JobModal({ isOpen, onClose, onSaved, job }: JobModalProps) {
         applied_date: new Date().toISOString().split('T')[0],
       })
     } else {
-      // Creating — start at URL step
+      // Creating — pre-fill from profile preferences
       setStep('url')
       setUrlInput('')
-      setForm(emptyForm)
+      setForm({
+        ...emptyForm,
+        job_title: user?.target_role ?? '',
+        location: user?.preferred_location ?? '',
+        salary: user?.salary_expectation ?? '',
+        job_platform: user?.preferred_platform ?? '',
+      })
       setScrapeError('')
     }
     setError('')
@@ -108,9 +115,10 @@ export function JobModal({ isOpen, onClose, onSaved, job }: JobModalProps) {
         salary: data.salary_range !== 'Not specified' ? data.salary_range : '',
         job_platform: detectPlatform(urlInput),
         status: 'applied',
+        applied_date: new Date().toISOString().split('T')[0],
       })
       setStep('form')
-    } catch (err: any) {
+    } catch {
       setScrapeError(err.response?.data?.message || 'Failed to scrape. You can fill the form manually.')
       setStep('url')
     }
@@ -133,7 +141,7 @@ export function JobModal({ isOpen, onClose, onSaved, job }: JobModalProps) {
       isEditing ? await jobService.update(job.id, form) : await jobService.create(form)
       onSaved()
       onClose()
-    } catch (err: any) {
+    } catch {
       setError(err.response?.data?.message || 'Something went wrong.')
     } finally {
       setLoading(false)
@@ -152,7 +160,7 @@ export function JobModal({ isOpen, onClose, onSaved, job }: JobModalProps) {
             transition={{ duration: 0.2 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
           >
-            <div className="w-full max-w-4xl bg-orbit-surface border border-orbit-border rounded-2xl shadow-2xl pointer-events-auto flex flex-col max-h-[95vh]"
+            <div role="dialog" aria-modal="true" className="w-full max-w-4xl bg-orbit-surface border border-orbit-border rounded-2xl shadow-2xl pointer-events-auto flex flex-col max-h-[95vh]"
               onClick={e => e.stopPropagation()}>
 
               {/* Header */}
@@ -174,7 +182,7 @@ export function JobModal({ isOpen, onClose, onSaved, job }: JobModalProps) {
                     </p>
                   </div>
                 </div>
-                <button onClick={onClose} className="p-1.5 rounded-lg text-slate-500 hover:text-slate-200 hover:bg-white/5 transition-colors">
+                <button onClick={onClose} aria-label="Close" className="p-1.5 rounded-lg text-slate-500 hover:text-slate-200 hover:bg-white/5 transition-colors">
                   <X className="w-4 h-4" />
                 </button>
               </div>
@@ -244,7 +252,7 @@ export function JobModal({ isOpen, onClose, onSaved, job }: JobModalProps) {
               {/* ── Step 2: Form ── */}
               {step === 'form' && (
                 <>
-                  <div className="px-6 py-5 flex-1">
+                  <div className="px-6 py-5 flex-1 overflow-y-auto">
                     {error && (
                       <div className="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
                         {error}
@@ -252,7 +260,7 @@ export function JobModal({ isOpen, onClose, onSaved, job }: JobModalProps) {
                     )}
 
                     <form id="job-form" onSubmit={handleSubmit} className={`transition-opacity duration-200 ${rescraping ? 'opacity-50 pointer-events-none select-none' : ''}`}>
-                      <div className="grid grid-cols-2 gap-x-6 gap-y-4">
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-4">
 
                         {/* Col 1 */}
                         <div className="space-y-4">
@@ -285,10 +293,14 @@ export function JobModal({ isOpen, onClose, onSaved, job }: JobModalProps) {
                           </div>
                           <div>
                             <label className={labelClass}>Platform</label>
-                            <select name="job_platform" value={form.job_platform} onChange={handleChange}
-                              className={inputClass + ' cursor-pointer'}>
-                              {platformOptions.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-                            </select>
+                            <input name="job_platform" type="text" value={form.job_platform} onChange={handleChange}
+                              placeholder="e.g. LinkedIn, Indeed, JobStreet"
+                              list="platform-list" className={inputClass} />
+                            <datalist id="platform-list">
+                              {availablePlatforms.map(p => (
+                                <option key={p} value={p} />
+                              ))}
+                            </datalist>
                           </div>
                           <div>
                             <label className={labelClass}>Applied Date</label>
@@ -298,7 +310,7 @@ export function JobModal({ isOpen, onClose, onSaved, job }: JobModalProps) {
                         </div>
 
                         {/* Col 2 */}
-                        <div className="space-y-4 flex flex-col">
+                        <div className="flex flex-col gap-4">
                           {/* URL + Rescrape */}
                           <div>
                             <label className={labelClass}>Job URL</label>
@@ -326,7 +338,7 @@ export function JobModal({ isOpen, onClose, onSaved, job }: JobModalProps) {
                                         data.benefits !== 'Not specified' ? `\nBENEFITS\n${data.benefits}` : '',
                                       ].filter(Boolean).join('\n').trim() || prev.job_description,
                                     }))
-                                  } catch (err: any) {
+                                  } catch {
                                     setScrapeError(err.response?.data?.message || 'Rescrape failed.')
                                   } finally {
                                     setRescraping(false)
@@ -344,12 +356,11 @@ export function JobModal({ isOpen, onClose, onSaved, job }: JobModalProps) {
                             {scrapeError && <p className="text-xs text-red-400 mt-1">{scrapeError}</p>}
                           </div>
 
-                          {/* Description — takes remaining height */}
                           <div className="flex flex-col flex-1">
                             <label className={labelClass}>Job Description</label>
                             <textarea name="job_description" value={form.job_description} onChange={handleChange}
                               placeholder="Paste or write job description here..."
-                              className={inputClass + ' resize-none flex-1 min-h-[260px]'} />
+                              className={inputClass + ' resize-none flex-1'} />
                           </div>
                         </div>
                       </div>

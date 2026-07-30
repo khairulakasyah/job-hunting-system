@@ -10,36 +10,43 @@ class ScrapeController extends Controller
 {
     public function scrape(Request $request): JsonResponse
     {
-        $request->validate([
-            'url' => ['required', 'url'],
-        ]);
+        try {
+            $request->validate([
+                'url' => ['required', 'url'],
+            ]);
 
-        $scraperUrl = config('services.scraper.url', 'http://scraper:5000');
+            $scraperUrl = config('services.scraper.url', 'http://scraper:5000');
 
-        $response = Http::timeout(30)->post("{$scraperUrl}/scrape", [
-            'url' => $request->url,
-        ]);
+            $response = Http::timeout(30)->post("{$scraperUrl}/scrape", [
+                'url' => $request->url,
+            ]);
 
-        if (!$response->successful()) {
+            if (!$response->successful()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Scraper failed. Make sure the Flask server is running.',
+                ], 422);
+            }
+
+            $data = $response->json();
+
+            if (!$data['success']) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $data['message'] ?? 'Could not scrape this URL.',
+                ], 422);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Job data scraped successfully.',
+                'data' => $data['data'],
+            ]);
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Scraper failed. Make sure the Flask server is running.',
-            ], 422);
+                'message' => 'An error occurred: ' . $e->getMessage(),
+            ], 500);
         }
-
-        $data = $response->json();
-
-        if (!$data['success']) {
-            return response()->json([
-                'success' => false,
-                'message' => $data['message'] ?? 'Could not scrape this URL.',
-            ], 422);
-        }
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Job data scraped successfully.',
-            'data' => $data['data'],
-        ]);
     }
 }

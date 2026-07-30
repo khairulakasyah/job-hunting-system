@@ -39,4 +39,8 @@ return [
         'url' => env('SCRAPER_SERVICE_URL', 'http://scraper:5000'),
     ],
 
+    'ai' => [
+        'key' => env('AI_API_KEY'),
+    ],
+
 ];

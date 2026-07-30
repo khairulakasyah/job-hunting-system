@@ -26,7 +26,7 @@ export function ComponentsPage() {
       <div>
         <h1 className="text-2xl font-bold text-slate-100">Component Showcase</h1>
         <p className="text-slate-500 text-sm mt-1">
-          All Orbit UI components with their variants and sizes. Copy patterns directly into your pages.
+          All Job Hunter UI components with their variants and sizes. Copy patterns directly into your pages.
         </p>
       </div>
 
@@ -63,8 +63,8 @@ export function ComponentsPage() {
               <Button variant="outline" icon={<Download className="w-3.5 h-3.5" />}>Export</Button>
               <Button variant="ghost" icon={<Edit className="w-3.5 h-3.5" />}>Edit</Button>
               <Button variant="destructive" icon={<Trash2 className="w-3.5 h-3.5" />}>Delete</Button>
-              <Button size="icon"><Plus className="w-4 h-4" /></Button>
-              <Button size="icon" variant="outline"><Search className="w-4 h-4" /></Button>
+              <Button size="icon" aria-label="Add item"><Plus className="w-4 h-4" /></Button>
+              <Button size="icon" variant="outline" aria-label="Search"><Search className="w-4 h-4" /></Button>
             </div>
           </div>
         </div>
@@ -136,7 +136,7 @@ export function ComponentsPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Input label="Default" placeholder="Enter text..." value={inputVal} onChange={e => setInputVal(e.target.value)} />
           <Input label="With prefix" prefix={<Search className="w-3.5 h-3.5" />} placeholder="Search..." />
-          <Input label="With suffix" suffix={<span className="text-xs">@orbit.io</span>} placeholder="username" />
+          <Input label="With suffix" suffix={<span className="text-xs">@acme.io</span>} placeholder="username" />
           <Input label="With hint" placeholder="your@email.com" hint="We'll never share your email." />
           <Input label="Error state" placeholder="Enter value..." error="This field is required" />
           <Input label="Disabled" placeholder="Disabled input" disabled />
@@ -156,19 +156,19 @@ export function ComponentsPage() {
           </Card>
           <Card gradient className="p-5">
             <h4 className="text-sm font-semibold text-slate-200 mb-1">Gradient Border</h4>
-            <p className="text-xs text-slate-500">Violet → cyan gradient border</p>
+            <p className="text-xs text-slate-500">Indigo → teal gradient border</p>
           </Card>
         </div>
       </Section>
 
       {/* Color palette */}
-      <Section title="Color System" description="Orbit's violet + cyan design tokens">
+      <Section title="Color System" description="Job Hunter's indigo + teal design tokens">
         <div className="space-y-3">
           {[
-            { name: 'orbit-primary', hex: '#7C3AED', label: 'Primary (Violet)' },
-            { name: 'orbit-primary-light', hex: '#8B5CF6', label: 'Primary Light' },
-            { name: 'orbit-accent', hex: '#06B6D4', label: 'Accent (Cyan)' },
-            { name: 'orbit-accent-light', hex: '#22D3EE', label: 'Accent Light' },
+            { name: 'orbit-primary', hex: '#4F46E5', label: 'Primary (Indigo)' },
+            { name: 'orbit-primary-light', hex: '#6366F1', label: 'Primary Light' },
+            { name: 'orbit-accent', hex: '#0D9488', label: 'Accent (Teal)' },
+            { name: 'orbit-accent-light', hex: '#14B8A6', label: 'Accent Light' },
             { name: 'orbit-success', hex: '#10B981', label: 'Success' },
             { name: 'orbit-warning', hex: '#F59E0B', label: 'Warning' },
             { name: 'orbit-danger', hex: '#EF4444', label: 'Danger' },

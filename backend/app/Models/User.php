@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\PasswordResetNotification;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -23,6 +24,15 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'resume_url',
+        'portfolio_url',
+        'linkedin_url',
+        'github_url',
+        'preferred_platform',
+        'preferred_location',
+        'salary_expectation',
+        'target_role',
+        'onboarding_completed',
     ];
 
     /**
@@ -45,11 +55,27 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'onboarding_completed' => 'boolean',
         ];
     }
 
     public function jobs()
     {
         return $this->hasMany(Job::class);
+    }
+
+    public function emailTemplates()
+    {
+        return $this->hasMany(EmailTemplate::class);
+    }
+
+    public function noteCategories()
+    {
+        return $this->hasMany(NoteCategory::class);
+    }
+
+    public function sendPasswordResetNotification($token): void
+    {
+        $this->notify(new PasswordResetNotification($token));
     }
 }

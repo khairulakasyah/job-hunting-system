@@ -21,7 +21,7 @@ class StoreJobRequest extends FormRequest
             'url'             => ['nullable', 'url', 'max:500'],
             'job_description' => ['nullable', 'string'],
             'salary'          => ['nullable', 'string', 'max:255'],
-            'job_platform'    => ['sometimes', 'in:linkedin,indeed,jobstreet,hiredly'],
+            'job_platform'    => ['sometimes', 'string'],
             'applied_date' => ['nullable', 'date'],
         ];
     }

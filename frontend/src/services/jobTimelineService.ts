@@ -1,12 +1,16 @@
 import api from './api'
 
 export interface JobTimeline {
-  id:         number
-  job_id:     number
-  stage:      string
-  stage_date: string
-  created_at: string
-  updated_at: string
+  id:           number
+  job_id:       number
+  stage:        string
+  stage_date:   string
+  event_type:   string | null
+  scheduled_at: string | null
+  location:     string | null
+  meeting_link: string | null
+  created_at:   string
+  updated_at:   string
 }
 
 export const STAGES = [

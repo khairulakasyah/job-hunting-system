@@ -1,11 +1,8 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Moon, Sun, Monitor, User, Bell, Shield, Key, Save, Camera } from 'lucide-react'
+import { User, Bell, Shield, Key, Save, Camera } from 'lucide-react'
 import { Button, Input, Card, CardHeader, CardBody, Badge } from '@/components/ui'
-import { useTheme } from '@/hooks/useTheme'
 import { cn } from '@/utils/cn'
-
-type ThemeOption = 'dark' | 'light' | 'system'
 
 function SectionCard({
   icon: Icon,
@@ -68,8 +65,6 @@ function Toggle({ checked, onChange }: { checked: boolean; onChange: (v: boolean
 }
 
 export function SettingsPage() {
-  const { theme, toggle } = useTheme()
-  const [themeOption, setThemeOption] = useState<ThemeOption>(theme)
   const [notifications, setNotifications] = useState({
     email: true,
     push: false,
@@ -80,25 +75,10 @@ export function SettingsPage() {
   const [email, setEmail] = useState('alex@orbitdash.io')
   const [saved, setSaved] = useState(false)
 
-  const handleThemeSelect = (option: ThemeOption) => {
-    setThemeOption(option)
-    if (option !== 'system') {
-      const isDark = option === 'dark'
-      const currentlyDark = theme === 'dark'
-      if (isDark !== currentlyDark) toggle()
-    }
-  }
-
   const handleSave = () => {
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
   }
-
-  const themeOptions: { value: ThemeOption; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
-    { value: 'dark', label: 'Dark', icon: Moon },
-    { value: 'light', label: 'Light', icon: Sun },
-    { value: 'system', label: 'System', icon: Monitor },
-  ]
 
   return (
     <div className="flex-1 overflow-y-auto p-6 max-w-2xl space-y-5">
@@ -132,37 +112,13 @@ export function SettingsPage() {
       </SectionCard>
 
       {/* Appearance */}
-      <SectionCard icon={Sun} title="Appearance" description="Customize how Orbit looks for you" index={1}>
+      <SectionCard icon={User} title="Appearance" description="Customize how Job Hunter looks for you" index={1}>
         <div>
-          <p className="text-xs font-medium text-slate-400 mb-3">Theme</p>
-          <div className="flex items-center gap-2">
-            {themeOptions.map(opt => (
-              <button
-                key={opt.value}
-                onClick={() => handleThemeSelect(opt.value)}
-                className={cn(
-                  'flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-medium transition-all duration-150',
-                  themeOption === opt.value
-                    ? 'bg-orbit-primary/15 border-orbit-primary/40 text-orbit-primary-light shadow-sm'
-                    : 'border-orbit-border text-slate-400 hover:border-orbit-border2 hover:text-slate-200'
-                )}
-              >
-                <opt.icon className="w-4 h-4" />
-                {opt.label}
-              </button>
-            ))}
-          </div>
-          <p className="text-xs text-slate-600 mt-2">
-            System follows your OS preference
-          </p>
-        </div>
-
-        <div className="mt-5 pt-5 border-t border-orbit-border">
           <p className="text-xs font-medium text-slate-400 mb-3">Accent Color</p>
           <div className="flex items-center gap-3">
             {[
-              { name: 'Violet', color: '#7C3AED', active: true },
-              { name: 'Cyan', color: '#06B6D4', active: false },
+              { name: 'Indigo', color: '#4F46E5', active: true },
+              { name: 'Teal', color: '#0D9488', active: false },
               { name: 'Emerald', color: '#10B981', active: false },
               { name: 'Rose', color: '#F43F5E', active: false },
               { name: 'Amber', color: '#F59E0B', active: false },
@@ -228,11 +184,11 @@ export function SettingsPage() {
       </SectionCard>
 
       {/* API Keys */}
-      <SectionCard icon={Key} title="API Keys" description="Manage keys for connecting Orbit to your backend" index={4}>
+      <SectionCard icon={Key} title="API Keys" description="Manage keys for connecting Job Hunter to your backend" index={4}>
         <div className="space-y-3">
           {[
-            { name: 'Production', key: 'sk-orbit-prod-••••••••••••••••••••••3f8a', status: 'active' as const, created: 'Jan 15, 2026' },
-            { name: 'Development', key: 'sk-orbit-dev-••••••••••••••••••••••9b2c', status: 'active' as const, created: 'Mar 4, 2026' },
+            { name: 'Production', key: 'sk-jh-prod-••••••••••••••••••••••3f8a', status: 'active' as const, created: 'Jan 15, 2026' },
+            { name: 'Development', key: 'sk-jh-dev-••••••••••••••••••••••9b2c', status: 'active' as const, created: 'Mar 4, 2026' },
           ].map(apiKey => (
             <div key={apiKey.name} className="flex items-center justify-between p-3 rounded-lg bg-orbit-surface2 border border-orbit-border">
               <div>

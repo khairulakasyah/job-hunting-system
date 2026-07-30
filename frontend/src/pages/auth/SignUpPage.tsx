@@ -24,7 +24,7 @@ export function SignUpPage() {
     try {
       await register(name, email, password)
       navigate('/dashboard')
-    } catch (err: any) {
+    } catch {
       const message = err.response?.data?.message || 'Registration failed. Please try again.'
       setError(message)
     } finally {
@@ -49,10 +49,10 @@ export function SignUpPage() {
             <svg viewBox="0 0 32 32" fill="none" className="w-4 h-4">
               <circle cx="16" cy="16" r="4" fill="white" />
               <ellipse cx="16" cy="16" rx="11" ry="5" stroke="white" strokeWidth="1.5" strokeOpacity="0.7" transform="rotate(-30 16 16)" />
-              <circle cx="23" cy="11" r="2" fill="#06B6D4" />
+              <circle cx="23" cy="11" r="2" fill="#0D9488" />
             </svg>
           </div>
-          <span className="text-slate-100 font-semibold">Orbit</span>
+          <span className="text-slate-100 font-semibold">Job Hunter</span>
         </div>
 
         <h1 className="text-2xl font-bold text-slate-100 mb-1">Create your account</h1>

@@ -1,34 +1,28 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { Menu, Search, Bell, Sun, Moon, X, LogOut, User } from 'lucide-react'
+import { Menu, Search, Bell, X, LogOut, User, Briefcase, StickyNote, FileText, Loader2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/utils/cn'
 import { useSidebar } from '@/hooks/useSidebar'
-import { useTheme } from '@/hooks/useTheme'
+import { searchService, type SearchResults } from '@/services/searchService'
+
 import { useAuth } from '@/contexts/AuthContext'
 
 const routeLabels: Record<string, string> = {
   '/dashboard': 'Dashboard',
-  '/billing': 'Billing',
-  '/crm/contacts': 'CRM — Contacts',
-  '/crm/pipeline': 'CRM — Pipeline',
-  '/ai/chat': 'AI Chat',
-  '/settings': 'Settings',
-  '/help': 'Help',
-  '/components': 'Components',
   '/jobs': 'Jobs',
+  '/jobs/pipeline': 'Pipeline',
+  '/jobs/calendar': 'Calendar',
+  '/jobs/offers': 'Offers',
+  '/jobs/email-templates': 'Email Templates',
+  '/notes': 'Notes',
   '/profile': 'Profile',
 }
 
-const notifications = [
-  { id: '1', text: 'New enterprise deal closed', time: '2 min ago', unread: true },
-  { id: '2', text: 'Sarah Kim upgraded to Pro', time: '18 min ago', unread: true },
-  { id: '3', text: 'Revenue milestone: $250K MRR', time: '3 hours ago', unread: false },
-]
+const notifications: { id: string; text: string; time: string; unread: boolean }[] = []
 
 export function Topbar() {
   const { toggle: toggleSidebar } = useSidebar()
-  const { theme, toggle: toggleTheme } = useTheme()
   const location = useLocation()
   const navigate  = useNavigate()
 
@@ -37,6 +31,31 @@ export function Topbar() {
   const [showNotifications, setShowNotifications] = useState(false)
   const [showSearch, setShowSearch]               = useState(false)
   const [showUserMenu, setShowUserMenu]           = useState(false)
+
+  const [searchQuery, setSearchQuery]             = useState('')
+  const [searchResults, setSearchResults]         = useState<SearchResults | null>(null)
+  const [searchLoading, setSearchLoading]         = useState(false)
+  const searchTimer = useRef<ReturnType<typeof setTimeout>>()
+
+  useEffect(() => {
+    if (!searchQuery.trim()) { setSearchResults(null); return }
+    setSearchLoading(true)
+    clearTimeout(searchTimer.current)
+    searchTimer.current = setTimeout(async () => {
+      try {
+        const data = await searchService.search(searchQuery.trim())
+        setSearchResults(data)
+      } catch { /* silent */ }
+      setSearchLoading(false)
+    }, 300)
+    return () => clearTimeout(searchTimer.current)
+  }, [searchQuery])
+
+  const handleSearchClose = () => {
+    setShowSearch(false)
+    setSearchQuery('')
+    setSearchResults(null)
+  }
 
   const unreadCount = notifications.filter(n => n.unread).length
   const pageTitle   = routeLabels[location.pathname] ?? 'Dashboard'
@@ -52,24 +71,24 @@ export function Topbar() {
     <header className="h-16 border-b border-orbit-border bg-orbit-surface/80 backdrop-blur-xl flex items-center px-6 gap-4 flex-shrink-0 relative z-30">
       {/* Left: hamburger + page title */}
       <button
-        onClick={toggleSidebar}
+        onClick={toggleSidebar} aria-label="Toggle sidebar"
         className="p-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-colors"
       >
         <Menu className="w-5 h-5" />
       </button>
 
-      <div className="flex items-center gap-2 text-sm">
-        <span className="text-slate-500">Orbit</span>
-        <span className="text-slate-600">/</span>
-        <span className="text-slate-200 font-medium">{pageTitle}</span>
-      </div>
+        <div className="flex items-center gap-2 text-sm min-w-0">
+          <span className="text-slate-500 flex-shrink-0">Job Hunter</span>
+          <span className="text-slate-600 flex-shrink-0">/</span>
+          <span className="text-slate-200 font-medium truncate">{pageTitle}</span>
+        </div>
 
       {/* Right: actions */}
       <div className="ml-auto flex items-center gap-1">
 
         {/* Search */}
         <button
-          onClick={() => setShowSearch(true)}
+          onClick={() => setShowSearch(true)} aria-label="Open search"
           className="p-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-colors"
         >
           <Search className="w-4 h-4" />
@@ -78,7 +97,7 @@ export function Topbar() {
         {/* Notifications */}
         <div className="relative">
           <button
-            onClick={() => setShowNotifications(o => !o)}
+            onClick={() => setShowNotifications(o => !o)} aria-label="Toggle notifications"
             className="p-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-colors relative"
           >
             <Bell className="w-4 h-4" />
@@ -135,14 +154,6 @@ export function Topbar() {
           </AnimatePresence>
         </div>
 
-        {/* Theme toggle */}
-        <button
-          onClick={toggleTheme}
-          className="p-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-colors"
-        >
-          {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-        </button>
-
         {/* User avatar + dropdown */}
         <div className="relative ml-2">
           <button
@@ -172,7 +183,7 @@ export function Topbar() {
                   {/* Menu items */}
                   <div className="p-1">
                     <button
-                      onClick={() => { setShowUserMenu(false) }}
+                      onClick={() => { setShowUserMenu(false); navigate('/profile') }}
                       className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-colors"
                     >
                       <User className="w-4 h-4" />
@@ -202,13 +213,14 @@ export function Topbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-start justify-center pt-24 px-4"
-            onClick={() => setShowSearch(false)}
+            onClick={handleSearchClose}
           >
             <motion.div
               initial={{ y: -20, opacity: 0, scale: 0.96 }}
               animate={{ y: 0, opacity: 1, scale: 1 }}
               exit={{ y: -20, opacity: 0, scale: 0.96 }}
               transition={{ duration: 0.2 }}
+              role="dialog" aria-modal="true"
               className="w-full max-w-xl bg-orbit-surface2 border border-orbit-border rounded-2xl shadow-2xl overflow-hidden"
               onClick={e => e.stopPropagation()}
             >
@@ -217,30 +229,86 @@ export function Topbar() {
                 <input
                   autoFocus
                   type="text"
+                  value={searchQuery}
+                  onChange={e => setSearchQuery(e.target.value)}
                   placeholder="Search jobs, companies..."
                   className="flex-1 bg-transparent text-slate-200 placeholder-slate-500 outline-none text-sm"
                 />
-                <button onClick={() => setShowSearch(false)} className="text-slate-500 hover:text-slate-300">
+                {searchLoading && <Loader2 className="w-4 h-4 text-slate-500 animate-spin" />}
+                <button onClick={handleSearchClose} aria-label="Close search" className="text-slate-500 hover:text-slate-300">
                   <X className="w-4 h-4" />
                 </button>
               </div>
-              <div className="px-4 py-3">
-                <p className="text-xs text-slate-600 uppercase tracking-wider font-medium mb-3">Quick Links</p>
-                <div className="space-y-1">
-                  {[
-                    { label: 'Dashboard', path: '/dashboard' },
-                    { label: 'Jobs', path: '/jobs' },
-                  ].map(item => (
-                    <div
-                      key={item.path}
-                      onClick={() => { navigate(item.path); setShowSearch(false) }}
-                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white/5 cursor-pointer transition-colors"
-                    >
-                      <span className="text-sm text-slate-300">{item.label}</span>
-                      <span className="ml-auto text-xs text-slate-600">{item.path}</span>
+              <div className="px-4 py-3 max-h-80 overflow-y-auto">
+                {!searchQuery.trim() ? (
+                  <>
+                    <p className="text-xs text-slate-600 uppercase tracking-wider font-medium mb-3">Quick Links</p>
+                    <div className="space-y-1">
+                      {[
+                        { label: 'Dashboard', icon: null, path: '/dashboard' },
+                        { label: 'Jobs', icon: null, path: '/jobs' },
+                        { label: 'Pipeline', icon: null, path: '/jobs/pipeline' },
+                        { label: 'Calendar', icon: null, path: '/jobs/calendar' },
+                      ].map(item => (
+                        <div key={item.path}
+                          onClick={() => { navigate(item.path); setShowSearch(false) }}
+                          className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white/5 cursor-pointer transition-colors">
+                          <span className="text-sm text-slate-300">{item.label}</span>
+                          <span className="ml-auto text-xs text-slate-600">{item.path}</span>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </>
+                ) : !searchResults ? null : (
+                  <div className="space-y-4">
+                    {searchResults.jobs.length > 0 && (
+                      <div>
+                        <p className="text-[10px] text-slate-600 uppercase tracking-wider font-semibold mb-2 flex items-center gap-1.5">
+                          <Briefcase className="w-3 h-3" /> Jobs
+                        </p>
+                        {searchResults.jobs.map(job => (
+                          <div key={job.id}
+                            onClick={() => { navigate('/jobs'); setShowSearch(false) }}
+                            className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/5 cursor-pointer transition-colors">
+                            <span className="text-sm text-slate-200">{job.job_title}</span>
+                            <span className="text-xs text-slate-500">@{job.company_name}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {searchResults.notes.length > 0 && (
+                      <div>
+                        <p className="text-[10px] text-slate-600 uppercase tracking-wider font-semibold mb-2 flex items-center gap-1.5">
+                          <StickyNote className="w-3 h-3" /> Notes
+                        </p>
+                        {searchResults.notes.map(note => (
+                          <div key={note.id}
+                            onClick={() => { navigate('/notes'); setShowSearch(false) }}
+                            className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/5 cursor-pointer transition-colors">
+                            <span className="text-sm text-slate-200">{note.title}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {searchResults.templates.length > 0 && (
+                      <div>
+                        <p className="text-[10px] text-slate-600 uppercase tracking-wider font-semibold mb-2 flex items-center gap-1.5">
+                          <FileText className="w-3 h-3" /> Email Templates
+                        </p>
+                        {searchResults.templates.map(t => (
+                          <div key={t.id}
+                            onClick={() => { navigate('/jobs/email-templates'); setShowSearch(false) }}
+                            className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/5 cursor-pointer transition-colors">
+                            <span className="text-sm text-slate-200">{t.name}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {!searchResults.jobs.length && !searchResults.notes.length && !searchResults.templates.length && (
+                      <p className="text-sm text-slate-500 text-center py-6">No results found</p>
+                    )}
+                  </div>
+                )}
               </div>
             </motion.div>
           </motion.div>

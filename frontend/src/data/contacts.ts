@@ -9,5 +9,5 @@ export const contacts: Contact[] = [
   { id: '6', name: 'Emma Torres', email: 'emma@forge.com', phone: '+1 (512) 345-6789', company: 'Forge Inc', role: 'Founder', status: 'active', initials: 'ET', location: 'Austin, TX', lastActivity: '1 hour ago', tags: ['Startup', 'Enterprise'], deals: 4, value: 58000 },
   { id: '7', name: 'Daniel Park', email: 'daniel@stack.io', phone: '+1 (469) 678-9012', company: 'Stack IO', role: 'Director of Ops', status: 'active', initials: 'DP', location: 'Dallas, TX', lastActivity: '30 min ago', tags: ['Enterprise', 'Ops'], deals: 2, value: 24000 },
   { id: '8', name: 'Aisha Johnson', email: 'aisha@mesh.co', phone: '+1 (404) 901-2345', company: 'Mesh Co', role: 'CMO', status: 'prospect', initials: 'AJ', location: 'Atlanta, GA', lastActivity: '4 days ago', tags: ['Marketing', 'Prospect'], deals: 0, value: 0 },
-  { id: '9', name: 'Liam Murphy', email: 'liam@orbit.io', phone: '+353 1 234 5678', company: 'Orbit IO', role: 'Architect', status: 'active', initials: 'LM', location: 'Dublin, IE', lastActivity: '6 hours ago', tags: ['Tech', 'Cloud'], deals: 1, value: 8400 },
+  { id: '9', name: 'Liam Murphy', email: 'liam@acme.io', phone: '+353 1 234 5678', company: 'Acme Corp', role: 'Architect', status: 'active', initials: 'LM', location: 'Dublin, IE', lastActivity: '6 hours ago', tags: ['Tech', 'Cloud'], deals: 1, value: 8400 },
 ]

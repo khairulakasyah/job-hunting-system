@@ -220,6 +220,7 @@ export function BillingPage() {
           }
         />
         <CardBody className="p-0 pt-2">
+          <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="border-b border-orbit-border">
@@ -262,6 +263,7 @@ export function BillingPage() {
               ))}
             </tbody>
           </table>
+          </div>
         </CardBody>
       </Card>
     </div>
