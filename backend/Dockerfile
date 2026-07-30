@@ -14,11 +14,18 @@ RUN cp .env.example .env \
     && php -r "file_put_contents('.env', str_replace('APP_KEY=', 'APP_KEY=base64:' . base64_encode(random_bytes(32)), file_get_contents('.env')));" \
     && composer install --no-dev --no-interaction --optimize-autoloader --no-scripts
 
-# Step 2b — Discover packages
-RUN php artisan package:discover --ansi
+# Step 2b — Clear stale cache, then discover packages
+RUN rm -f bootstrap/cache/*.php \
+    && php artisan package:discover --ansi
 
-# Step 2c — Cache config, routes, views
-RUN php artisan optimize
+# Step 2c — Cache config
+RUN php artisan config:cache
+
+# Step 2d — Cache events
+RUN php artisan event:cache
+
+# Step 2e — Cache routes
+RUN php artisan route:cache
 
 # Step 3 — Set permissions and remove build-only .env
 RUN chmod -R 777 storage bootstrap/cache \
