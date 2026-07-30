@@ -26,8 +26,8 @@ function SectionCard({
       <Card>
         <CardHeader>
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-orbit-primary/10">
-              <Icon className="w-4 h-4 text-orbit-primary-light" />
+            <div className="p-2 rounded-lg bg-primary/10">
+              <Icon className="w-4 h-4 text-primary-light" />
             </div>
             <div>
               <h3 className="text-sm font-semibold text-slate-200">{title}</h3>
@@ -35,7 +35,7 @@ function SectionCard({
             </div>
           </div>
         </CardHeader>
-        <CardBody className="pt-5 border-t border-orbit-border mt-4">
+        <CardBody className="pt-5 border-t border-border mt-4">
           {children}
         </CardBody>
       </Card>
@@ -50,8 +50,8 @@ function Toggle({ checked, onChange }: { checked: boolean; onChange: (v: boolean
       aria-checked={checked}
       onClick={() => onChange(!checked)}
       className={cn(
-        'relative w-10 h-5 rounded-full transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orbit-primary',
-        checked ? 'bg-orbit-primary' : 'bg-orbit-surface3'
+        'relative w-10 h-5 rounded-full transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
+        checked ? 'bg-primary' : 'bg-surface3'
       )}
     >
       <span
@@ -72,7 +72,7 @@ export function SettingsPage() {
     security: true,
   })
   const [name, setName] = useState('Alex Morgan')
-  const [email, setEmail] = useState('alex@orbitdash.io')
+  const [email, setEmail] = useState('alex@example.com')
   const [saved, setSaved] = useState(false)
 
   const handleSave = () => {
@@ -92,10 +92,10 @@ export function SettingsPage() {
       <SectionCard icon={User} title="Profile" description="Your name and email address" index={0}>
         <div className="flex items-start gap-5 mb-5">
           <div className="relative flex-shrink-0">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orbit-primary to-orbit-accent flex items-center justify-center text-white text-xl font-bold">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white text-xl font-bold">
               B
             </div>
-            <button className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-orbit-primary flex items-center justify-center shadow-lg">
+            <button className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-primary flex items-center justify-center shadow-lg">
               <Camera className="w-3 h-3 text-white" />
             </button>
           </div>
@@ -128,7 +128,7 @@ export function SettingsPage() {
                 title={c.name}
                 className={cn(
                   'w-7 h-7 rounded-full transition-all duration-150',
-                  c.active ? 'ring-2 ring-offset-2 ring-offset-orbit-surface scale-110' : 'hover:scale-105'
+                  c.active ? 'ring-2 ring-offset-2 ring-offset-surface scale-110' : 'hover:scale-105'
                 )}
                 style={{ background: c.color, '--tw-ring-color': c.color } as React.CSSProperties}
               />
@@ -170,7 +170,7 @@ export function SettingsPage() {
             </div>
             <Button variant="outline" size="sm">Change Password</Button>
           </div>
-          <div className="flex items-center justify-between pt-4 border-t border-orbit-border">
+          <div className="flex items-center justify-between pt-4 border-t border-border">
             <div>
               <div className="flex items-center gap-2">
                 <p className="text-sm text-slate-200">Two-Factor Authentication</p>
@@ -190,7 +190,7 @@ export function SettingsPage() {
             { name: 'Production', key: 'sk-jh-prod-••••••••••••••••••••••3f8a', status: 'active' as const, created: 'Jan 15, 2026' },
             { name: 'Development', key: 'sk-jh-dev-••••••••••••••••••••••9b2c', status: 'active' as const, created: 'Mar 4, 2026' },
           ].map(apiKey => (
-            <div key={apiKey.name} className="flex items-center justify-between p-3 rounded-lg bg-orbit-surface2 border border-orbit-border">
+            <div key={apiKey.name} className="flex items-center justify-between p-3 rounded-lg bg-surface2 border border-border">
               <div>
                 <div className="flex items-center gap-2">
                   <p className="text-sm font-medium text-slate-200">{apiKey.name}</p>

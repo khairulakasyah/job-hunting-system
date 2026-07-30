@@ -28,7 +28,7 @@ export function ResetPasswordPage() {
       })
       toast.success('Password reset successfully. Please sign in.')
       navigate('/sign-in')
-    } catch {
+    } catch (err: any) {
       toast.error(err.response?.data?.message || 'Failed to reset password.')
     } finally {
       setLoading(false)
@@ -36,9 +36,9 @@ export function ResetPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen bg-orbit-bg flex items-center justify-center p-6">
+    <div className="min-h-screen bg-bg flex items-center justify-center p-6">
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[400px] h-[300px] bg-orbit-primary/8 blur-[100px] rounded-full" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[400px] h-[300px] bg-primary/8 blur-[100px] rounded-full" />
       </div>
 
       <motion.div
@@ -47,8 +47,8 @@ export function ResetPasswordPage() {
         className="w-full max-w-sm"
       >
         <div className="flex items-center gap-2 mb-8">
-          <div className="w-8 h-8 rounded-lg bg-orbit-primary flex items-center justify-center">
-            <span className="text-white font-bold text-sm">O</span>
+          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+            <img src="/jobhunter-nobg.png" alt="JH" className="w-4 h-4 object-contain" />
           </div>
           <span className="text-slate-100 font-semibold">Job Hunter</span>
         </div>

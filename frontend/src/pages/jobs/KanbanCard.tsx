@@ -34,8 +34,8 @@ export function KanbanCard({ job, index, onView }: KanbanCardProps) {
       transition={{ delay: index * 0.03 }}
       ref={setNodeRef}
       style={style}
-      className={`bg-orbit-surface2 border border-orbit-border rounded-xl p-3.5 cursor-pointer group transition-all ${
-        isDragging ? 'opacity-50 shadow-2xl scale-105' : 'hover:border-orbit-border2 hover:shadow-md'
+      className={`bg-surface2 border border-border rounded-xl p-3.5 cursor-pointer group transition-all ${
+        isDragging ? 'opacity-50 shadow-2xl scale-105' : 'hover:border-border2 hover:shadow-md'
       }`}
       onClick={() => !isDragging && onView(job)}
     >
@@ -56,7 +56,7 @@ export function KanbanCard({ job, index, onView }: KanbanCardProps) {
               <p className="text-[11px] text-slate-500 truncate">{job.location}</p>
             </div>
           )}
-          <div className="flex items-center justify-between mt-2 pt-2 border-t border-orbit-border">
+          <div className="flex items-center justify-between mt-2 pt-2 border-t border-border">
             {job.salary ? (
               <div className="flex items-center gap-1">
                 <DollarSign className="w-3 h-3 text-slate-500" />

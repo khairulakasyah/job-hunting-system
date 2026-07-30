@@ -53,7 +53,7 @@ export function OnboardingWizard() {
     }
   }
 
-  const inputClass = 'w-full bg-white border border-slate-300 rounded-xl px-4 py-3.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-orbit-primary focus:ring-2 focus:ring-orbit-primary/20 transition-all'
+  const inputClass = 'w-full bg-white border border-slate-300 rounded-xl px-4 py-3.5 text-sm text-slate-900 placeholder-slate-400 outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all'
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-teal-50 flex items-center justify-center p-6">
@@ -64,7 +64,7 @@ export function OnboardingWizard() {
       >
         {/* Logo */}
         <div className="flex items-center justify-center gap-2 mb-10">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-orbit-primary to-orbit-accent flex items-center justify-center shadow-lg shadow-orbit-primary/20">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg shadow-primary/20">
             <span className="text-white font-bold text-sm">J</span>
           </div>
           <span className="text-slate-800 font-bold text-lg">Job Hunter</span>
@@ -76,7 +76,7 @@ export function OnboardingWizard() {
             <div key={s} className="flex items-center gap-2">
               <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
                 step === s
-                  ? 'bg-orbit-primary text-white shadow-md shadow-orbit-primary/30 scale-110'
+                  ? 'bg-primary text-white shadow-md shadow-primary/30 scale-110'
                   : step > s
                     ? 'bg-emerald-500 text-white'
                     : 'bg-slate-200 text-slate-500'
@@ -100,7 +100,7 @@ export function OnboardingWizard() {
           {step === 1 && (
             <div className="space-y-6">
               <div className="w-14 h-14 rounded-2xl bg-indigo-100 flex items-center justify-center mx-auto">
-                <Target className="w-7 h-7 text-orbit-primary" />
+                <Target className="w-7 h-7 text-primary" />
               </div>
               <div className="text-center">
                 <h2 className="text-xl font-bold text-slate-800">What role are you looking for?</h2>
@@ -110,7 +110,7 @@ export function OnboardingWizard() {
                 placeholder="e.g. Senior Frontend Developer"
                 autoFocus className={inputClass} />
               <button onClick={handleNext}
-                className="w-full flex items-center justify-center gap-2 py-3 bg-orbit-primary hover:bg-orbit-primary/90 text-white text-sm font-semibold rounded-xl transition-colors">
+                className="w-full flex items-center justify-center gap-2 py-3 bg-primary hover:bg-primary/90 text-white text-sm font-semibold rounded-xl transition-colors">
                 Next <ChevronRight className="w-4 h-4" />
               </button>
             </div>
@@ -120,7 +120,7 @@ export function OnboardingWizard() {
           {step === 2 && (
             <div className="space-y-6">
               <div className="w-14 h-14 rounded-2xl bg-teal-100 flex items-center justify-center mx-auto">
-                <Globe className="w-7 h-7 text-orbit-accent" />
+                <Globe className="w-7 h-7 text-accent" />
               </div>
               <div className="text-center">
                 <h2 className="text-xl font-bold text-slate-800">Where are you looking?</h2>
@@ -148,7 +148,7 @@ export function OnboardingWizard() {
                   Back
                 </button>
                 <button onClick={handleNext}
-                  className="flex-1 flex items-center justify-center gap-2 py-3 bg-orbit-primary hover:bg-orbit-primary/90 text-white text-sm font-semibold rounded-xl transition-colors">
+                  className="flex-1 flex items-center justify-center gap-2 py-3 bg-primary hover:bg-primary/90 text-white text-sm font-semibold rounded-xl transition-colors">
                   Next <ChevronRight className="w-4 h-4" />
                 </button>
               </div>

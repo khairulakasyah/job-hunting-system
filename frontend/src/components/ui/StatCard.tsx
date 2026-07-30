@@ -6,25 +6,25 @@ import type { StatCardData } from '@/types'
 
 const colorMap = {
   primary: {
-    icon: 'bg-orbit-primary/15 text-orbit-primary-light',
+    icon: 'bg-primary/15 text-primary-light',
     chart: '#4F46E5',
     gradient: 'rgba(79, 70, 229, 0.15)',
     positive: 'text-violet-400',
   },
   accent: {
-    icon: 'bg-orbit-accent/15 text-orbit-accent-light',
+    icon: 'bg-accent/15 text-accent-light',
     chart: '#0D9488',
     gradient: 'rgba(13, 148, 136, 0.15)',
     positive: 'text-cyan-400',
   },
   success: {
-    icon: 'bg-orbit-success/15 text-emerald-400',
+    icon: 'bg-success/15 text-emerald-400',
     chart: '#10B981',
     gradient: 'rgba(16, 185, 129, 0.15)',
     positive: 'text-emerald-400',
   },
   warning: {
-    icon: 'bg-orbit-warning/15 text-amber-400',
+    icon: 'bg-warning/15 text-amber-400',
     chart: '#F59E0B',
     gradient: 'rgba(245, 158, 11, 0.15)',
     positive: 'text-amber-400',
@@ -47,7 +47,7 @@ export function StatCard({ data, index = 0 }: StatCardProps) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, delay: index * 0.07 }}
-      className="bg-orbit-surface rounded-xl border border-orbit-border hover:border-orbit-border2 transition-colors overflow-hidden group"
+      className="bg-surface rounded-xl border border-border hover:border-border2 transition-colors overflow-hidden group"
     >
       <div className="p-5">
         {/* Top row: icon + change badge */}

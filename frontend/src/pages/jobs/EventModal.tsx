@@ -25,7 +25,7 @@ const eventTypes = [
 
 
 
-const inputClass = 'w-full bg-orbit-surface2 border border-orbit-border rounded-lg px-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-orbit-primary transition-colors'
+const inputClass = 'w-full bg-surface2 border border-border rounded-lg px-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-primary transition-colors'
 const labelClass = 'block text-xs font-medium text-slate-400 mb-1.5'
 
 export function EventModal({ isOpen, onClose, onSaved, event, prefilledDate }: EventModalProps) {
@@ -102,10 +102,10 @@ export function EventModal({ isOpen, onClose, onSaved, event, prefilledDate }: E
             animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 16 }}
             transition={{ duration: 0.2 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
-            <div role="dialog" aria-modal="true" className="w-full max-w-lg bg-orbit-surface border border-orbit-border rounded-2xl shadow-2xl pointer-events-auto"
+            <div role="dialog" aria-modal="true" className="w-full max-w-lg bg-surface border border-border rounded-2xl shadow-2xl pointer-events-auto"
               onClick={e => e.stopPropagation()}>
 
-              <div className="flex items-center justify-between px-6 py-4 border-b border-orbit-border">
+              <div className="flex items-center justify-between px-6 py-4 border-b border-border">
                 <p className="text-sm font-semibold text-slate-200">
                   {isEditing ? 'Edit Event' : 'New Event'}
                 </p>
@@ -122,7 +122,7 @@ export function EventModal({ isOpen, onClose, onSaved, event, prefilledDate }: E
                 <div>
                   <label className={labelClass}>Job <span className="text-red-400">*</span></label>
                   {jobsLoading ? (
-                    <div className="h-10 bg-orbit-surface2 rounded-lg animate-pulse" />
+                    <div className="h-10 bg-surface2 rounded-lg animate-pulse" />
                   ) : (
                     <select value={jobId} onChange={e => setJobId(Number(e.target.value))}
                       className={inputClass + ' cursor-pointer'}>
@@ -141,8 +141,8 @@ export function EventModal({ isOpen, onClose, onSaved, event, prefilledDate }: E
                       <button key={et.value} type="button" onClick={() => setEventType(et.value)}
                         className={`px-3 py-2 rounded-lg text-xs font-medium border transition-all text-left ${
                           eventType === et.value
-                            ? 'bg-orbit-primary/20 border-orbit-primary/40 text-orbit-primary-light'
-                            : 'bg-orbit-surface2 border-orbit-border text-slate-400 hover:border-orbit-border2'
+                            ? 'bg-primary/20 border-primary/40 text-primary-light'
+                            : 'bg-surface2 border-border text-slate-400 hover:border-border2'
                         }`}>
                         {et.label}
                       </button>
@@ -180,11 +180,11 @@ export function EventModal({ isOpen, onClose, onSaved, event, prefilledDate }: E
 
                 <div className="flex items-center gap-3 pt-2">
                   <button type="submit" disabled={loading || jobsLoading}
-                    className="flex-1 py-2.5 bg-orbit-primary hover:bg-orbit-primary/90 disabled:opacity-50 text-white text-sm font-medium rounded-lg transition-colors">
+                    className="flex-1 py-2.5 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white text-sm font-medium rounded-lg transition-colors">
                     {loading ? 'Saving...' : isEditing ? 'Update Event' : 'Create Event'}
                   </button>
                   <button type="button" onClick={onClose}
-                    className="px-4 py-2.5 bg-orbit-surface2 hover:bg-white/5 text-slate-400 text-sm font-medium rounded-lg border border-orbit-border transition-colors">
+                    className="px-4 py-2.5 bg-surface2 hover:bg-white/5 text-slate-400 text-sm font-medium rounded-lg border border-border transition-colors">
                     Cancel
                   </button>
                 </div>

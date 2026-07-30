@@ -165,13 +165,13 @@ export function ComponentsPage() {
       <Section title="Color System" description="Job Hunter's indigo + teal design tokens">
         <div className="space-y-3">
           {[
-            { name: 'orbit-primary', hex: '#4F46E5', label: 'Primary (Indigo)' },
-            { name: 'orbit-primary-light', hex: '#6366F1', label: 'Primary Light' },
-            { name: 'orbit-accent', hex: '#0D9488', label: 'Accent (Teal)' },
-            { name: 'orbit-accent-light', hex: '#14B8A6', label: 'Accent Light' },
-            { name: 'orbit-success', hex: '#10B981', label: 'Success' },
-            { name: 'orbit-warning', hex: '#F59E0B', label: 'Warning' },
-            { name: 'orbit-danger', hex: '#EF4444', label: 'Danger' },
+            { name: 'primary', hex: '#4F46E5', label: 'Primary (Indigo)' },
+            { name: 'primary-light', hex: '#6366F1', label: 'Primary Light' },
+            { name: 'accent', hex: '#0D9488', label: 'Accent (Teal)' },
+            { name: 'accent-light', hex: '#14B8A6', label: 'Accent Light' },
+            { name: 'success', hex: '#10B981', label: 'Success' },
+            { name: 'warning', hex: '#F59E0B', label: 'Warning' },
+            { name: 'danger', hex: '#EF4444', label: 'Danger' },
           ].map(color => (
             <div key={color.name} className="flex items-center gap-4">
               <div

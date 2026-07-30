@@ -21,9 +21,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           </label>
         )}
         <div className={cn(
-          'flex items-center gap-2 h-9 rounded-lg border bg-orbit-surface2 px-3 text-sm transition-colors',
-          'border-orbit-border focus-within:border-orbit-primary focus-within:ring-1 focus-within:ring-orbit-primary/30',
-          error && 'border-orbit-danger focus-within:border-orbit-danger focus-within:ring-orbit-danger/30',
+          'flex items-center gap-2 h-9 rounded-lg border bg-surface2 px-3 text-sm transition-colors',
+          'border-border focus-within:border-primary focus-within:ring-1 focus-within:ring-primary/30',
+          error && 'border-danger focus-within:border-danger focus-within:ring-danger/30',
           props.disabled && 'opacity-50 cursor-not-allowed',
         )}>
           {prefix && <span className="text-slate-500 flex-shrink-0">{prefix}</span>}
@@ -40,7 +40,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           {suffix && <span className="text-slate-500 flex-shrink-0">{suffix}</span>}
         </div>
         {(error || hint) && (
-          <p className={cn('text-xs mt-1.5', error ? 'text-orbit-danger' : 'text-slate-500')}>
+          <p className={cn('text-xs mt-1.5', error ? 'text-danger' : 'text-slate-500')}>
             {error ?? hint}
           </p>
         )}

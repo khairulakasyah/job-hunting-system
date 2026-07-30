@@ -28,7 +28,7 @@ function formatMonth(ym: string): string {
 function ChartTooltip({ active, payload, label }: { active?: boolean; payload?: { value: number; name: string; color: string }[]; label?: string }) {
   if (!active || !payload?.length) return null
   return (
-    <div className="bg-orbit-surface2 border border-orbit-border rounded-xl p-3 shadow-2xl">
+    <div className="bg-surface2 border border-border rounded-xl p-3 shadow-2xl">
       <p className="text-xs text-slate-500 mb-2">{label}</p>
       {payload.map(p => (
         <div key={p.name} className="flex items-center gap-2 text-sm">
@@ -128,7 +128,7 @@ export function AdminDashboardPage() {
         <div>
           <div className="flex items-center gap-3">
             <h1 className="text-2xl font-bold text-slate-100">All Users Dashboard</h1>
-            <span className="text-[10px] font-semibold bg-orbit-primary/20 text-orbit-primary-light px-2 py-0.5 rounded-full uppercase">Admin</span>
+            <span className="text-[10px] font-semibold bg-primary/20 text-primary-light px-2 py-0.5 rounded-full uppercase">Admin</span>
           </div>
           <p className="text-slate-500 text-sm mt-1">Aggregated analytics across all users</p>
         </div>
@@ -137,7 +137,7 @@ export function AdminDashboardPage() {
       {/* Stats Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-6 gap-4">
         {[
-          { label: 'Total Jobs', value: dashData?.status_distribution.reduce((s, i) => s + i.count, 0) ?? 0, icon: <Briefcase className="w-5 h-5" />, color: 'text-orbit-primary-light', bg: 'bg-orbit-primary/10', border: 'border-orbit-primary/20' },
+          { label: 'Total Jobs', value: dashData?.status_distribution.reduce((s, i) => s + i.count, 0) ?? 0, icon: <Briefcase className="w-5 h-5" />, color: 'text-primary-light', bg: 'bg-primary/10', border: 'border-primary/20' },
           { label: 'Applied', value: dashData?.status_distribution.find(s => s.status === 'applied')?.count ?? 0, icon: <LayoutDashboard className="w-5 h-5" />, color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/20' },
           { label: 'Interview', value: dashData?.status_distribution.find(s => s.status === 'interview')?.count ?? 0, icon: <Clock className="w-5 h-5" />, color: 'text-amber-400', bg: 'bg-amber-500/10', border: 'border-amber-500/20' },
           { label: 'Offer', value: dashData?.status_distribution.find(s => s.status === 'offer')?.count ?? 0, icon: <Trophy className="w-5 h-5" />, color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
@@ -145,7 +145,7 @@ export function AdminDashboardPage() {
           { label: 'Success Rate', value: dashData ? `${dashData.success_rate}%` : 0, icon: <TrendingUp className="w-5 h-5" />, color: 'text-teal-400', bg: 'bg-teal-500/10', border: 'border-teal-500/20' },
         ].map((card, i) => (
           <motion.div key={card.label} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-            className={`bg-orbit-surface border ${card.border} rounded-xl p-5 flex items-center gap-4`}>
+            className={`bg-surface border ${card.border} rounded-xl p-5 flex items-center gap-4`}>
             <div className={`w-11 h-11 rounded-xl ${card.bg} ${card.color} flex items-center justify-center flex-shrink-0`}>{card.icon}</div>
             <div>
               <p className="text-2xl font-bold text-slate-100">{card.value}</p>
@@ -169,7 +169,7 @@ export function AdminDashboardPage() {
                   return (
                     <div key={item.stage} className="flex items-center gap-3">
                       <span className="text-xs text-slate-400 w-36 flex-shrink-0">{item.stage}</span>
-                      <div className="flex-1 h-5 bg-orbit-surface3 rounded-full overflow-hidden">
+                      <div className="flex-1 h-5 bg-surface3 rounded-full overflow-hidden">
                         <motion.div initial={{ width: 0 }} animate={{ width: `${(item.days / maxDays) * 100}%` }}
                           transition={{ duration: 0.8, ease: 'easeOut' }}
                           className="h-full rounded-full flex items-center justify-end pr-2"
@@ -228,9 +228,9 @@ export function AdminDashboardPage() {
               </AreaChart>
             </ResponsiveContainer>
             {trendData.length > 0 && (
-              <div className="flex items-center gap-4 mt-2 pt-3 border-t border-orbit-border">
+              <div className="flex items-center gap-4 mt-2 pt-3 border-t border-border">
                 <div className="flex items-center gap-2 text-xs text-slate-500">
-                  <div className="w-3 h-0.5 bg-orbit-primary rounded" /> Applications
+                  <div className="w-3 h-0.5 bg-primary rounded" /> Applications
                 </div>
                 <div className="ml-auto text-xs text-slate-600">
                   Last month: <span className="text-slate-200 font-semibold">{trendData[trendData.length - 1]?.applications ?? 0}</span>
@@ -260,7 +260,7 @@ export function AdminDashboardPage() {
                       <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: item.color }} />
                       <span className="text-xs text-slate-400 flex-1">{item.name}</span>
                       <div className="flex items-center gap-2">
-                        <div className="w-16 h-1.5 bg-orbit-surface3 rounded-full overflow-hidden">
+                        <div className="w-16 h-1.5 bg-surface3 rounded-full overflow-hidden">
                           <div className="h-full rounded-full" style={{ width: `${(item.value / Math.max(...platformData.map(d => d.value))) * 100}%`, background: item.color }} />
                         </div>
                         <span className="text-xs text-slate-300 w-8 text-right">{item.value}</span>
@@ -268,13 +268,13 @@ export function AdminDashboardPage() {
                     </div>
                   ))}
                   {platformSuccessData.some(p => p.offers > 0) && (
-                    <div className="pt-2 mt-2 border-t border-orbit-border">
+                    <div className="pt-2 mt-2 border-t border-border">
                       <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Success Rate</p>
                       {platformSuccessData.filter(p => p.total > 0).map(p => (
                         <div key={p.platform} className="flex items-center gap-2 text-xs mb-1.5">
                           <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: p.color }} />
                           <span className="text-slate-400 w-20 truncate">{p.platform}</span>
-                          <div className="flex-1 h-1.5 bg-orbit-surface3 rounded-full overflow-hidden">
+                          <div className="flex-1 h-1.5 bg-surface3 rounded-full overflow-hidden">
                             <div className="h-full rounded-full" style={{ width: `${p.rate}%`, background: p.color === '#FF6B00' ? '#4F46E5' : p.color }} />
                           </div>
                           <span className="text-slate-300 w-14 text-right">{p.offers}/{p.total}</span>
@@ -300,9 +300,9 @@ export function AdminDashboardPage() {
             ) : (
               (dashData?.recent_activity ?? []).slice(0, 8).map((item, i) => (
                 <motion.div key={`${item.type}-${i}`} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.03 }}
-                  className="flex items-start gap-3 py-2.5 border-b border-orbit-border last:border-0">
+                  className="flex items-start gap-3 py-2.5 border-b border-border last:border-0">
                   <div className={cn('w-2 h-2 rounded-full mt-1.5 flex-shrink-0',
-                    item.type === 'job_created' ? 'bg-emerald-500' : item.type === 'stage_advanced' ? 'bg-amber-500' : 'bg-orbit-primary')} />
+                    item.type === 'job_created' ? 'bg-emerald-500' : item.type === 'stage_advanced' ? 'bg-amber-500' : 'bg-primary')} />
                   <div className="flex-1 min-w-0">
                     <p className="text-xs text-slate-300 leading-relaxed">{item.description}</p>
                     <p className="text-[11px] text-slate-600 mt-0.5">{timeAgo(item.created_at)}</p>
@@ -326,8 +326,8 @@ export function AdminDashboardPage() {
             ) : (
               (dashData?.upcoming_events ?? []).slice(0, 5).map((ev, i) => (
                 <motion.div key={ev.id} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }}
-                  className="flex items-start gap-3 py-3 border-b border-orbit-border last:border-0">
-                  <div className="w-9 h-9 rounded-lg bg-orbit-primary/10 text-orbit-primary-light flex items-center justify-center flex-shrink-0">
+                  className="flex items-start gap-3 py-3 border-b border-border last:border-0">
+                  <div className="w-9 h-9 rounded-lg bg-primary/10 text-primary-light flex items-center justify-center flex-shrink-0">
                     <Calendar className="w-4 h-4" />
                   </div>
                   <div className="flex-1 min-w-0">

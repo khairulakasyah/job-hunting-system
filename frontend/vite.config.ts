@@ -13,9 +13,15 @@ export default defineConfig({
   },
   // Add this block below to enable instant file syncing in Docker
   server: {
-    host: true, // Allows connections from outside the container
+    host: true,
     watch: {
-      usePolling: true, // Forces Vite to detect file changes inside Docker volumes
+      usePolling: true,
+    },
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+      },
     },
   },
 })

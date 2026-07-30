@@ -24,7 +24,7 @@ export function SignUpPage() {
     try {
       await register(name, email, password)
       navigate('/dashboard')
-    } catch {
+    } catch (err: any) {
       const message = err.response?.data?.message || 'Registration failed. Please try again.'
       setError(message)
     } finally {
@@ -33,10 +33,10 @@ export function SignUpPage() {
   }
 
   return (
-    <div className="min-h-screen bg-orbit-bg flex items-center justify-center p-6 relative">
+    <div className="min-h-screen bg-bg flex items-center justify-center p-6 relative">
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[300px] bg-orbit-primary/8 blur-[100px] rounded-full" />
-        <div className="absolute bottom-0 right-1/4 w-[400px] h-[300px] bg-orbit-accent/8 blur-[100px] rounded-full" />
+        <div className="absolute top-0 left-1/4 w-[500px] h-[300px] bg-primary/8 blur-[100px] rounded-full" />
+        <div className="absolute bottom-0 right-1/4 w-[400px] h-[300px] bg-accent/8 blur-[100px] rounded-full" />
       </div>
 
       <motion.div
@@ -45,12 +45,8 @@ export function SignUpPage() {
         className="w-full max-w-sm relative"
       >
         <div className="flex items-center gap-2 mb-8">
-          <div className="w-8 h-8 rounded-lg bg-orbit-primary flex items-center justify-center glow-primary">
-            <svg viewBox="0 0 32 32" fill="none" className="w-4 h-4">
-              <circle cx="16" cy="16" r="4" fill="white" />
-              <ellipse cx="16" cy="16" rx="11" ry="5" stroke="white" strokeWidth="1.5" strokeOpacity="0.7" transform="rotate(-30 16 16)" />
-              <circle cx="23" cy="11" r="2" fill="#0D9488" />
-            </svg>
+          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center glow-primary">
+            <img src="/jobhunter-nobg.png" alt="JH" className="w-4 h-4 object-contain" />
           </div>
           <span className="text-slate-100 font-semibold">Job Hunter</span>
         </div>
@@ -107,16 +103,16 @@ export function SignUpPage() {
           <label className="flex items-start gap-2 cursor-pointer pt-1">
             <input
               type="checkbox"
-              className="mt-0.5 rounded border-orbit-border bg-orbit-surface2 text-orbit-primary w-3.5 h-3.5 flex-shrink-0"
+              className="mt-0.5 rounded border-border bg-surface2 text-primary w-3.5 h-3.5 flex-shrink-0"
               required
             />
             <span className="text-xs text-slate-500 leading-relaxed">
               I agree to the{' '}
-              <a href="#" className="text-orbit-primary-light hover:text-orbit-accent transition-colors">
+              <a href="#" className="text-primary-light hover:text-accent transition-colors">
                 Terms of Service
               </a>
               {' '}and{' '}
-              <a href="#" className="text-orbit-primary-light hover:text-orbit-accent transition-colors">
+              <a href="#" className="text-primary-light hover:text-accent transition-colors">
                 Privacy Policy
               </a>
             </span>
@@ -138,7 +134,7 @@ export function SignUpPage() {
           Already have an account?{' '}
           <Link
             to="/sign-in"
-            className="text-orbit-primary-light hover:text-orbit-accent transition-colors font-medium"
+            className="text-primary-light hover:text-accent transition-colors font-medium"
           >
             Sign in
           </Link>

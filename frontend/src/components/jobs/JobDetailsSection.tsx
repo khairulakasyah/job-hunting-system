@@ -9,8 +9,8 @@ const platformLabel: Record<string, string> = {
 
 function DetailRow({ icon, label, value }: { icon: React.ReactNode; label: string; value: React.ReactNode }) {
   return (
-    <div className="flex items-start gap-3 py-3 border-b border-orbit-border last:border-0">
-      <div className="w-7 h-7 rounded-md bg-orbit-surface2 flex items-center justify-center flex-shrink-0 mt-0.5 text-slate-500">{icon}</div>
+    <div className="flex items-start gap-3 py-3 border-b border-border last:border-0">
+      <div className="w-7 h-7 rounded-md bg-surface2 flex items-center justify-center flex-shrink-0 mt-0.5 text-slate-500">{icon}</div>
       <div className="flex-1 min-w-0">
         <p className="text-xs text-slate-500 mb-0.5">{label}</p>
         <div className="text-sm text-slate-200">{value}</div>
@@ -39,7 +39,7 @@ export function JobDetailsSection({ job }: Props) {
       )}
       {job.url && (
         <DetailRow icon={<ExternalLink className="w-3.5 h-3.5" />} label="Job URL"
-          value={<a href={job.url} target="_blank" rel="noopener noreferrer" className="text-orbit-primary-light hover:text-orbit-accent transition-colors truncate block">{job.url}</a>} />
+          value={<a href={job.url} target="_blank" rel="noopener noreferrer" className="text-primary-light hover:text-accent transition-colors truncate block">{job.url}</a>} />
       )}
 
       {job.job_description && (

@@ -33,7 +33,7 @@ const statusOptions = [
   { value: 'rejected',  label: 'Rejected'  },
 ]
 
-const inputClass = 'w-full bg-orbit-surface2 border border-orbit-border rounded-lg px-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-orbit-primary transition-colors'
+const inputClass = 'w-full bg-surface2 border border-border rounded-lg px-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-primary transition-colors'
 const labelClass = 'block text-xs font-medium text-slate-400 mb-1.5'
 
 function detectPlatform(url: string): string {
@@ -160,14 +160,14 @@ export function JobModal({ isOpen, onClose, onSaved, job }: JobModalProps) {
             transition={{ duration: 0.2 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
           >
-            <div role="dialog" aria-modal="true" className="w-full max-w-4xl bg-orbit-surface border border-orbit-border rounded-2xl shadow-2xl pointer-events-auto flex flex-col max-h-[95vh]"
+            <div role="dialog" aria-modal="true" className="w-full max-w-4xl bg-surface border border-border rounded-2xl shadow-2xl pointer-events-auto flex flex-col max-h-[95vh]"
               onClick={e => e.stopPropagation()}>
 
               {/* Header */}
-              <div className="flex items-center justify-between px-6 py-4 border-b border-orbit-border flex-shrink-0">
+              <div className="flex items-center justify-between px-6 py-4 border-b border-border flex-shrink-0">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-orbit-primary/20 flex items-center justify-center">
-                    <Briefcase className="w-4 h-4 text-orbit-primary-light" />
+                  <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center">
+                    <Briefcase className="w-4 h-4 text-primary-light" />
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-slate-200">
@@ -191,10 +191,10 @@ export function JobModal({ isOpen, onClose, onSaved, job }: JobModalProps) {
               {(step === 'url' || step === 'scraping') && !isEditing && (
                 <div className="px-6 py-8 flex flex-col items-center text-center gap-6">
 
-                  <div className="w-14 h-14 rounded-2xl bg-orbit-primary/10 border border-orbit-primary/20 flex items-center justify-center">
+                  <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
                     {step === 'scraping'
-                      ? <Loader2 className="w-7 h-7 text-orbit-primary-light animate-spin" />
-                      : <Link className="w-7 h-7 text-orbit-primary-light" />
+                      ? <Loader2 className="w-7 h-7 text-primary-light animate-spin" />
+                      : <Link className="w-7 h-7 text-primary-light" />
                     }
                   </div>
 
@@ -224,13 +224,13 @@ export function JobModal({ isOpen, onClose, onSaved, job }: JobModalProps) {
                       onKeyDown={e => e.key === 'Enter' && handleScrape()}
                       placeholder="https://www.jobstreet.com.my/job/..."
                       disabled={step === 'scraping'}
-                      className="w-full bg-orbit-surface2 border border-orbit-border rounded-lg px-4 py-3 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-orbit-primary transition-colors disabled:opacity-50"
+                      className="w-full bg-surface2 border border-border rounded-lg px-4 py-3 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-primary transition-colors disabled:opacity-50"
                     />
 
                     <button
                       onClick={handleScrape}
                       disabled={!urlInput.trim() || step === 'scraping'}
-                      className="w-full flex items-center justify-center gap-2 py-2.5 bg-orbit-primary hover:bg-orbit-primary/90 disabled:opacity-50 text-white text-sm font-medium rounded-lg transition-colors"
+                      className="w-full flex items-center justify-center gap-2 py-2.5 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white text-sm font-medium rounded-lg transition-colors"
                     >
                       {step === 'scraping'
                         ? <><Loader2 className="w-4 h-4 animate-spin" /> Loading...</>
@@ -241,7 +241,7 @@ export function JobModal({ isOpen, onClose, onSaved, job }: JobModalProps) {
                     <button
                       onClick={handleSkip}
                       disabled={step === 'scraping'}
-                      className="w-full py-2.5 bg-orbit-surface2 hover:bg-white/5 disabled:opacity-50 text-slate-400 text-sm font-medium rounded-lg border border-orbit-border transition-colors"
+                      className="w-full py-2.5 bg-surface2 hover:bg-white/5 disabled:opacity-50 text-slate-400 text-sm font-medium rounded-lg border border-border transition-colors"
                     >
                       Skip — fill manually
                     </button>
@@ -345,7 +345,7 @@ export function JobModal({ isOpen, onClose, onSaved, job }: JobModalProps) {
                                   }
                                 }}
                                 disabled={!form.url.trim() || rescraping}
-                                className="flex-shrink-0 flex items-center gap-1.5 px-3 py-2.5 bg-orbit-surface2 hover:bg-white/5 disabled:opacity-40 text-slate-400 hover:text-slate-200 text-xs font-medium rounded-lg border border-orbit-border transition-colors whitespace-nowrap"
+                                className="flex-shrink-0 flex items-center gap-1.5 px-3 py-2.5 bg-surface2 hover:bg-white/5 disabled:opacity-40 text-slate-400 hover:text-slate-200 text-xs font-medium rounded-lg border border-border transition-colors whitespace-nowrap"
                               >
                                 {rescraping
                                   ? <><Loader2 className="w-3.5 h-3.5 animate-spin" /> Scraping...</>
@@ -368,19 +368,19 @@ export function JobModal({ isOpen, onClose, onSaved, job }: JobModalProps) {
                   </div>
 
                   {/* Footer */}
-                  <div className="px-6 py-4 border-t border-orbit-border flex items-center gap-3 flex-shrink-0">
+                  <div className="px-6 py-4 border-t border-border flex items-center gap-3 flex-shrink-0">
                     {!isEditing && (
                       <button type="button" onClick={() => setStep('url')}
-                        className="px-4 py-2.5 bg-orbit-surface2 hover:bg-white/5 text-slate-400 text-sm font-medium rounded-lg border border-orbit-border transition-colors">
+                        className="px-4 py-2.5 bg-surface2 hover:bg-white/5 text-slate-400 text-sm font-medium rounded-lg border border-border transition-colors">
                         ← Back
                       </button>
                     )}
                     <button type="submit" form="job-form" disabled={loading}
-                      className="flex-1 py-2.5 bg-orbit-primary hover:bg-orbit-primary/90 disabled:opacity-50 text-white text-sm font-medium rounded-lg transition-colors">
+                      className="flex-1 py-2.5 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white text-sm font-medium rounded-lg transition-colors">
                       {loading ? 'Saving...' : isEditing ? 'Update Job' : 'Save Job'}
                     </button>
                     <button type="button" onClick={onClose}
-                      className="px-4 py-2.5 bg-orbit-surface2 hover:bg-white/5 text-slate-400 text-sm font-medium rounded-lg border border-orbit-border transition-colors">
+                      className="px-4 py-2.5 bg-surface2 hover:bg-white/5 text-slate-400 text-sm font-medium rounded-lg border border-border transition-colors">
                       Cancel
                     </button>
                   </div>

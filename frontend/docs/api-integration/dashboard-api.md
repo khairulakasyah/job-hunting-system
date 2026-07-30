@@ -82,7 +82,7 @@ Add loading states:
 {statsLoading ? (
   <div className="grid grid-cols-4 gap-4">
     {[...Array(4)].map((_, i) => (
-      <div key={i} className="h-40 bg-orbit-surface rounded-xl animate-pulse border border-orbit-border" />
+      <div key={i} className="h-40 bg-surface rounded-xl animate-pulse border border-border" />
     ))}
   </div>
 ) : (

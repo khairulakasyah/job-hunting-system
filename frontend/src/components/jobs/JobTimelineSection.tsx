@@ -120,14 +120,14 @@ export function JobTimelineSection({ jobId, timelines, loading, modalStatus, onT
   }
 
   return (
-    <div className="px-6 pt-5 pb-5 border-b border-orbit-border">
+    <div className="px-6 pt-5 pb-5 border-b border-border">
       <div className="flex items-center justify-between mb-5">
         <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
           <Clock className="w-3.5 h-3.5" /> Application Timeline
         </p>
         {timelines.length > 1 && (
           <button onClick={handleReset} disabled={resetting}
-            className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs text-slate-500 hover:text-red-400 hover:bg-red-500/10 border border-orbit-border transition-colors disabled:opacity-40">
+            className="flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs text-slate-500 hover:text-red-400 hover:bg-red-500/10 border border-border transition-colors disabled:opacity-40">
             <RotateCcw className="w-3 h-3" />
             {resetting ? 'Resetting...' : 'Reset'}
           </button>
@@ -136,7 +136,7 @@ export function JobTimelineSection({ jobId, timelines, loading, modalStatus, onT
 
       {loading ? (
         <div className="flex justify-center py-6">
-          <div className="w-5 h-5 border-2 border-orbit-primary border-t-transparent rounded-full animate-spin" />
+          <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin" />
         </div>
       ) : (
         <>
@@ -159,7 +159,7 @@ export function JobTimelineSection({ jobId, timelines, loading, modalStatus, onT
                       )}
                     </div>
                     {!isLast && (
-                      <div className={`h-[2px] w-6 mt-[7px] flex-shrink-0 transition-colors duration-300 ${isActive && activeStages.has(MAIN_STAGES[i + 1].key) ? 'bg-orbit-primary' : 'bg-slate-700'}`} />
+                      <div className={`h-[2px] w-6 mt-[7px] flex-shrink-0 transition-colors duration-300 ${isActive && activeStages.has(MAIN_STAGES[i + 1].key) ? 'bg-primary' : 'bg-slate-700'}`} />
                     )}
                   </div>
                 )
@@ -185,7 +185,7 @@ export function JobTimelineSection({ jobId, timelines, loading, modalStatus, onT
             <AnimatePresence>
               {pendingStage && (
                 <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden">
-                  <div className="p-4 bg-orbit-surface2 border border-orbit-border rounded-xl space-y-3">
+                  <div className="p-4 bg-surface2 border border-border rounded-xl space-y-3">
                     <p className="text-xs font-medium text-slate-400">
                       Set date for <span className="text-slate-200">{STAGES.find(s => s.key === pendingStage)?.label}</span>
                     </p>
@@ -193,14 +193,14 @@ export function JobTimelineSection({ jobId, timelines, loading, modalStatus, onT
                       <div className="relative flex-1">
                         <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
                         <input type="date" value={stageDate} onChange={e => setStageDate(e.target.value)}
-                          className="w-full bg-orbit-surface border border-orbit-border rounded-lg pl-10 pr-3 py-2 text-sm text-slate-200 outline-none focus:border-orbit-primary transition-colors" />
+                          className="w-full bg-surface border border-border rounded-lg pl-10 pr-3 py-2 text-sm text-slate-200 outline-none focus:border-primary transition-colors" />
                       </div>
                       <button onClick={() => handleAdvance(pendingStage)} disabled={advancing}
-                        className="px-4 py-2 bg-orbit-primary hover:bg-orbit-primary/90 disabled:opacity-50 text-white text-sm font-medium rounded-lg transition-colors whitespace-nowrap">
+                        className="px-4 py-2 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white text-sm font-medium rounded-lg transition-colors whitespace-nowrap">
                         {advancing ? 'Saving...' : 'Confirm'}
                       </button>
                       <button onClick={() => setPendingStage(null)}
-                        className="px-3 py-2 bg-orbit-surface hover:bg-white/5 text-slate-400 text-sm rounded-lg border border-orbit-border transition-colors">Cancel</button>
+                        className="px-3 py-2 bg-surface hover:bg-white/5 text-slate-400 text-sm rounded-lg border border-border transition-colors">Cancel</button>
                     </div>
                   </div>
                 </motion.div>
@@ -211,13 +211,13 @@ export function JobTimelineSection({ jobId, timelines, loading, modalStatus, onT
               <div className="flex items-center gap-2 flex-wrap">
                 {prevStageKey && !isRejected && (
                   <button onClick={handleGoBack} disabled={advancing}
-                    className="flex items-center gap-1.5 px-3 py-2 bg-orbit-surface2 hover:bg-white/5 disabled:opacity-40 text-slate-400 text-xs font-medium rounded-lg border border-orbit-border transition-colors">
+                    className="flex items-center gap-1.5 px-3 py-2 bg-surface2 hover:bg-white/5 disabled:opacity-40 text-slate-400 text-xs font-medium rounded-lg border border-border transition-colors">
                     &larr; Previous
                   </button>
                 )}
                 {nextStageKey && !isRejected && (
                   <button onClick={() => { setStageDate(new Date().toISOString().split('T')[0]); setPendingStage(nextStageKey) }} disabled={advancing}
-                    className="flex items-center gap-1.5 px-3 py-2 bg-orbit-primary hover:bg-orbit-primary/90 disabled:opacity-40 text-white text-xs font-medium rounded-lg transition-colors">
+                    className="flex items-center gap-1.5 px-3 py-2 bg-primary hover:bg-primary/90 disabled:opacity-40 text-white text-xs font-medium rounded-lg transition-colors">
                     Next: {STAGES.find(s => s.key === nextStageKey)?.label} &rarr;
                   </button>
                 )}

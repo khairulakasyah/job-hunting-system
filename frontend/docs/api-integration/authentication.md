@@ -43,22 +43,22 @@ export function useAuth() { return useContext(AuthContext) }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(() => {
-    const stored = localStorage.getItem('orbit_user')
+    const stored = localStorage.getItem('user')
     return stored ? JSON.parse(stored) : null
   })
   const navigate = useNavigate()
 
   const signIn = async (email: string, password: string) => {
     const { data } = await api.post('/auth/sign-in', { email, password })
-    localStorage.setItem('orbit_token', data.token)
-    localStorage.setItem('orbit_user', JSON.stringify(data.user))
+    localStorage.setItem('token', data.token)
+    localStorage.setItem('user', JSON.stringify(data.user))
     setUser(data.user)
     navigate('/dashboard')
   }
 
   const signOut = () => {
-    localStorage.removeItem('orbit_token')
-    localStorage.removeItem('orbit_user')
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
     setUser(null)
     navigate('/sign-in')
   }

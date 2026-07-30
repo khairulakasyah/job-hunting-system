@@ -22,7 +22,7 @@ function ContactCard({ contact, index }: { contact: Contact; index: number }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: index * 0.05 }}
     >
-      <Card className="p-5 hover:border-orbit-border2 transition-all duration-200 group cursor-pointer">
+      <Card className="p-5 hover:border-border2 transition-all duration-200 group cursor-pointer">
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center gap-3">
             <Avatar initials={contact.initials} size="lg" online={contact.status === 'active'} />
@@ -64,14 +64,14 @@ function ContactCard({ contact, index }: { contact: Contact; index: number }) {
           <div className="flex items-center gap-1.5 flex-wrap">
             <Tag className="w-3 h-3 text-slate-700" />
             {contact.tags.map(tag => (
-              <span key={tag} className="text-[10px] text-slate-500 bg-orbit-surface3 px-2 py-0.5 rounded-full border border-orbit-border">
+              <span key={tag} className="text-[10px] text-slate-500 bg-surface3 px-2 py-0.5 rounded-full border border-border">
                 {tag}
               </span>
             ))}
           </div>
         )}
 
-        <div className="mt-4 pt-4 border-t border-orbit-border flex items-center justify-between">
+        <div className="mt-4 pt-4 border-t border-border flex items-center justify-between">
           <div className="text-center">
             <p className="text-sm font-semibold text-slate-200">{contact.deals}</p>
             <p className="text-[10px] text-slate-600">Deals</p>
@@ -98,7 +98,7 @@ function ContactRow({ contact, index }: { contact: Contact; index: number }) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: index * 0.04 }}
-      className="border-b border-orbit-border hover:bg-white/2 transition-colors group"
+      className="border-b border-border hover:bg-white/2 transition-colors group"
     >
       <td className="px-5 py-3.5">
         <div className="flex items-center gap-3">
@@ -124,7 +124,7 @@ function ContactRow({ contact, index }: { contact: Contact; index: number }) {
       <td className="px-5 py-3.5">
         <div className="flex items-center gap-1 flex-wrap">
           {contact.tags.slice(0, 2).map(tag => (
-            <span key={tag} className="text-[10px] text-slate-500 bg-orbit-surface3 px-2 py-0.5 rounded-full border border-orbit-border">
+            <span key={tag} className="text-[10px] text-slate-500 bg-surface3 px-2 py-0.5 rounded-full border border-border">
               {tag}
             </span>
           ))}
@@ -182,7 +182,7 @@ export function ContactsPage() {
           />
         </div>
 
-        <div className="flex items-center gap-1 bg-orbit-surface2 border border-orbit-border rounded-lg p-1">
+        <div className="flex items-center gap-1 bg-surface2 border border-border rounded-lg p-1">
           {(['all', 'active', 'inactive', 'prospect'] as StatusFilter[]).map(s => (
             <button
               key={s}
@@ -190,7 +190,7 @@ export function ContactsPage() {
               className={cn(
                 'px-3 py-1 rounded-md text-xs font-medium capitalize transition-all',
                 statusFilter === s
-                  ? 'bg-orbit-primary text-white shadow-sm'
+                  ? 'bg-primary text-white shadow-sm'
                   : 'text-slate-500 hover:text-slate-300'
               )}
             >
@@ -203,16 +203,16 @@ export function ContactsPage() {
           Filters
         </Button>
 
-        <div className="flex items-center gap-1 bg-orbit-surface2 border border-orbit-border rounded-lg p-1">
+        <div className="flex items-center gap-1 bg-surface2 border border-border rounded-lg p-1">
           <button
             onClick={() => setViewMode('grid')}
-            className={cn('p-1.5 rounded-md transition-all', viewMode === 'grid' ? 'bg-orbit-primary text-white' : 'text-slate-500 hover:text-slate-300')}
+            className={cn('p-1.5 rounded-md transition-all', viewMode === 'grid' ? 'bg-primary text-white' : 'text-slate-500 hover:text-slate-300')}
           >
             <LayoutGrid className="w-3.5 h-3.5" />
           </button>
           <button
             onClick={() => setViewMode('list')}
-            className={cn('p-1.5 rounded-md transition-all', viewMode === 'list' ? 'bg-orbit-primary text-white' : 'text-slate-500 hover:text-slate-300')}
+            className={cn('p-1.5 rounded-md transition-all', viewMode === 'list' ? 'bg-primary text-white' : 'text-slate-500 hover:text-slate-300')}
           >
             <List className="w-3.5 h-3.5" />
           </button>
@@ -239,7 +239,7 @@ export function ContactsPage() {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-orbit-border">
+                <tr className="border-b border-border">
                   {['Contact', 'Company', 'Location', 'Status', 'Tags', 'Value', 'Last Active', ''].map(col => (
                     <th key={col} className="text-left text-[11px] font-semibold text-slate-600 uppercase tracking-wider px-5 py-3">
                       {col}

@@ -23,7 +23,7 @@ export function SignInPage() {
     try {
       await login(email, password)
       navigate('/dashboard')
-    } catch {
+    } catch (err: any) {
       const message = err.response?.data?.message || 'Login failed. Please try again.'
       setError(message)
     } finally {
@@ -32,22 +32,18 @@ export function SignInPage() {
   }
 
   return (
-    <div className="min-h-screen bg-orbit-bg flex">
+    <div className="min-h-screen bg-bg flex">
       {/* Ambient glow */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-orbit-primary/10 blur-[120px] rounded-full" />
-        <div className="absolute bottom-0 right-0 w-[400px] h-[300px] bg-orbit-accent/8 blur-[100px] rounded-full" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-primary/10 blur-[120px] rounded-full" />
+        <div className="absolute bottom-0 right-0 w-[400px] h-[300px] bg-accent/8 blur-[100px] rounded-full" />
       </div>
 
       {/* Left panel — branding */}
-      <div className="hidden lg:flex lg:w-1/2 flex-col justify-between p-12 border-r border-orbit-border relative">
+      <div className="hidden lg:flex lg:w-1/2 flex-col justify-between p-12 border-r border-border relative">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-orbit-primary flex items-center justify-center glow-primary">
-            <svg viewBox="0 0 32 32" fill="none" className="w-5 h-5">
-              <circle cx="16" cy="16" r="4" fill="white" />
-              <ellipse cx="16" cy="16" rx="11" ry="5" stroke="white" strokeWidth="1.5" strokeOpacity="0.7" transform="rotate(-30 16 16)" />
-              <circle cx="23" cy="11" r="2" fill="#0D9488" />
-            </svg>
+          <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center glow-primary">
+            <img src="/jobhunter-nobg.png" alt="JH" className="w-5 h-5 object-contain" />
           </div>
           <span className="text-slate-100 font-semibold text-xl tracking-tight">Job Hunter</span>
         </div>
@@ -67,7 +63,7 @@ export function SignInPage() {
               { value: 'Monitor', label: 'Progress' },
               { value: '100%', label: 'Free Forever' },
             ].map(stat => (
-              <div key={stat.label} className="bg-orbit-surface/60 border border-orbit-border rounded-xl p-4">
+              <div key={stat.label} className="bg-surface/60 border border-border rounded-xl p-4">
                 <p className="text-xl font-bold text-slate-100">{stat.value}</p>
                 <p className="text-xs text-slate-500 mt-0.5">{stat.label}</p>
               </div>
@@ -90,8 +86,8 @@ export function SignInPage() {
         >
           {/* Mobile logo */}
           <div className="flex items-center gap-2 mb-8 lg:hidden">
-            <div className="w-8 h-8 rounded-lg bg-orbit-primary flex items-center justify-center">
-              <span className="text-white font-bold text-sm">O</span>
+            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+              <img src="/jobhunter-nobg.png" alt="JH" className="w-4 h-4 object-contain" />
             </div>
             <span className="text-slate-100 font-semibold text-lg">Job Hunter</span>
           </div>
@@ -137,10 +133,10 @@ export function SignInPage() {
 
             <div className="flex items-center justify-between">
               <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" className="rounded border-orbit-border bg-orbit-surface2 text-orbit-primary w-3.5 h-3.5" />
+                <input type="checkbox" className="rounded border-border bg-surface2 text-primary w-3.5 h-3.5" />
                 <span className="text-xs text-slate-500">Remember me</span>
               </label>
-              <Link to="/forgot-password" className="text-xs text-orbit-primary-light hover:text-orbit-accent transition-colors">
+              <Link to="/forgot-password" className="text-xs text-primary-light hover:text-accent transition-colors">
                 Forgot password?
               </Link>
             </div>
@@ -159,7 +155,7 @@ export function SignInPage() {
 
           <p className="text-center text-xs text-slate-500 mt-8">
             Don't have an account?{' '}
-            <Link to="/sign-up" className="text-orbit-primary-light hover:text-orbit-accent transition-colors font-medium">
+            <Link to="/sign-up" className="text-primary-light hover:text-accent transition-colors font-medium">
               Sign up free
             </Link>
           </p>

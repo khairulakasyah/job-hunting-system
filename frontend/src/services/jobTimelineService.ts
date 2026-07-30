@@ -24,7 +24,7 @@ export const STAGES = [
 ]
 
 export const STAGE_COLORS: Record<string, { dot: string; text: string; line: string }> = {
-  saved:          { dot: 'bg-slate-400  border-slate-400',  text: 'text-slate-300',   line: 'bg-orbit-primary' },
+  saved:          { dot: 'bg-slate-400  border-slate-400',  text: 'text-slate-300',   line: 'bg-primary' },
   applied:        { dot: 'bg-blue-500   border-blue-500',   text: 'text-blue-400',    line: 'bg-blue-500'      },
   interview:      { dot: 'bg-amber-500  border-amber-500',  text: 'text-amber-400',   line: 'bg-amber-500'     },
   technical_test: { dot: 'bg-purple-500 border-purple-500', text: 'text-purple-400',  line: 'bg-purple-500'    },

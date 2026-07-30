@@ -68,7 +68,7 @@ export function Topbar() {
   }
 
   return (
-    <header className="h-16 border-b border-orbit-border bg-orbit-surface/80 backdrop-blur-xl flex items-center px-6 gap-4 flex-shrink-0 relative z-30">
+    <header className="h-16 border-b border-border bg-surface/80 backdrop-blur-xl flex items-center px-6 gap-4 flex-shrink-0 relative z-30">
       {/* Left: hamburger + page title */}
       <button
         onClick={toggleSidebar} aria-label="Toggle sidebar"
@@ -104,9 +104,9 @@ export function Topbar() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -8, scale: 0.96 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute right-0 top-full mt-2 w-96 bg-orbit-surface2 border border-orbit-border rounded-2xl shadow-2xl z-50 overflow-hidden"
+                  className="absolute right-0 top-full mt-2 w-96 bg-surface2 border border-border rounded-2xl shadow-2xl z-50 overflow-hidden"
                 >
-                  <div className="flex items-center gap-3 px-4 py-4 border-b border-orbit-border">
+                  <div className="flex items-center gap-3 px-4 py-4 border-b border-border">
                     <Search className="w-5 h-5 text-slate-500 flex-shrink-0" />
                     <input
                       autoFocus
@@ -206,7 +206,7 @@ export function Topbar() {
           >
             <Bell className="w-4 h-4" />
             {unreadCount > 0 && (
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-orbit-accent rounded-full ring-2 ring-orbit-surface" />
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-accent rounded-full ring-2 ring-surface" />
             )}
           </button>
 
@@ -219,26 +219,26 @@ export function Topbar() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -8, scale: 0.96 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute right-0 top-full mt-2 w-80 bg-orbit-surface2 border border-orbit-border rounded-xl shadow-2xl z-50 overflow-hidden"
+                  className="absolute right-0 top-full mt-2 w-80 bg-surface2 border border-border rounded-xl shadow-2xl z-50 overflow-hidden"
                 >
-                  <div className="flex items-center justify-between px-4 py-3 border-b border-orbit-border">
+                  <div className="flex items-center justify-between px-4 py-3 border-b border-border">
                     <p className="text-sm font-semibold text-slate-200">Notifications</p>
-                    <span className="text-xs bg-orbit-primary/20 text-orbit-primary-light px-2 py-0.5 rounded-full font-medium">
+                    <span className="text-xs bg-primary/20 text-primary-light px-2 py-0.5 rounded-full font-medium">
                       {unreadCount} new
                     </span>
                   </div>
-                  <div className="divide-y divide-orbit-border">
+                  <div className="divide-y divide-border">
                     {notifications.map(n => (
                       <div
                         key={n.id}
                         className={cn(
                           'flex items-start gap-3 px-4 py-3 hover:bg-white/3 transition-colors',
-                          n.unread && 'bg-orbit-primary/5'
+                          n.unread && 'bg-primary/5'
                         )}
                       >
                         <div className={cn(
                           'w-2 h-2 rounded-full mt-1.5 flex-shrink-0',
-                          n.unread ? 'bg-orbit-accent' : 'bg-orbit-border2'
+                          n.unread ? 'bg-accent' : 'bg-border2'
                         )} />
                         <div>
                           <p className="text-sm text-slate-200">{n.text}</p>
@@ -247,8 +247,8 @@ export function Topbar() {
                       </div>
                     ))}
                   </div>
-                  <div className="px-4 py-3 border-t border-orbit-border">
-                    <button className="text-xs text-orbit-primary-light hover:text-orbit-accent transition-colors">
+                  <div className="px-4 py-3 border-t border-border">
+                    <button className="text-xs text-primary-light hover:text-accent transition-colors">
                       Mark all as read
                     </button>
                   </div>
@@ -262,7 +262,7 @@ export function Topbar() {
         <div className="relative ml-2">
           <button
             onClick={() => setShowUserMenu(o => !o)}
-            className="w-8 h-8 rounded-full bg-gradient-to-br from-orbit-primary to-orbit-accent flex items-center justify-center text-white text-xs font-bold cursor-pointer hover:opacity-90 transition-opacity"
+            className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white text-xs font-bold cursor-pointer hover:opacity-90 transition-opacity"
           >
             {userInitial}
           </button>
@@ -276,10 +276,10 @@ export function Topbar() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -8, scale: 0.96 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute right-0 top-full mt-2 w-56 bg-orbit-surface2 border border-orbit-border rounded-xl shadow-2xl z-50 overflow-hidden"
+                  className="absolute right-0 top-full mt-2 w-56 bg-surface2 border border-border rounded-xl shadow-2xl z-50 overflow-hidden"
                 >
                   {/* User info */}
-                  <div className="px-4 py-3 border-b border-orbit-border">
+                  <div className="px-4 py-3 border-b border-border">
                     <p className="text-sm font-semibold text-slate-200">{user?.name}</p>
                     <p className="text-xs text-slate-500 mt-0.5">{user?.email}</p>
                   </div>

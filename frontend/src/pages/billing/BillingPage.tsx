@@ -19,7 +19,7 @@ function UsageMeter({ label, used, limit, unit = '' }: { label: string; used: nu
         </p>
       </div>
       {limit && (
-        <div className="h-1.5 bg-orbit-surface3 rounded-full overflow-hidden">
+        <div className="h-1.5 bg-surface3 rounded-full overflow-hidden">
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${pct}%` }}
@@ -27,8 +27,8 @@ function UsageMeter({ label, used, limit, unit = '' }: { label: string; used: nu
             className={cn(
               'h-full rounded-full',
               isHigh
-                ? 'bg-gradient-to-r from-orbit-warning to-orbit-danger'
-                : 'bg-gradient-to-r from-orbit-primary to-orbit-accent'
+                ? 'bg-gradient-to-r from-warning to-danger'
+                : 'bg-gradient-to-r from-primary to-accent'
             )}
           />
         </div>
@@ -73,12 +73,12 @@ export function BillingPage() {
           animate={{ opacity: 1, y: 0 }}
           className="gradient-border"
         >
-          <Card className="p-5 bg-gradient-to-br from-orbit-primary/5 to-orbit-accent/5">
+          <Card className="p-5 bg-gradient-to-br from-primary/5 to-accent/5">
             <div className="flex items-start justify-between mb-4">
               <div>
                 <div className="flex items-center gap-2 mb-1">
-                  <Zap className="w-4 h-4 text-orbit-primary-light" />
-                  <span className="text-xs font-semibold text-orbit-primary-light uppercase tracking-wider">Current Plan</span>
+                  <Zap className="w-4 h-4 text-primary-light" />
+                  <span className="text-xs font-semibold text-primary-light uppercase tracking-wider">Current Plan</span>
                 </div>
                 <h2 className="text-2xl font-bold text-slate-100">{currentPlan.name}</h2>
               </div>
@@ -91,12 +91,12 @@ export function BillingPage() {
             <div className="space-y-2 mb-5">
               {currentPlan.features.map(f => (
                 <div key={f} className="flex items-center gap-2 text-sm text-slate-400">
-                  <Check className="w-3.5 h-3.5 text-orbit-primary-light flex-shrink-0" />
+                  <Check className="w-3.5 h-3.5 text-primary-light flex-shrink-0" />
                   {f}
                 </div>
               ))}
             </div>
-            <div className="pt-4 border-t border-orbit-border">
+            <div className="pt-4 border-t border-border">
               <p className="text-xs text-slate-500">
                 Renews on <span className="text-slate-300 font-medium">{currentPlan.renewsAt}</span>
               </p>
@@ -165,17 +165,17 @@ export function BillingPage() {
             >
               <Card className={cn(
                 'p-5 relative',
-                plan.highlight && 'bg-gradient-to-b from-orbit-primary/5 to-transparent'
+                plan.highlight && 'bg-gradient-to-b from-primary/5 to-transparent'
               )}>
                 {plan.highlight && (
-                  <div className="absolute -top-px left-1/2 -translate-x-1/2 bg-orbit-primary text-white text-[10px] font-semibold px-3 py-0.5 rounded-b-lg">
+                  <div className="absolute -top-px left-1/2 -translate-x-1/2 bg-primary text-white text-[10px] font-semibold px-3 py-0.5 rounded-b-lg">
                     CURRENT
                   </div>
                 )}
                 <div className="flex items-center gap-2 mb-1">
                   {plan.id === 'starter' && <Zap className="w-4 h-4 text-slate-400" />}
-                  {plan.id === 'pro' && <Zap className="w-4 h-4 text-orbit-primary-light" />}
-                  {plan.id === 'enterprise' && <Building2 className="w-4 h-4 text-orbit-accent" />}
+                  {plan.id === 'pro' && <Zap className="w-4 h-4 text-primary-light" />}
+                  {plan.id === 'enterprise' && <Building2 className="w-4 h-4 text-accent" />}
                   <h3 className="font-semibold text-slate-200">{plan.name}</h3>
                 </div>
                 <div className="flex items-baseline gap-1 mb-2">
@@ -188,7 +188,7 @@ export function BillingPage() {
                     <div key={f} className="flex items-start gap-2 text-xs text-slate-400">
                       <Check className={cn(
                         'w-3.5 h-3.5 flex-shrink-0 mt-0.5',
-                        plan.highlight ? 'text-orbit-primary-light' : 'text-slate-500'
+                        plan.highlight ? 'text-primary-light' : 'text-slate-500'
                       )} />
                       {f}
                     </div>
@@ -223,7 +223,7 @@ export function BillingPage() {
           <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-orbit-border">
+              <tr className="border-b border-border">
                 {['Invoice', 'Date', 'Due Date', 'Description', 'Amount', 'Status', ''].map(col => (
                   <th key={col} className="text-left text-[11px] font-semibold text-slate-600 uppercase tracking-wider px-5 pb-3">
                     {col}
@@ -231,7 +231,7 @@ export function BillingPage() {
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-orbit-border">
+            <tbody className="divide-y divide-border">
               {invoices.map((inv, i) => (
                 <motion.tr
                   key={inv.id}

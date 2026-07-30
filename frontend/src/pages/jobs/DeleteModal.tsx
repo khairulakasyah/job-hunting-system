@@ -60,7 +60,7 @@ export function DeleteModal({ isOpen, onClose, onConfirm, loading, jobName }: De
             exit={{   opacity: 0, scale: 0.95, y: 16 }}
             transition={{ duration: 0.2 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
-            <div role="dialog" aria-modal="true" className="w-full max-w-sm bg-orbit-surface border border-orbit-border rounded-2xl shadow-2xl pointer-events-auto"
+            <div role="dialog" aria-modal="true" className="w-full max-w-sm bg-surface border border-border rounded-2xl shadow-2xl pointer-events-auto"
               onClick={e => e.stopPropagation()}>
               <div className="flex flex-col items-center text-center px-6 pt-8 pb-6">
                 <div className="w-14 h-14 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center mb-4">
@@ -73,10 +73,10 @@ export function DeleteModal({ isOpen, onClose, onConfirm, loading, jobName }: De
                   This action cannot be undone.
                 </p>
               </div>
-              <div className="border-t border-orbit-border" />
+              <div className="border-t border-border" />
               <div className="flex items-center gap-3 p-4">
                 <button onClick={onClose} disabled={loading}
-                  className="flex-1 py-2.5 bg-orbit-surface2 hover:bg-white/5 disabled:opacity-50 text-slate-400 text-sm font-medium rounded-lg border border-orbit-border transition-colors">
+                  className="flex-1 py-2.5 bg-surface2 hover:bg-white/5 disabled:opacity-50 text-slate-400 text-sm font-medium rounded-lg border border-border transition-colors">
                   Cancel
                 </button>
                 <button

@@ -68,7 +68,7 @@ const handleSend = async () => {
   // Stream from backend
   const response = await fetch('/ai/chat', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('orbit_token')}` },
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` },
     body: JSON.stringify({
       model,
       messages: [...messages, userMsg].map(m => ({ role: m.role, content: m.content })),

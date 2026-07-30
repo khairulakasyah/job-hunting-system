@@ -58,12 +58,12 @@ function SortableNoteCard({
 
   if (isEditing) {
     return (
-      <div className="bg-orbit-surface2 border border-orbit-border rounded-lg p-3">
+      <div className="bg-surface2 border border-border rounded-lg p-3">
         <input
           value={editTitle}
           onChange={e => onChangeTitle(e.target.value)}
           placeholder="Title"
-          className="w-full bg-orbit-surface border border-orbit-border rounded px-2 py-1 text-sm text-slate-200 outline-none focus:border-orbit-primary mb-2"
+          className="w-full bg-surface border border-border rounded px-2 py-1 text-sm text-slate-200 outline-none focus:border-primary mb-2"
           autoFocus
         />
         <textarea
@@ -71,7 +71,7 @@ function SortableNoteCard({
           onChange={e => onChangeContent(e.target.value)}
           placeholder="Content (optional)"
           rows={3}
-          className="w-full bg-orbit-surface border border-orbit-border rounded px-2 py-1 text-sm text-slate-300 outline-none focus:border-orbit-primary resize-none mb-2"
+          className="w-full bg-surface border border-border rounded px-2 py-1 text-sm text-slate-300 outline-none focus:border-primary resize-none mb-2"
         />
         <div className="flex items-center justify-between">
           <button onClick={onDelete} className="text-xs text-red-400 hover:text-red-300">
@@ -82,7 +82,7 @@ function SortableNoteCard({
               Cancel
             </button>
             <button onClick={onSaveEdit}
-              className="text-xs px-2 py-1 bg-orbit-primary text-white rounded-md hover:bg-orbit-primary/90">
+              className="text-xs px-2 py-1 bg-primary text-white rounded-md hover:bg-primary/90">
               Save
             </button>
           </div>
@@ -93,7 +93,7 @@ function SortableNoteCard({
 
   return (
     <div ref={setNodeRef} style={style}
-      className="bg-orbit-surface2 border border-orbit-border rounded-lg p-3 hover:border-orbit-border2 group transition-colors overflow-hidden">
+      className="bg-surface2 border border-border rounded-lg p-3 hover:border-border2 group transition-colors overflow-hidden">
       <div className="flex items-start gap-2">
         <button {...attributes} {...listeners}
           onClick={e => e.stopPropagation()}
@@ -153,15 +153,15 @@ function Column({ category, notes, editingId, editTitle, editContent, adding, ne
 
   return (
     <div ref={setNodeRef}
-      className={`flex flex-col bg-orbit-surface border border-orbit-border rounded-xl transition-colors ${
-        isDroppableOver || isOver ? 'bg-orbit-primary/5 border-orbit-primary/30' : ''
+      className={`flex flex-col bg-surface border border-border rounded-xl transition-colors ${
+        isDroppableOver || isOver ? 'bg-primary/5 border-primary/30' : ''
       }`}>
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-orbit-border flex-shrink-0">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-border flex-shrink-0">
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded-full" style={{ backgroundColor: category.color }} />
           <span className="text-sm font-semibold text-slate-200">{category.name}</span>
-          <span className="text-[11px] font-medium text-slate-500 bg-orbit-surface2 px-1.5 py-0.5 rounded-full">
+          <span className="text-[11px] font-medium text-slate-500 bg-surface2 px-1.5 py-0.5 rounded-full">
             {notes.length}
           </span>
         </div>
@@ -199,12 +199,12 @@ function Column({ category, notes, editingId, editTitle, editContent, adding, ne
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               className="overflow-hidden">
-              <div className="bg-orbit-surface2 border border-orbit-border rounded-lg p-3">
+              <div className="bg-surface2 border border-border rounded-lg p-3">
                 <input
                   value={newTitle}
                   onChange={e => onChangeNewTitle(e.target.value)}
                   placeholder="Title"
-                  className="w-full bg-orbit-surface border border-orbit-border rounded px-2 py-1 text-sm text-slate-200 outline-none focus:border-orbit-primary mb-2"
+                  className="w-full bg-surface border border-border rounded px-2 py-1 text-sm text-slate-200 outline-none focus:border-primary mb-2"
                   autoFocus
                 />
                 <textarea
@@ -212,14 +212,14 @@ function Column({ category, notes, editingId, editTitle, editContent, adding, ne
                   onChange={e => onChangeNewContent(e.target.value)}
                   placeholder="Content (optional)"
                   rows={2}
-                  className="w-full bg-orbit-surface border border-orbit-border rounded px-2 py-1 text-sm text-slate-300 outline-none focus:border-orbit-primary resize-none mb-2"
+                  className="w-full bg-surface border border-border rounded px-2 py-1 text-sm text-slate-300 outline-none focus:border-primary resize-none mb-2"
                 />
                 <div className="flex justify-end gap-2">
                   <button onClick={onCancelAdd} className="text-xs text-slate-500 hover:text-slate-300">
                     Cancel
                   </button>
                   <button onClick={onAddNote} disabled={!newTitle.trim()}
-                    className="text-xs px-2 py-1 bg-orbit-primary text-white rounded-md hover:bg-orbit-primary/90 disabled:opacity-40">
+                    className="text-xs px-2 py-1 bg-primary text-white rounded-md hover:bg-primary/90 disabled:opacity-40">
                     Add
                   </button>
                 </div>
@@ -233,7 +233,7 @@ function Column({ category, notes, editingId, editTitle, editContent, adding, ne
       {!adding && (
         <div className="px-3 pb-3 flex-shrink-0">
           <button onClick={onStartAdd}
-            className="w-full flex items-center justify-center gap-1 py-2 text-xs text-slate-500 hover:text-slate-300 hover:bg-white/5 rounded-lg transition-colors border border-dashed border-orbit-border">
+            className="w-full flex items-center justify-center gap-1 py-2 text-xs text-slate-500 hover:text-slate-300 hover:bg-white/5 rounded-lg transition-colors border border-dashed border-border">
             <Plus className="w-3.5 h-3.5" /> Add Note
           </button>
         </div>
@@ -472,7 +472,7 @@ export function NotesKanbanPage() {
         <div className="h-[calc(100vh-220px)]">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {[1, 2, 3, 4].map(i => (
-              <div key={i} className="bg-orbit-surface rounded-xl animate-pulse h-32" />
+              <div key={i} className="bg-surface rounded-xl animate-pulse h-32" />
             ))}
           </div>
         </div>
@@ -490,7 +490,7 @@ export function NotesKanbanPage() {
           <p className="text-slate-500 text-sm mt-1">Kanban board for your notes</p>
         </div>
         <button onClick={() => { setCatName(''); setCatColor(CATEGORY_COLORS[0]); setModalOpen(true) }}
-          className="flex items-center gap-2 px-4 py-2 bg-orbit-primary hover:bg-orbit-primary/90 text-white text-sm font-medium rounded-lg transition-colors">
+          className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-white text-sm font-medium rounded-lg transition-colors">
           <Plus className="w-4 h-4" /> Add Column
         </button>
       </motion.div>
@@ -535,7 +535,7 @@ export function NotesKanbanPage() {
           <DragOverlay>
             {activeNote && (
               <div className="w-72 opacity-90">
-                <div className="bg-orbit-surface2 border border-orbit-border rounded-lg p-3">
+                <div className="bg-surface2 border border-border rounded-lg p-3">
                   <p className="text-sm font-medium text-slate-200">{activeNote.title}</p>
                 </div>
               </div>
@@ -554,9 +554,9 @@ export function NotesKanbanPage() {
               animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 16 }}
               transition={{ duration: 0.2 }}
               className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
-              <div role="dialog" aria-modal="true" className="w-full max-w-md bg-orbit-surface border border-orbit-border rounded-2xl shadow-2xl pointer-events-auto"
+              <div role="dialog" aria-modal="true" className="w-full max-w-md bg-surface border border-border rounded-2xl shadow-2xl pointer-events-auto"
                 onClick={e => e.stopPropagation()}>
-                <div className="flex items-center justify-between px-6 py-4 border-b border-orbit-border">
+                <div className="flex items-center justify-between px-6 py-4 border-b border-border">
                   <p className="text-sm font-semibold text-slate-200">New Column</p>
                   <button onClick={() => setModalOpen(false)} aria-label="Close"
                     className="p-1.5 rounded-lg text-slate-500 hover:text-slate-200 transition-colors">
@@ -568,7 +568,7 @@ export function NotesKanbanPage() {
                     <label className="block text-xs font-medium text-slate-400 mb-1.5">Name</label>
                     <input type="text" value={catName} onChange={e => setCatName(e.target.value)}
                       placeholder="e.g. To Do, Interview Notes, Ideas"
-                      className="w-full bg-orbit-surface2 border border-orbit-border rounded-lg px-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-orbit-primary transition-colors"
+                      className="w-full bg-surface2 border border-border rounded-lg px-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-primary transition-colors"
                       autoFocus />
                   </div>
                   <div>
@@ -577,20 +577,20 @@ export function NotesKanbanPage() {
                       {CATEGORY_COLORS.map(c => (
                         <button key={c} onClick={() => setCatColor(c)}
                           className={`w-7 h-7 rounded-full transition-all ${
-                            catColor === c ? 'ring-2 ring-white ring-offset-2 ring-offset-orbit-surface scale-110' : ''
+                            catColor === c ? 'ring-2 ring-white ring-offset-2 ring-offset-surface scale-110' : ''
                           }`}
                           style={{ backgroundColor: c }} />
                       ))}
                     </div>
                   </div>
                 </div>
-                <div className="px-6 py-4 border-t border-orbit-border flex items-center gap-3">
+                <div className="px-6 py-4 border-t border-border flex items-center gap-3">
                   <button onClick={handleCreateCategory} disabled={!catName.trim()}
-                    className="flex-1 py-2.5 bg-orbit-primary hover:bg-orbit-primary/90 disabled:opacity-50 text-white text-sm font-medium rounded-lg transition-colors">
+                    className="flex-1 py-2.5 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white text-sm font-medium rounded-lg transition-colors">
                     Create Column
                   </button>
                   <button onClick={() => setModalOpen(false)}
-                    className="px-4 py-2.5 bg-orbit-surface2 hover:bg-white/5 text-slate-400 text-sm font-medium rounded-lg border border-orbit-border transition-colors">
+                    className="px-4 py-2.5 bg-surface2 hover:bg-white/5 text-slate-400 text-sm font-medium rounded-lg border border-border transition-colors">
                     Cancel
                   </button>
                 </div>

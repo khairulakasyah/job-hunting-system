@@ -9,7 +9,7 @@ export function Card({ className, glass, gradient, children, ...props }: CardPro
   return (
     <div
       className={cn(
-        'rounded-xl border border-orbit-border bg-orbit-surface',
+        'rounded-xl border border-border bg-surface',
         glass && 'glass',
         gradient && 'gradient-border',
         className
@@ -51,7 +51,7 @@ export function CardBody({ className, children, ...props }: React.HTMLAttributes
 
 export function CardFooter({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cn('px-5 pb-5 pt-0 border-t border-orbit-border mt-2 pt-4', className)} {...props}>
+    <div className={cn('px-5 pb-5 pt-0 border-t border-border mt-2 pt-4', className)} {...props}>
       {children}
     </div>
   )

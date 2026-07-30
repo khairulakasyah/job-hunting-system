@@ -11,8 +11,8 @@ export function Layout() {
 
   return (
     <SidebarContext.Provider value={sidebarState}>
-      <div className="flex h-screen bg-orbit-bg overflow-hidden">
-        <div className="orbit-glow-bg" />
+      <div className="flex h-screen bg-bg overflow-hidden">
+        <div className="glow-bg" />
 
         <Sidebar />
 

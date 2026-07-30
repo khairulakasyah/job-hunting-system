@@ -24,7 +24,7 @@ function MarkdownMessage({ content }: { content: string }) {
       elements.push(<p key={i} className="font-semibold text-slate-100 mt-3 mb-1">{line.slice(2, -2)}</p>)
     } else if (line.startsWith('- ') || line.startsWith('* ')) {
       elements.push(
-        <li key={i} className="ml-4 text-slate-300 list-disc marker:text-orbit-primary">
+        <li key={i} className="ml-4 text-slate-300 list-disc marker:text-primary">
           {formatInline(line.slice(2))}
         </li>
       )
@@ -37,10 +37,10 @@ function MarkdownMessage({ content }: { content: string }) {
         i++
       }
       elements.push(
-        <div key={`table-${i}`} className="overflow-x-auto my-2 rounded-lg border border-orbit-border">
+        <div key={`table-${i}`} className="overflow-x-auto my-2 rounded-lg border border-border">
           <table className="w-full text-xs">
             <thead>
-              <tr className="border-b border-orbit-border bg-orbit-surface2">
+              <tr className="border-b border-border bg-surface2">
                 {rows[0]?.map((h, j) => (
                   <th key={j} className="px-3 py-2 text-left font-semibold text-slate-300">{h}</th>
                 ))}
@@ -48,7 +48,7 @@ function MarkdownMessage({ content }: { content: string }) {
             </thead>
             <tbody>
               {rows.slice(1).map((row, j) => (
-                <tr key={j} className="border-b border-orbit-border last:border-0 hover:bg-white/2">
+                <tr key={j} className="border-b border-border last:border-0 hover:bg-white/2">
                   {row.map((cell, k) => (
                     <td key={k} className="px-3 py-2 text-slate-400">{formatInline(cell)}</td>
                   ))}
@@ -85,7 +85,7 @@ function TypingIndicator() {
       {[0, 1, 2].map(i => (
         <motion.div
           key={i}
-          className="w-1.5 h-1.5 rounded-full bg-orbit-primary"
+          className="w-1.5 h-1.5 rounded-full bg-primary"
           animate={{ y: [0, -4, 0] }}
           transition={{ duration: 0.6, delay: i * 0.15, repeat: Infinity }}
         />
@@ -133,7 +133,7 @@ export function ChatPage() {
   }
 
   return (
-    <div className="flex flex-1 overflow-hidden bg-orbit-bg">
+    <div className="flex flex-1 overflow-hidden bg-bg">
       {/* Mobile conv list overlay */}
       <AnimatePresence>
         {showConvList && (
@@ -150,13 +150,13 @@ export function ChatPage() {
       {/* Conversation list — desktop: always visible, mobile: slide-in drawer */}
       <div
         className={cn(
-          'flex-shrink-0 w-64 border-r border-orbit-border bg-orbit-surface flex flex-col',
+          'flex-shrink-0 w-64 border-r border-border bg-surface flex flex-col',
           'fixed inset-y-0 left-0 z-30 transition-transform duration-200 ease-in-out',
           'md:relative md:inset-auto md:z-auto',
           showConvList ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         )}
       >
-        <div className="p-3 border-b border-orbit-border flex items-center gap-2">
+        <div className="p-3 border-b border-border flex items-center gap-2">
           <div className="flex-1">
             <Button variant="outline" size="sm" className="w-full" icon={<Plus className="w-3.5 h-3.5" />}>
               New Chat
@@ -180,19 +180,19 @@ export function ChatPage() {
               className={cn(
                 'w-full text-left px-3 py-2.5 rounded-lg transition-colors group',
                 activeConv === conv.id
-                  ? 'bg-orbit-primary/10 border border-orbit-primary/20'
+                  ? 'bg-primary/10 border border-primary/20'
                   : 'hover:bg-white/5'
               )}
             >
               <div className="flex items-center gap-2 mb-0.5">
-                <Sparkles className={cn('w-3 h-3 flex-shrink-0', activeConv === conv.id ? 'text-orbit-primary-light' : 'text-slate-600')} />
+                <Sparkles className={cn('w-3 h-3 flex-shrink-0', activeConv === conv.id ? 'text-primary-light' : 'text-slate-600')} />
                 <p className={cn(
                   'text-xs font-medium truncate',
                   activeConv === conv.id ? 'text-slate-200' : 'text-slate-400'
                 )}>
                   {conv.title}
                 </p>
-                {conv.unread && <div className="w-1.5 h-1.5 rounded-full bg-orbit-accent flex-shrink-0 ml-auto" />}
+                {conv.unread && <div className="w-1.5 h-1.5 rounded-full bg-accent flex-shrink-0 ml-auto" />}
               </div>
               <p className="text-[11px] text-slate-600 truncate ml-5">{conv.lastMessage}</p>
               <p className="text-[10px] text-slate-700 ml-5 mt-0.5">{conv.timestamp}</p>
@@ -204,7 +204,7 @@ export function ChatPage() {
       {/* Main chat area */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {/* Chat header */}
-        <div className="h-14 border-b border-orbit-border px-4 flex items-center gap-3 bg-orbit-surface/60 backdrop-blur-xl flex-shrink-0">
+        <div className="h-14 border-b border-border px-4 flex items-center gap-3 bg-surface/60 backdrop-blur-xl flex-shrink-0">
           {/* Mobile conv list toggle */}
           <button
             onClick={() => setShowConvList(true)} aria-label="Open conversation list"
@@ -213,8 +213,8 @@ export function ChatPage() {
             <Menu className="w-4 h-4" />
           </button>
 
-          <div className="w-7 h-7 rounded-lg bg-orbit-primary/15 flex items-center justify-center flex-shrink-0">
-            <Sparkles className="w-4 h-4 text-orbit-primary-light" />
+          <div className="w-7 h-7 rounded-lg bg-primary/15 flex items-center justify-center flex-shrink-0">
+            <Sparkles className="w-4 h-4 text-primary-light" />
           </div>
           <div className="min-w-0">
             <p className="text-sm font-semibold text-slate-200 truncate">Job Hunter AI</p>
@@ -223,9 +223,9 @@ export function ChatPage() {
           <div className="ml-auto relative flex-shrink-0">
             <button
               onClick={() => setShowModelPicker(o => !o)}
-              className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-200 bg-orbit-surface2 px-2.5 py-1.5 rounded-lg border border-orbit-border transition-colors"
+              className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-200 bg-surface2 px-2.5 py-1.5 rounded-lg border border-border transition-colors"
             >
-              <div className="w-1.5 h-1.5 rounded-full bg-orbit-accent animate-pulse" />
+              <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
               <span className="hidden sm:inline">{model}</span>
               <span className="sm:hidden">Model</span>
               <ChevronDown className="w-3 h-3" />
@@ -238,7 +238,7 @@ export function ChatPage() {
                     initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
-                    className="absolute right-0 top-full mt-1 bg-orbit-surface2 border border-orbit-border rounded-xl shadow-2xl z-50 overflow-hidden min-w-48"
+                    className="absolute right-0 top-full mt-1 bg-surface2 border border-border rounded-xl shadow-2xl z-50 overflow-hidden min-w-48"
                   >
                     {models.map(m => (
                       <button
@@ -246,7 +246,7 @@ export function ChatPage() {
                         onClick={() => { setModel(m); setShowModelPicker(false) }}
                         className={cn(
                           'w-full text-left px-4 py-2.5 text-xs transition-colors hover:bg-white/5',
-                          m === model ? 'text-orbit-primary-light font-medium' : 'text-slate-400'
+                          m === model ? 'text-primary-light font-medium' : 'text-slate-400'
                         )}
                       >
                         {m}
@@ -269,7 +269,7 @@ export function ChatPage() {
               className={cn('flex gap-3', msg.role === 'user' && 'flex-row-reverse')}
             >
               {msg.role === 'assistant' ? (
-                <div className="w-8 h-8 rounded-lg bg-orbit-primary flex items-center justify-center flex-shrink-0 mt-0.5">
+                <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center flex-shrink-0 mt-0.5">
                   <Sparkles className="w-4 h-4 text-white" />
                 </div>
               ) : (
@@ -280,8 +280,8 @@ export function ChatPage() {
                 <div className={cn(
                   'rounded-2xl px-4 py-3',
                   msg.role === 'user'
-                    ? 'bg-orbit-primary text-white rounded-tr-sm'
-                    : 'bg-orbit-surface2 border border-orbit-border rounded-tl-sm'
+                    ? 'bg-primary text-white rounded-tr-sm'
+                    : 'bg-surface2 border border-border rounded-tl-sm'
                 )}>
                   {msg.role === 'user' ? (
                     <p className="text-sm leading-relaxed">{msg.content}</p>
@@ -315,10 +315,10 @@ export function ChatPage() {
 
           {isTyping && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-3">
-              <div className="w-8 h-8 rounded-lg bg-orbit-primary flex items-center justify-center flex-shrink-0">
+              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center flex-shrink-0">
                 <Sparkles className="w-4 h-4 text-white" />
               </div>
-              <div className="bg-orbit-surface2 border border-orbit-border rounded-2xl rounded-tl-sm px-4 py-3">
+              <div className="bg-surface2 border border-border rounded-2xl rounded-tl-sm px-4 py-3">
                 <TypingIndicator />
               </div>
             </motion.div>
@@ -327,8 +327,8 @@ export function ChatPage() {
         </div>
 
         {/* Input area — always pinned to bottom */}
-        <div className="border-t border-orbit-border p-4 bg-orbit-surface/60 backdrop-blur-xl flex-shrink-0">
-          <div className="flex items-end gap-3 bg-orbit-surface2 border border-orbit-border rounded-2xl px-4 py-3 focus-within:border-orbit-primary/50 transition-colors">
+        <div className="border-t border-border p-4 bg-surface/60 backdrop-blur-xl flex-shrink-0">
+          <div className="flex items-end gap-3 bg-surface2 border border-border rounded-2xl px-4 py-3 focus-within:border-primary/50 transition-colors">
             <button aria-label="Attach file" className="text-slate-500 hover:text-slate-300 transition-colors mb-0.5 hidden sm:block">
               <Paperclip className="w-4 h-4" />
             </button>
@@ -353,16 +353,16 @@ export function ChatPage() {
               className={cn(
                 'p-2 rounded-xl transition-all flex-shrink-0',
                 input.trim() && !isTyping
-                  ? 'bg-orbit-primary text-white hover:bg-orbit-primary-light shadow-sm shadow-orbit-primary/30'
-                  : 'bg-orbit-surface3 text-slate-600'
+                  ? 'bg-primary text-white hover:bg-primary-light shadow-sm shadow-primary/30'
+                  : 'bg-surface3 text-slate-600'
               )}
             >
               <Send className="w-4 h-4" />
             </button>
           </div>
           <p className="text-[11px] text-slate-700 text-center mt-2 hidden sm:block">
-            Press <kbd className="px-1 py-0.5 bg-orbit-surface3 rounded text-slate-500 text-[10px]">Enter</kbd> to send,{' '}
-            <kbd className="px-1 py-0.5 bg-orbit-surface3 rounded text-slate-500 text-[10px]">Shift+Enter</kbd> for new line
+            Press <kbd className="px-1 py-0.5 bg-surface3 rounded text-slate-500 text-[10px]">Enter</kbd> to send,{' '}
+            <kbd className="px-1 py-0.5 bg-surface3 rounded text-slate-500 text-[10px]">Shift+Enter</kbd> for new line
           </p>
         </div>
       </div>

@@ -79,7 +79,7 @@ export function NotesPanel({ jobId }: { jobId: number }) {
     return (
       <div className="space-y-3">
         {[1, 2].map(i => (
-          <div key={i} className="h-20 bg-orbit-surface2 rounded-lg animate-pulse" />
+          <div key={i} className="h-20 bg-surface2 rounded-lg animate-pulse" />
         ))}
       </div>
     )
@@ -94,13 +94,13 @@ export function NotesPanel({ jobId }: { jobId: number }) {
           onChange={e => setNewContent(e.target.value)}
           placeholder="Write a note..."
           rows={3}
-          className="w-full bg-orbit-surface2 border border-orbit-border rounded-lg px-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-orbit-primary transition-colors resize-none"
+          className="w-full bg-surface2 border border-border rounded-lg px-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-primary transition-colors resize-none"
         />
         <div className="flex justify-end mt-2">
           <button
             onClick={handleCreate}
             disabled={creating || !newContent.trim()}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-orbit-primary hover:bg-orbit-primary/90 disabled:opacity-40 text-white rounded-lg transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-primary hover:bg-primary/90 disabled:opacity-40 text-white rounded-lg transition-colors"
           >
             <Plus className="w-3.5 h-3.5" />
             {creating ? 'Adding...' : 'Add Note'}
@@ -123,8 +123,8 @@ export function NotesPanel({ jobId }: { jobId: number }) {
               exit={{ opacity: 0, height: 0 }}
               className={`rounded-lg border ${
                 note.pinned
-                  ? 'bg-orbit-primary/5 border-orbit-primary/20'
-                  : 'bg-orbit-surface2 border-orbit-border'
+                  ? 'bg-primary/5 border-primary/20'
+                  : 'bg-surface2 border-border'
               }`}
             >
               {editingId === note.id ? (
@@ -133,7 +133,7 @@ export function NotesPanel({ jobId }: { jobId: number }) {
                     value={editContent}
                     onChange={e => setEditContent(e.target.value)}
                     rows={3}
-                    className="w-full bg-orbit-surface border border-orbit-border rounded-lg px-3 py-2 text-sm text-slate-200 outline-none focus:border-orbit-primary transition-colors resize-none"
+                    className="w-full bg-surface border border-border rounded-lg px-3 py-2 text-sm text-slate-200 outline-none focus:border-primary transition-colors resize-none"
                     autoFocus
                   />
                   <div className="flex justify-end gap-2 mt-2">
@@ -167,7 +167,7 @@ export function NotesPanel({ jobId }: { jobId: number }) {
                         onClick={() => handleTogglePin(note)} aria-label={note.pinned ? 'Unpin note' : 'Pin note'}
                         className={`p-1 rounded-md transition-colors ${
                           note.pinned
-                            ? 'text-orbit-primary-light'
+                            ? 'text-primary-light'
                             : 'text-slate-500 hover:text-slate-300'
                         }`}
                       >

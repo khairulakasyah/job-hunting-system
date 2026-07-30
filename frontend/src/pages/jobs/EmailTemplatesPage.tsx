@@ -89,24 +89,24 @@ export function EmailTemplatesPage() {
           <p className="text-slate-500 text-sm mt-1">Manage your email templates</p>
         </div>
         <button onClick={openCreate}
-          className="flex items-center gap-2 px-4 py-2 bg-orbit-primary hover:bg-orbit-primary/90 text-white text-sm font-medium rounded-lg transition-colors">
+          className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-white text-sm font-medium rounded-lg transition-colors">
           <Plus className="w-4 h-4" /> Add Template
         </button>
       </motion.div>
 
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {[1, 2].map(i => <div key={i} className="h-32 bg-orbit-surface rounded-xl animate-pulse" />)}
+          {[1, 2].map(i => <div key={i} className="h-32 bg-surface rounded-xl animate-pulse" />)}
         </div>
       ) : templates.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-20 text-center">
-          <div className="w-14 h-14 rounded-full bg-orbit-surface2 flex items-center justify-center mb-4">
+          <div className="w-14 h-14 rounded-full bg-surface2 flex items-center justify-center mb-4">
             <FileText className="w-7 h-7 text-slate-500" />
           </div>
           <p className="text-slate-300 font-medium">No templates yet</p>
           <p className="text-slate-500 text-sm mt-1 mb-4">Create email templates to speed up your outreach</p>
           <button onClick={openCreate}
-            className="flex items-center gap-2 px-4 py-2 bg-orbit-primary hover:bg-orbit-primary/90 text-white text-sm font-medium rounded-lg transition-colors">
+            className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-white text-sm font-medium rounded-lg transition-colors">
             <Plus className="w-4 h-4" /> Create Template
           </button>
         </div>
@@ -114,7 +114,7 @@ export function EmailTemplatesPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {templates.map(t => (
             <motion.div key={t.id} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
-              className="bg-orbit-surface border border-orbit-border rounded-xl p-5 hover:border-orbit-border2 transition-colors group">
+              className="bg-surface border border-border rounded-xl p-5 hover:border-border2 transition-colors group">
               <div className="flex items-start justify-between mb-2">
                 <h3 className="text-sm font-semibold text-slate-200">{t.name}</h3>
                 <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -130,7 +130,7 @@ export function EmailTemplatesPage() {
               </div>
               <p className="text-xs text-slate-500 mb-1.5 truncate">{t.subject}</p>
               <p className="text-xs text-slate-600 line-clamp-2">{t.body}</p>
-              <div className="flex items-center gap-3 mt-3 pt-3 border-t border-orbit-border">
+              <div className="flex items-center gap-3 mt-3 pt-3 border-t border-border">
                 <button onClick={() => handleCopy(t.subject, `${t.id}-subject`)}
                   className="flex items-center gap-1 text-xs text-slate-500 hover:text-slate-200 transition-colors">
                   <Copy className="w-3 h-3" />
@@ -157,9 +157,9 @@ export function EmailTemplatesPage() {
               animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 16 }}
               transition={{ duration: 0.2 }}
               className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
-              <div role="dialog" aria-modal="true" className="w-full max-w-xl bg-orbit-surface border border-orbit-border rounded-2xl shadow-2xl pointer-events-auto"
+              <div role="dialog" aria-modal="true" className="w-full max-w-xl bg-surface border border-border rounded-2xl shadow-2xl pointer-events-auto"
                 onClick={e => e.stopPropagation()}>
-                <div className="flex items-center justify-between px-6 py-4 border-b border-orbit-border">
+                <div className="flex items-center justify-between px-6 py-4 border-b border-border">
                   <p className="text-sm font-semibold text-slate-200">
                     {editing ? 'Edit Template' : 'New Template'}
                   </p>
@@ -173,13 +173,13 @@ export function EmailTemplatesPage() {
                     <label className="block text-xs font-medium text-slate-400 mb-1.5">Name <span className="text-red-400">*</span></label>
                     <input type="text" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
                       placeholder="e.g. Interview Invitation"
-                      className="w-full bg-orbit-surface2 border border-orbit-border rounded-lg px-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-orbit-primary transition-colors" />
+                      className="w-full bg-surface2 border border-border rounded-lg px-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-primary transition-colors" />
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-slate-400 mb-1.5">Subject <span className="text-red-400">*</span></label>
                     <input type="text" value={form.subject} onChange={e => setForm(f => ({ ...f, subject: e.target.value }))}
                       placeholder="e.g. Interview Invitation - {{company_name}}"
-                      className="w-full bg-orbit-surface2 border border-orbit-border rounded-lg px-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-orbit-primary transition-colors" />
+                      className="w-full bg-surface2 border border-border rounded-lg px-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-primary transition-colors" />
                   </div>
                   <div>
                     <div className="flex items-center justify-between mb-1.5">
@@ -188,7 +188,7 @@ export function EmailTemplatesPage() {
                         <span className="text-[10px] text-slate-600">Insert:</span>
                         {hintVars.map(v => (
                           <button key={v} type="button" onClick={() => setForm(f => ({ ...f, body: f.body + v }))}
-                            className="text-[10px] px-1.5 py-0.5 rounded bg-orbit-surface3 text-slate-400 hover:text-slate-200 hover:bg-white/10 transition-colors">
+                            className="text-[10px] px-1.5 py-0.5 rounded bg-surface3 text-slate-400 hover:text-slate-200 hover:bg-white/10 transition-colors">
                             {v}
                           </button>
                         ))}
@@ -196,16 +196,16 @@ export function EmailTemplatesPage() {
                     </div>
                     <textarea value={form.body} onChange={e => setForm(f => ({ ...f, body: e.target.value }))}
                       rows={8} placeholder="Dear {{candidate_name}},..."
-                      className="w-full bg-orbit-surface2 border border-orbit-border rounded-lg px-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-orbit-primary transition-colors resize-none" />
+                      className="w-full bg-surface2 border border-border rounded-lg px-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-primary transition-colors resize-none" />
                   </div>
                 </div>
-                <div className="px-6 py-4 border-t border-orbit-border flex items-center gap-3">
+                <div className="px-6 py-4 border-t border-border flex items-center gap-3">
                   <button onClick={handleSave} disabled={saving}
-                    className="flex-1 py-2.5 bg-orbit-primary hover:bg-orbit-primary/90 disabled:opacity-50 text-white text-sm font-medium rounded-lg transition-colors">
+                    className="flex-1 py-2.5 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white text-sm font-medium rounded-lg transition-colors">
                     {saving ? 'Saving...' : editing ? 'Update Template' : 'Create Template'}
                   </button>
                   <button onClick={() => setModalOpen(false)}
-                    className="px-4 py-2.5 bg-orbit-surface2 hover:bg-white/5 text-slate-400 text-sm font-medium rounded-lg border border-orbit-border transition-colors">
+                    className="px-4 py-2.5 bg-surface2 hover:bg-white/5 text-slate-400 text-sm font-medium rounded-lg border border-border transition-colors">
                     Cancel
                   </button>
                 </div>

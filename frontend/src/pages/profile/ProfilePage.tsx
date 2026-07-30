@@ -159,9 +159,9 @@ export function ProfilePage() {
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.05 }}
-        className="bg-orbit-surface border border-orbit-border rounded-xl p-6 flex items-center gap-5"
+        className="bg-surface border border-border rounded-xl p-6 flex items-center gap-5"
       >
-        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-orbit-primary to-orbit-accent flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
+        <div className="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
           {user?.name?.charAt(0).toUpperCase() ?? 'U'}
         </div>
         <div>
@@ -180,7 +180,7 @@ export function ProfilePage() {
         {statCards.map((card, i) => (
           <div
             key={card.label}
-            className="bg-orbit-surface border border-orbit-border rounded-xl p-4 flex flex-col items-center gap-2"
+            className="bg-surface border border-border rounded-xl p-4 flex flex-col items-center gap-2"
           >
             <div className={`w-9 h-9 rounded-lg bg-gradient-to-br ${card.color} flex items-center justify-center`}>
               <card.icon className="w-4 h-4 text-white" />
@@ -198,7 +198,7 @@ export function ProfilePage() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-orbit-surface border border-orbit-border rounded-xl p-6"
+          className="bg-surface border border-border rounded-xl p-6"
         >
           <h2 className="text-sm font-semibold text-slate-200 mb-5">Personal Information</h2>
 
@@ -216,7 +216,7 @@ export function ProfilePage() {
                 <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
                 <input type="text" value={name} onChange={e => setName(e.target.value)} required
                   placeholder="Your full name"
-                  className="w-full bg-orbit-surface2 border border-orbit-border rounded-lg pl-10 pr-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-orbit-primary transition-colors" />
+                  className="w-full bg-surface2 border border-border rounded-lg pl-10 pr-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-primary transition-colors" />
               </div>
             </div>
             <div>
@@ -225,11 +225,11 @@ export function ProfilePage() {
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
                 <input type="email" value={email} onChange={e => setEmail(e.target.value)} required
                   placeholder="your@email.com"
-                  className="w-full bg-orbit-surface2 border border-orbit-border rounded-lg pl-10 pr-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-orbit-primary transition-colors" />
+                  className="w-full bg-surface2 border border-border rounded-lg pl-10 pr-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-primary transition-colors" />
               </div>
             </div>
             <button type="submit" disabled={infoState.loading}
-              className="flex items-center justify-center gap-2 w-full py-2.5 bg-orbit-primary hover:bg-orbit-primary/90 disabled:opacity-50 text-white text-sm font-medium rounded-lg transition-colors">
+              className="flex items-center justify-center gap-2 w-full py-2.5 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white text-sm font-medium rounded-lg transition-colors">
               <Save className="w-4 h-4" />
               {infoState.loading ? 'Saving...' : 'Save Changes'}
             </button>
@@ -241,7 +241,7 @@ export function ProfilePage() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
-          className="bg-orbit-surface border border-orbit-border rounded-xl p-6"
+          className="bg-surface border border-border rounded-xl p-6"
         >
           <h2 className="text-sm font-semibold text-slate-200 mb-5">Resume & Portfolio Links</h2>
 
@@ -259,7 +259,7 @@ export function ProfilePage() {
                 <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
                 <input type="url" value={resumeUrl} onChange={e => setResumeUrl(e.target.value)}
                   placeholder="https://drive.google.com/your-resume"
-                  className="w-full bg-orbit-surface2 border border-orbit-border rounded-lg pl-10 pr-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-orbit-primary transition-colors" />
+                  className="w-full bg-surface2 border border-border rounded-lg pl-10 pr-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-primary transition-colors" />
               </div>
             </div>
             <div>
@@ -268,7 +268,7 @@ export function ProfilePage() {
                 <ExternalLink className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
                 <input type="url" value={portfolioUrl} onChange={e => setPortfolioUrl(e.target.value)}
                   placeholder="https://your-portfolio.com"
-                  className="w-full bg-orbit-surface2 border border-orbit-border rounded-lg pl-10 pr-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-orbit-primary transition-colors" />
+                  className="w-full bg-surface2 border border-border rounded-lg pl-10 pr-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-primary transition-colors" />
               </div>
             </div>
             <div>
@@ -277,7 +277,7 @@ export function ProfilePage() {
                 <Linkedin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
                 <input type="url" value={linkedinUrl} onChange={e => setLinkedinUrl(e.target.value)}
                   placeholder="https://linkedin.com/in/your-profile"
-                  className="w-full bg-orbit-surface2 border border-orbit-border rounded-lg pl-10 pr-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-orbit-primary transition-colors" />
+                  className="w-full bg-surface2 border border-border rounded-lg pl-10 pr-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-primary transition-colors" />
               </div>
             </div>
             <div>
@@ -286,11 +286,11 @@ export function ProfilePage() {
                 <Github className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
                 <input type="url" value={githubUrl} onChange={e => setGithubUrl(e.target.value)}
                   placeholder="https://github.com/your-profile"
-                  className="w-full bg-orbit-surface2 border border-orbit-border rounded-lg pl-10 pr-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-orbit-primary transition-colors" />
+                  className="w-full bg-surface2 border border-border rounded-lg pl-10 pr-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-primary transition-colors" />
               </div>
             </div>
             <button type="submit" disabled={linksState.loading}
-              className="flex items-center justify-center gap-2 w-full py-2.5 bg-orbit-primary hover:bg-orbit-primary/90 disabled:opacity-50 text-white text-sm font-medium rounded-lg transition-colors">
+              className="flex items-center justify-center gap-2 w-full py-2.5 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white text-sm font-medium rounded-lg transition-colors">
               <Save className="w-4 h-4" />
               {linksState.loading ? 'Saving...' : 'Save Links'}
             </button>
@@ -302,7 +302,7 @@ export function ProfilePage() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-orbit-surface border border-orbit-border rounded-xl p-6"
+          className="bg-surface border border-border rounded-xl p-6"
         >
           <h2 className="text-sm font-semibold text-slate-200 mb-5">Change Password</h2>
 
@@ -320,7 +320,7 @@ export function ProfilePage() {
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
                 <input type={showCurrent ? 'text' : 'password'} value={currentPassword}
                   onChange={e => setCurrentPassword(e.target.value)} required placeholder="Enter current password"
-                  className="w-full bg-orbit-surface2 border border-orbit-border rounded-lg pl-10 pr-10 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-orbit-primary transition-colors" />
+                  className="w-full bg-surface2 border border-border rounded-lg pl-10 pr-10 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-primary transition-colors" />
                 <button type="button" onClick={() => setShowCurrent(v => !v)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors">
                   {showCurrent ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -333,7 +333,7 @@ export function ProfilePage() {
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
                 <input type={showNew ? 'text' : 'password'} value={newPassword}
                   onChange={e => setNewPassword(e.target.value)} required placeholder="Min. 8 characters"
-                  className="w-full bg-orbit-surface2 border border-orbit-border rounded-lg pl-10 pr-10 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-orbit-primary transition-colors" />
+                  className="w-full bg-surface2 border border-border rounded-lg pl-10 pr-10 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-primary transition-colors" />
                 <button type="button" onClick={() => setShowNew(v => !v)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors">
                   {showNew ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -346,7 +346,7 @@ export function ProfilePage() {
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
                 <input type={showConfirm ? 'text' : 'password'} value={confirmPassword}
                   onChange={e => setConfirmPassword(e.target.value)} required placeholder="Repeat new password"
-                  className="w-full bg-orbit-surface2 border border-orbit-border rounded-lg pl-10 pr-10 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-orbit-primary transition-colors" />
+                  className="w-full bg-surface2 border border-border rounded-lg pl-10 pr-10 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-primary transition-colors" />
                 <button type="button" onClick={() => setShowConfirm(v => !v)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors">
                   {showConfirm ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -354,7 +354,7 @@ export function ProfilePage() {
               </div>
             </div>
             <button type="submit" disabled={passwordState.loading}
-              className="flex items-center justify-center gap-2 w-full py-2.5 bg-orbit-primary hover:bg-orbit-primary/90 disabled:opacity-50 text-white text-sm font-medium rounded-lg transition-colors">
+              className="flex items-center justify-center gap-2 w-full py-2.5 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white text-sm font-medium rounded-lg transition-colors">
               <Lock className="w-4 h-4" />
               {passwordState.loading ? 'Changing...' : 'Change Password'}
             </button>
@@ -366,7 +366,7 @@ export function ProfilePage() {
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25 }}
-          className="bg-orbit-surface border border-orbit-border rounded-xl p-6"
+          className="bg-surface border border-border rounded-xl p-6"
         >
           <h2 className="text-sm font-semibold text-slate-200 mb-5">Job Search Preferences</h2>
 
@@ -384,7 +384,7 @@ export function ProfilePage() {
                 <Globe className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
                 <input type="text" value={preferredPlatform} onChange={e => setPreferredPlatform(e.target.value)}
                   placeholder="e.g. LinkedIn, Indeed, JobStreet" list="pref-platform-list"
-                  className="w-full bg-orbit-surface2 border border-orbit-border rounded-lg pl-10 pr-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-orbit-primary transition-colors" />
+                  className="w-full bg-surface2 border border-border rounded-lg pl-10 pr-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-primary transition-colors" />
                 <datalist id="pref-platform-list">
                   {availablePlatforms.map(p => (
                     <option key={p} value={p} />
@@ -398,7 +398,7 @@ export function ProfilePage() {
                 <Target className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
                 <input type="text" value={targetRole} onChange={e => setTargetRole(e.target.value)}
                   placeholder="e.g. Senior Frontend Developer"
-                  className="w-full bg-orbit-surface2 border border-orbit-border rounded-lg pl-10 pr-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-orbit-primary transition-colors" />
+                  className="w-full bg-surface2 border border-border rounded-lg pl-10 pr-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-primary transition-colors" />
               </div>
             </div>
             <div>
@@ -407,7 +407,7 @@ export function ProfilePage() {
                 <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
                 <input type="text" value={preferredLocation} onChange={e => setPreferredLocation(e.target.value)}
                   placeholder="e.g. Kuala Lumpur, Remote"
-                  className="w-full bg-orbit-surface2 border border-orbit-border rounded-lg pl-10 pr-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-orbit-primary transition-colors" />
+                  className="w-full bg-surface2 border border-border rounded-lg pl-10 pr-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-primary transition-colors" />
               </div>
             </div>
             <div>
@@ -416,11 +416,11 @@ export function ProfilePage() {
                 <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
                 <input type="text" value={salaryExpectation} onChange={e => setSalaryExpectation(e.target.value)}
                   placeholder="e.g. RM 6,000 - RM 8,000"
-                  className="w-full bg-orbit-surface2 border border-orbit-border rounded-lg pl-10 pr-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-orbit-primary transition-colors" />
+                  className="w-full bg-surface2 border border-border rounded-lg pl-10 pr-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-primary transition-colors" />
               </div>
             </div>
             <button type="submit" disabled={prefsState.loading}
-              className="flex items-center justify-center gap-2 w-full py-2.5 bg-orbit-primary hover:bg-orbit-primary/90 disabled:opacity-50 text-white text-sm font-medium rounded-lg transition-colors">
+              className="flex items-center justify-center gap-2 w-full py-2.5 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white text-sm font-medium rounded-lg transition-colors">
               <Save className="w-4 h-4" />
               {prefsState.loading ? 'Saving...' : 'Save Preferences'}
             </button>

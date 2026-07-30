@@ -23,7 +23,7 @@ const PLATFORM_COLORS: Record<string, string> = {
 const ACTIVITY_ICONS: Record<string, string> = {
   job_created: 'bg-emerald-500',
   stage_advanced: 'bg-amber-500',
-  event_scheduled: 'bg-orbit-primary',
+  event_scheduled: 'bg-primary',
 }
 
 const ACTIVITY_LABELS: Record<string, string> = {
@@ -40,7 +40,7 @@ function formatMonth(ym: string): string {
 function ChartTooltip({ active, payload, label }: { active?: boolean; payload?: { value: number; name: string; color: string }[]; label?: string }) {
   if (!active || !payload?.length) return null
   return (
-    <div className="bg-orbit-surface2 border border-orbit-border rounded-xl p-3 shadow-2xl">
+    <div className="bg-surface2 border border-border rounded-xl p-3 shadow-2xl">
       <p className="text-xs text-slate-500 mb-2">{label}</p>
       {payload.map(p => (
         <div key={p.name} className="flex items-center gap-2 text-sm">
@@ -173,7 +173,7 @@ export function DashboardPage() {
       {/* Job Stats Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-6 gap-4">
         {[
-          { label: 'Total Jobs', value: stats?.total ?? 0, icon: <Briefcase className="w-5 h-5" />, color: 'text-orbit-primary-light', bg: 'bg-orbit-primary/10', border: 'border-orbit-primary/20' },
+          { label: 'Total Jobs', value: stats?.total ?? 0, icon: <Briefcase className="w-5 h-5" />, color: 'text-primary-light', bg: 'bg-primary/10', border: 'border-primary/20' },
           { label: 'Applied', value: stats?.applied ?? 0, icon: <LayoutDashboard className="w-5 h-5" />, color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/20' },
           { label: 'Interview', value: stats?.interview ?? 0, icon: <Clock className="w-5 h-5" />, color: 'text-amber-400', bg: 'bg-amber-500/10', border: 'border-amber-500/20' },
           { label: 'Offer', value: stats?.offer ?? 0, icon: <Trophy className="w-5 h-5" />, color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
@@ -185,14 +185,14 @@ export function DashboardPage() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.05 }}
-            className={`bg-orbit-surface border ${card.border} rounded-xl p-5 flex items-center gap-4`}
+            className={`bg-surface border ${card.border} rounded-xl p-5 flex items-center gap-4`}
           >
             <div className={`w-11 h-11 rounded-xl ${card.bg} ${card.color} flex items-center justify-center flex-shrink-0`}>
               {card.icon}
             </div>
             <div>
               <p className="text-2xl font-bold text-slate-100">
-                {stats || card.label === 'Success Rate' ? card.value : <span className="w-8 h-6 bg-orbit-surface2 rounded animate-pulse inline-block" />}
+                {stats || card.label === 'Success Rate' ? card.value : <span className="w-8 h-6 bg-surface2 rounded animate-pulse inline-block" />}
               </p>
               <p className="text-xs text-slate-500 mt-0.5">{card.label}</p>
             </div>
@@ -217,7 +217,7 @@ export function DashboardPage() {
                   return (
                     <div key={item.stage} className="flex items-center gap-3">
                       <span className="text-xs text-slate-400 w-36 flex-shrink-0">{item.stage}</span>
-                      <div className="flex-1 h-5 bg-orbit-surface3 rounded-full overflow-hidden">
+                      <div className="flex-1 h-5 bg-surface3 rounded-full overflow-hidden">
                         <motion.div
                           initial={{ width: 0 }}
                           animate={{ width: `${(item.days / maxDays) * 100}%` }}
@@ -290,9 +290,9 @@ export function DashboardPage() {
               </AreaChart>
             </ResponsiveContainer>
             {trendData.length > 0 && (
-              <div className="flex items-center gap-4 mt-2 pt-3 border-t border-orbit-border">
+              <div className="flex items-center gap-4 mt-2 pt-3 border-t border-border">
                 <div className="flex items-center gap-2 text-xs text-slate-500">
-                  <div className="w-3 h-0.5 bg-orbit-primary rounded" />
+                  <div className="w-3 h-0.5 bg-primary rounded" />
                   Applications
                 </div>
                 <div className="ml-auto text-xs text-slate-600">
@@ -335,7 +335,7 @@ export function DashboardPage() {
                       <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: item.color }} />
                       <span className="text-xs text-slate-400 flex-1">{item.name}</span>
                       <div className="flex items-center gap-2">
-                        <div className="w-16 h-1.5 bg-orbit-surface3 rounded-full overflow-hidden">
+                        <div className="w-16 h-1.5 bg-surface3 rounded-full overflow-hidden">
                           <div className="h-full rounded-full" style={{ width: `${(item.value / Math.max(...platformData.map(d => d.value))) * 100}%`, background: item.color }} />
                         </div>
                         <span className="text-xs text-slate-300 w-8 text-right">{item.value}</span>
@@ -344,13 +344,13 @@ export function DashboardPage() {
                   ))}
                   {/* Platform success rates */}
                   {platformSuccessData.some(p => p.offers > 0) && (
-                    <div className="pt-2 mt-2 border-t border-orbit-border">
+                    <div className="pt-2 mt-2 border-t border-border">
                       <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Success Rate</p>
                       {platformSuccessData.filter(p => p.total > 0).map(p => (
                         <div key={p.platform} className="flex items-center gap-2 text-xs mb-1.5">
                           <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: p.color }} />
                           <span className="text-slate-400 w-20 truncate">{p.platform}</span>
-                          <div className="flex-1 h-1.5 bg-orbit-surface3 rounded-full overflow-hidden">
+                          <div className="flex-1 h-1.5 bg-surface3 rounded-full overflow-hidden">
                             <div className="h-full rounded-full" style={{ width: `${p.rate}%`, background: p.color === '#FF6B00' ? '#4F46E5' : p.color }} />
                           </div>
                           <span className="text-slate-300 w-14 text-right">{p.offers}/{p.total}</span>
@@ -385,7 +385,7 @@ export function DashboardPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-orbit-border">
+                  <tr className="border-b border-border">
                     {['COMPANY', 'JOB TITLE', 'DATE', 'PLATFORM', 'STATUS'].map(col => (
                       <th key={col} className="text-left text-[11px] font-semibold text-slate-600 uppercase tracking-wider px-5 pb-3">
                         {col}
@@ -393,15 +393,15 @@ export function DashboardPage() {
                     ))}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-orbit-border">
+                <tbody className="divide-y divide-border">
                   {loading ? (
                     Array.from({ length: 5 }).map((_, i) => (
                       <tr key={i} className="animate-pulse">
-                        <td className="px-5 py-4"><div className="h-4 w-28 bg-orbit-surface2 rounded" /></td>
-                        <td className="px-5 py-4"><div className="h-4 w-36 bg-orbit-surface2 rounded" /></td>
-                        <td className="px-5 py-4"><div className="h-4 w-20 bg-orbit-surface2 rounded" /></td>
-                        <td className="px-5 py-4"><div className="h-4 w-20 bg-orbit-surface2 rounded" /></td>
-                        <td className="px-5 py-4"><div className="h-6 w-20 bg-orbit-surface2 rounded-full" /></td>
+                        <td className="px-5 py-4"><div className="h-4 w-28 bg-surface2 rounded" /></td>
+                        <td className="px-5 py-4"><div className="h-4 w-36 bg-surface2 rounded" /></td>
+                        <td className="px-5 py-4"><div className="h-4 w-20 bg-surface2 rounded" /></td>
+                        <td className="px-5 py-4"><div className="h-4 w-20 bg-surface2 rounded" /></td>
+                        <td className="px-5 py-4"><div className="h-6 w-20 bg-surface2 rounded-full" /></td>
                       </tr>
                     ))
                   ) : jobs.length === 0 ? (
@@ -454,9 +454,9 @@ export function DashboardPage() {
                   initial={{ opacity: 0, x: -8 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.05 }}
-                  className="flex items-start gap-3 py-3 border-b border-orbit-border last:border-0"
+                  className="flex items-start gap-3 py-3 border-b border-border last:border-0"
                 >
-                  <div className="w-9 h-9 rounded-lg bg-orbit-primary/10 text-orbit-primary-light flex items-center justify-center flex-shrink-0">
+                  <div className="w-9 h-9 rounded-lg bg-primary/10 text-primary-light flex items-center justify-center flex-shrink-0">
                     <Calendar className="w-4 h-4" />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -474,7 +474,7 @@ export function DashboardPage() {
             )}
 
             {/* Recent Activity */}
-            <div className="pt-3 mt-2 border-t border-orbit-border">
+            <div className="pt-3 mt-2 border-t border-border">
               <p className="text-[11px] font-semibold text-slate-600 uppercase tracking-wider mb-2">Recent Activity</p>
               {(dashData?.recent_activity ?? []).length === 0 ? (
                 <p className="text-xs text-slate-600 text-center py-4">No activity yet</p>
@@ -485,7 +485,7 @@ export function DashboardPage() {
                     initial={{ opacity: 0, x: -8 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.05 }}
-                    className="flex items-start gap-3 py-2.5 border-b border-orbit-border last:border-0"
+                    className="flex items-start gap-3 py-2.5 border-b border-border last:border-0"
                   >
                     <div className={cn(
                       'w-2 h-2 rounded-full mt-1.5 flex-shrink-0',

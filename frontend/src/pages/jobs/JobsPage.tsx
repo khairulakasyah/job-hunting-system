@@ -188,11 +188,11 @@ export function JobsPage() {
         </div>
         <div className="flex items-center gap-2">
           <button onClick={handleExport}
-            className="flex items-center gap-2 px-4 py-2 bg-orbit-surface2 hover:bg-white/5 text-slate-400 text-sm font-medium rounded-lg border border-orbit-border transition-colors">
+            className="flex items-center gap-2 px-4 py-2 bg-surface2 hover:bg-white/5 text-slate-400 text-sm font-medium rounded-lg border border-border transition-colors">
             <Download className="w-4 h-4" /> Export
           </button>
           <button onClick={openCreate}
-            className="flex items-center gap-2 px-4 py-2 bg-orbit-primary hover:bg-orbit-primary/90 text-white text-sm font-medium rounded-lg transition-colors">
+            className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-white text-sm font-medium rounded-lg transition-colors">
             <Plus className="w-4 h-4" /> Add Job
           </button>
         </div>
@@ -210,55 +210,55 @@ export function JobsPage() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
             <input type="text" value={searchInput} onChange={e => setSearchInput(e.target.value)}
               placeholder="Search by company, job title, or location..."
-              className="w-full bg-orbit-surface border border-orbit-border rounded-xl pl-10 pr-10 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-orbit-primary transition-colors" />
+              className="w-full bg-surface border border-border rounded-xl pl-10 pr-10 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-primary transition-colors" />
             {searchInput && (
               <button onClick={clearSearch} aria-label="Clear search" className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors">
                 <X className="w-4 h-4" />
               </button>
             )}
           </div>
-          <div className="flex items-center gap-1 bg-orbit-surface border border-orbit-border rounded-xl p-1 flex-wrap">
+          <div className="flex items-center gap-1 bg-surface border border-border rounded-xl p-1 flex-wrap">
             {statusFilters.map(f => (
               <button key={f.value} onClick={() => handleStatusFilter(f.value)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap ${statusFilter === f.value ? 'bg-orbit-primary text-white shadow-sm' : 'text-slate-500 hover:text-slate-200 hover:bg-white/5'}`}>
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap ${statusFilter === f.value ? 'bg-primary text-white shadow-sm' : 'text-slate-500 hover:text-slate-200 hover:bg-white/5'}`}>
                 {f.label}
               </button>
             ))}
           </div>
           <button onClick={() => setShowFilters(v => !v)}
-            className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs font-medium border transition-colors ${showFilters || hasActiveFilters ? 'bg-orbit-primary/10 border-orbit-primary/30 text-orbit-primary-light' : 'bg-orbit-surface border-orbit-border text-slate-500 hover:text-slate-200 hover:bg-white/5'}`}>
+            className={`flex items-center gap-2 px-3 py-2.5 rounded-xl text-xs font-medium border transition-colors ${showFilters || hasActiveFilters ? 'bg-primary/10 border-primary/30 text-primary-light' : 'bg-surface border-border text-slate-500 hover:text-slate-200 hover:bg-white/5'}`}>
             <Filter className="w-3.5 h-3.5" /> Filters
-            {hasActiveFilters && <div className="w-1.5 h-1.5 rounded-full bg-orbit-primary" />}
+            {hasActiveFilters && <div className="w-1.5 h-1.5 rounded-full bg-primary" />}
           </button>
         </div>
 
         {/* Advanced filters */}
         {showFilters && (
           <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}
-            className="flex flex-wrap items-end gap-3 p-4 bg-orbit-surface border border-orbit-border rounded-xl">
+            className="flex flex-wrap items-end gap-3 p-4 bg-surface border border-border rounded-xl">
             <div>
               <label className="block text-[10px] font-medium text-slate-500 mb-1">Platform</label>
               <select value={platformFilter} onChange={e => { setPlatformFilter(e.target.value); setCurrentPage(1) }}
-                className="bg-orbit-surface2 border border-orbit-border rounded-lg px-3 py-2 text-xs text-slate-200 outline-none focus:border-orbit-primary transition-colors">
+                className="bg-surface2 border border-border rounded-lg px-3 py-2 text-xs text-slate-200 outline-none focus:border-primary transition-colors">
                 <option value="">All Platforms</option>
                 {availablePlatforms.map(p => (
-                  <option key={p} value={p} className="bg-orbit-surface text-slate-200">{p.charAt(0).toUpperCase() + p.slice(1)}</option>
+                  <option key={p} value={p} className="bg-surface text-slate-200">{p.charAt(0).toUpperCase() + p.slice(1)}</option>
                 ))}
               </select>
             </div>
             <div>
               <label className="block text-[10px] font-medium text-slate-500 mb-1">From Date</label>
               <input type="date" value={dateFrom} onChange={e => { setDateFrom(e.target.value); setCurrentPage(1) }}
-                className="bg-orbit-surface2 border border-orbit-border rounded-lg px-3 py-2 text-xs text-slate-200 outline-none focus:border-orbit-primary transition-colors" />
+                className="bg-surface2 border border-border rounded-lg px-3 py-2 text-xs text-slate-200 outline-none focus:border-primary transition-colors" />
             </div>
             <div>
               <label className="block text-[10px] font-medium text-slate-500 mb-1">To Date</label>
               <input type="date" value={dateTo} onChange={e => { setDateTo(e.target.value); setCurrentPage(1) }}
-                className="bg-orbit-surface2 border border-orbit-border rounded-lg px-3 py-2 text-xs text-slate-200 outline-none focus:border-orbit-primary transition-colors" />
+                className="bg-surface2 border border-border rounded-lg px-3 py-2 text-xs text-slate-200 outline-none focus:border-primary transition-colors" />
             </div>
             {hasActiveFilters && (
               <button onClick={clearAllFilters}
-                className="px-3 py-2 bg-orbit-surface2 hover:bg-white/5 text-slate-400 text-xs font-medium rounded-lg border border-orbit-border transition-colors">
+                className="px-3 py-2 bg-surface2 hover:bg-white/5 text-slate-400 text-xs font-medium rounded-lg border border-border transition-colors">
                 Clear
               </button>
             )}
@@ -269,11 +269,11 @@ export function JobsPage() {
       {/* Bulk action bar */}
       {selectedIds.length > 0 && !loading && (
         <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-3 px-5 py-3 bg-orbit-primary/5 border border-orbit-primary/20 rounded-xl">
+          className="flex items-center gap-3 px-5 py-3 bg-primary/5 border border-primary/20 rounded-xl">
           <span className="text-sm text-slate-200 font-medium">{selectedIds.length} selected</span>
           <div className="flex items-center gap-1.5 ml-auto">
             <select value={bulkStatus} onChange={e => setBulkStatus(e.target.value)}
-              className="bg-orbit-surface2 border border-orbit-border rounded-lg px-2 py-1.5 text-xs text-slate-200 outline-none focus:border-orbit-primary transition-colors">
+              className="bg-surface2 border border-border rounded-lg px-2 py-1.5 text-xs text-slate-200 outline-none focus:border-primary transition-colors">
               <option value="">Change status...</option>
               {statusFilters.filter(f => f.value).map(f => (
                 <option key={f.value} value={f.value}>{f.label}</option>
@@ -281,7 +281,7 @@ export function JobsPage() {
             </select>
             {bulkStatus && (
               <button onClick={handleBulkStatus}
-                className="px-3 py-1.5 bg-orbit-primary hover:bg-orbit-primary/90 text-white text-xs font-medium rounded-lg transition-colors">
+                className="px-3 py-1.5 bg-primary hover:bg-primary/90 text-white text-xs font-medium rounded-lg transition-colors">
                 Apply
               </button>
             )}
@@ -295,14 +295,14 @@ export function JobsPage() {
 
       {/* Table */}
       <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-        className="bg-orbit-surface border border-orbit-border rounded-xl">
+        className="bg-surface border border-border rounded-xl">
         {loading ? (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-orbit-border">
+                <tr className="border-b border-border">
                   <th className="px-5 py-4 w-10">
-                    <div className="w-3.5 h-3.5 bg-orbit-surface2 rounded" />
+                    <div className="w-3.5 h-3.5 bg-surface2 rounded" />
                   </th>
                   {['Company', 'Job Title', 'Location', 'Platform', 'Salary', 'Status', 'Date', ''].map(col => (
                     <th key={col} className="text-left text-[11px] font-semibold text-slate-600 uppercase tracking-wider px-5 py-4">
@@ -313,10 +313,10 @@ export function JobsPage() {
               </thead>
               <tbody>
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <tr key={i} className="border-b border-orbit-border/50 animate-pulse">
+                  <tr key={i} className="border-b border-border/50 animate-pulse">
                     {[0, 1, 2, 3, 4, 5, 6, 7, 8].map(j => (
                       <td key={j} className="px-5 py-4">
-                        <div className={`h-4 rounded ${j === 7 ? 'w-12' : 'w-20'} bg-orbit-surface2`} />
+                        <div className={`h-4 rounded ${j === 7 ? 'w-12' : 'w-20'} bg-surface2`} />
                       </td>
                     ))}
                   </tr>
@@ -326,7 +326,7 @@ export function JobsPage() {
           </div>
         ) : jobs.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-center">
-            <div className="w-14 h-14 rounded-full bg-orbit-surface2 flex items-center justify-center mb-4">
+            <div className="w-14 h-14 rounded-full bg-surface2 flex items-center justify-center mb-4">
               <Briefcase className="w-7 h-7 text-slate-500" />
             </div>
             {search || statusFilter ? (
@@ -334,7 +334,7 @@ export function JobsPage() {
                 <p className="text-slate-300 font-medium">No results found</p>
                 <p className="text-slate-500 text-sm mt-1 mb-4">Try adjusting your search or filter</p>
                 <button onClick={() => { clearSearch(); handleStatusFilter('') }}
-                  className="flex items-center gap-2 px-4 py-2 bg-orbit-surface2 hover:bg-white/5 text-slate-400 text-sm font-medium rounded-lg border border-orbit-border transition-colors">
+                  className="flex items-center gap-2 px-4 py-2 bg-surface2 hover:bg-white/5 text-slate-400 text-sm font-medium rounded-lg border border-border transition-colors">
                   <X className="w-4 h-4" /> Clear filters
                 </button>
               </>
@@ -343,7 +343,7 @@ export function JobsPage() {
                 <p className="text-slate-300 font-medium">No jobs yet</p>
                 <p className="text-slate-500 text-sm mt-1 mb-4">Start tracking your applications</p>
                 <button onClick={openCreate}
-                  className="flex items-center gap-2 px-4 py-2 bg-orbit-primary hover:bg-orbit-primary/90 text-white text-sm font-medium rounded-lg transition-colors">
+                  className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-white text-sm font-medium rounded-lg transition-colors">
                   <Plus className="w-4 h-4" /> Add your first job
                 </button>
               </>
@@ -353,11 +353,11 @@ export function JobsPage() {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-orbit-border">
+                <tr className="border-b border-border">
                   <th className="px-5 py-4 w-10">
                     <input type="checkbox" checked={jobs.length > 0 && selectedIds.length === jobs.length}
                       onChange={toggleSelectAll}
-                      className="rounded border-orbit-border bg-orbit-surface2 text-orbit-primary w-3.5 h-3.5" />
+                      className="rounded border-border bg-surface2 text-primary w-3.5 h-3.5" />
                   </th>
                   {['Company', 'Job Title', 'Location', 'Platform', 'Salary', 'Status', 'Date', ''].map(col => (
                     <th key={col} className="text-left text-[11px] font-semibold text-slate-600 uppercase tracking-wider px-5 py-4">
@@ -366,15 +366,15 @@ export function JobsPage() {
                   ))}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-orbit-border">
+              <tbody className="divide-y divide-border">
                 {jobs.map((job, i) => (
                   <motion.tr key={job.id} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.05 }}
-                    className={`hover:bg-white/2 transition-colors ${selectedIds.includes(job.id) ? 'bg-orbit-primary/5' : ''}`}>
+                    className={`hover:bg-white/2 transition-colors ${selectedIds.includes(job.id) ? 'bg-primary/5' : ''}`}>
                     <td className="px-5 py-4">
                       <input type="checkbox" checked={selectedIds.includes(job.id)}
                         onChange={() => toggleSelect(job.id)}
-                        className="rounded border-orbit-border bg-orbit-surface2 text-orbit-primary w-3.5 h-3.5" />
+                        className="rounded border-border bg-surface2 text-primary w-3.5 h-3.5" />
                     </td>
                     <td className="px-5 py-4 text-sm font-medium text-slate-200">{job.company_name}</td>
                     <td className="px-5 py-4 text-sm text-slate-400">{job.job_title}</td>
@@ -389,7 +389,7 @@ export function JobsPage() {
                     </td>
                     <td className="px-5 py-4">
                       <button onClick={() => openView(job)}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-white/5 border border-orbit-border transition-colors">
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-white/5 border border-border transition-colors">
                         <Eye className="w-3.5 h-3.5" /> View
                       </button>
                     </td>

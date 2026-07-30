@@ -32,14 +32,14 @@ export function Pagination({ currentPage, lastPage, total, perPage, onPageChange
   }
 
   return (
-    <div className="flex items-center justify-between px-5 py-4 border-t border-orbit-border">
+    <div className="flex items-center justify-between px-5 py-4 border-t border-border">
       {/* Info + per-page */}
         <div className="flex items-center gap-3">
           {onPerPageChange && (
             <div className="flex items-center gap-1.5">
               <label className="text-[10px] font-medium text-slate-500">Rows</label>
               <select value={perPageValue} onChange={e => onPerPageChange(Number(e.target.value))}
-                className="bg-orbit-surface2 border border-orbit-border rounded px-1.5 py-1 text-xs text-slate-200 outline-none focus:border-orbit-primary transition-colors">
+                className="bg-surface2 border border-border rounded px-1.5 py-1 text-xs text-slate-200 outline-none focus:border-primary transition-colors">
                 <option value={10}>10</option>
                 <option value={25}>25</option>
                 <option value={50}>50</option>
@@ -76,7 +76,7 @@ export function Pagination({ currentPage, lastPage, total, perPage, onPageChange
               className={`
                 min-w-[32px] h-8 rounded-lg text-xs font-medium transition-colors
                 ${page === currentPage
-                  ? 'bg-orbit-primary text-white'
+                  ? 'bg-primary text-white'
                   : 'text-slate-500 hover:text-slate-200 hover:bg-white/5'
                 }
               `}

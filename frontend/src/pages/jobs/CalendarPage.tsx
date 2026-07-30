@@ -141,13 +141,13 @@ export function CalendarPage() {
           <p className="text-slate-500 text-sm mt-1">Manage your interviews and events</p>
         </div>
         <button onClick={openCreateEvent}
-          className="flex items-center gap-2 px-4 py-2 bg-orbit-primary hover:bg-orbit-primary/90 text-white text-sm font-medium rounded-lg transition-colors">
+          className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-white text-sm font-medium rounded-lg transition-colors">
           <Plus className="w-4 h-4" /> Add Event
         </button>
       </motion.div>
 
       <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}
-        className="bg-orbit-surface border border-orbit-border rounded-xl p-4">
+        className="bg-surface border border-border rounded-xl p-4">
         <div className="calendar-container" ref={calendarContainerRef} />
       </motion.div>
 

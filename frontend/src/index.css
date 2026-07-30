@@ -23,30 +23,30 @@
 
 /* ─── Map runtime vars to Tailwind tokens ────────────────────────────────── */
 @theme inline {
-  --color-orbit-bg:       var(--bg);
-  --color-orbit-surface:  var(--surface);
-  --color-orbit-surface2: var(--surface2);
-  --color-orbit-surface3: var(--surface3);
-  --color-orbit-border:   var(--border);
-  --color-orbit-border2:  var(--border2);
+  --color-bg:       var(--bg);
+  --color-surface:  var(--surface);
+  --color-surface2: var(--surface2);
+  --color-surface3: var(--surface3);
+  --color-border:   var(--border);
+  --color-border2:  var(--border2);
 }
 
 /* ─── Fixed design tokens ────────────────────────────────────────────────── */
 @theme {
   --font-family-sans: 'Inter', system-ui, -apple-system, sans-serif;
 
-  --color-orbit-primary:       #4F46E5;
-  --color-orbit-primary-light: #6366F1;
-  --color-orbit-primary-glow:  rgba(79, 70, 229, 0.25);
+  --color-primary:       #4F46E5;
+  --color-primary-light: #6366F1;
+  --color-primary-glow:  rgba(79, 70, 229, 0.25);
 
-  --color-orbit-accent:       #0D9488;
-  --color-orbit-accent-light: #14B8A6;
-  --color-orbit-accent-glow:  rgba(13, 148, 136, 0.2);
+  --color-accent:       #0D9488;
+  --color-accent-light: #14B8A6;
+  --color-accent-glow:  rgba(13, 148, 136, 0.2);
 
-  --color-orbit-success: #10B981;
-  --color-orbit-warning: #F59E0B;
-  --color-orbit-danger:  #EF4444;
-  --color-orbit-info:    #3B82F6;
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-danger:  #EF4444;
+  --color-info:    #3B82F6;
 }
 
 /* ─── Global resets ──────────────────────────────────────────────────────── */
@@ -81,8 +81,8 @@ body {
 ::-webkit-scrollbar-thumb:hover { background: var(--border2); filter: brightness(1.2); }
 
 /* ─── Utility classes ────────────────────────────────────────────────────── */
-.glow-primary { box-shadow: 0 0 20px var(--color-orbit-primary-glow); }
-.glow-accent  { box-shadow: 0 0 20px var(--color-orbit-accent-glow); }
+.glow-primary { box-shadow: 0 0 20px var(--color-primary-glow); }
+.glow-accent  { box-shadow: 0 0 20px var(--color-accent-glow); }
 
 .glass {
   background: var(--glass-bg);
@@ -111,7 +111,7 @@ body {
   pointer-events: none;
 }
 
-.orbit-glow-bg {
+.glow-bg {
   position: fixed;
   top: -200px;
   left: 50%;
@@ -132,12 +132,12 @@ body {
 .bg-white\/5  { background-color: rgba(0, 0, 0, 0.04) !important; }
 .bg-white\/3  { background-color: rgba(0, 0, 0, 0.02) !important; }
 
-.bg-orbit-primary\/5 { background-color: rgba(79, 70, 229, 0.06) !important; }
+.bg-primary\/5 { background-color: rgba(79, 70, 229, 0.06) !important; }
 
-.border-orbit-border { border-color: var(--border); }
+.border-border { border-color: var(--border); }
 
-.bg-orbit-primary\/15 { background-color: rgba(79, 70, 229, 0.12) !important; }
-.bg-orbit-primary\/10 { background-color: rgba(79, 70, 229, 0.10) !important; }
+.bg-primary\/15 { background-color: rgba(79, 70, 229, 0.12) !important; }
+.bg-primary\/10 { background-color: rgba(79, 70, 229, 0.10) !important; }
 
 /* ─── Select / Date input styling ────────────────────────────────────────── */
 select {

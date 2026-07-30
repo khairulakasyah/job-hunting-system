@@ -4,22 +4,22 @@ import { Loader2 } from 'lucide-react'
 import { cn } from '@/utils/cn'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orbit-primary focus-visible:ring-offset-2 focus-visible:ring-offset-orbit-bg disabled:pointer-events-none disabled:opacity-40 select-none',
+  'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg disabled:pointer-events-none disabled:opacity-40 select-none',
   {
     variants: {
       variant: {
         primary:
-          'bg-orbit-primary text-white hover:bg-orbit-primary-light shadow-sm shadow-orbit-primary/20 hover:shadow-orbit-primary/30 hover:shadow-md active:scale-[0.98]',
+          'bg-primary text-white hover:bg-primary-light shadow-sm shadow-primary/20 hover:shadow-primary/30 hover:shadow-md active:scale-[0.98]',
         secondary:
-          'bg-orbit-surface3 text-slate-200 hover:bg-orbit-border2 border border-orbit-border active:scale-[0.98]',
+          'bg-surface3 text-slate-200 hover:bg-border2 border border-border active:scale-[0.98]',
         ghost:
           'text-slate-400 hover:text-slate-200 hover:bg-white/5 active:scale-[0.98]',
         outline:
-          'border border-orbit-border text-slate-300 hover:border-orbit-border2 hover:bg-white/5 active:scale-[0.98]',
+          'border border-border text-slate-300 hover:border-border2 hover:bg-white/5 active:scale-[0.98]',
         destructive:
-          'bg-orbit-danger/10 text-orbit-danger border border-orbit-danger/20 hover:bg-orbit-danger/20 active:scale-[0.98]',
+          'bg-danger/10 text-danger border border-danger/20 hover:bg-danger/20 active:scale-[0.98]',
         accent:
-          'bg-orbit-accent text-orbit-bg font-semibold hover:bg-orbit-accent-light shadow-sm shadow-orbit-accent/20 active:scale-[0.98]',
+          'bg-accent text-bg font-semibold hover:bg-accent-light shadow-sm shadow-accent/20 active:scale-[0.98]',
       },
       size: {
         xs: 'h-7 px-2.5 text-xs',

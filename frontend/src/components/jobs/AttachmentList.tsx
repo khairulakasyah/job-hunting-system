@@ -68,7 +68,7 @@ export function AttachmentList({ jobId }: { jobId: number }) {
     return (
       <div className="space-y-2">
         {[1, 2].map(i => (
-          <div key={i} className="h-12 bg-orbit-surface2 rounded-lg animate-pulse" />
+          <div key={i} className="h-12 bg-surface2 rounded-lg animate-pulse" />
         ))}
       </div>
     )
@@ -91,7 +91,7 @@ export function AttachmentList({ jobId }: { jobId: number }) {
         <button
           onClick={() => fileInputRef.current?.click()}
           disabled={uploading}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-orbit-primary-light bg-orbit-primary/10 hover:bg-orbit-primary/20 rounded-lg transition-colors disabled:opacity-50"
+          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-primary-light bg-primary/10 hover:bg-primary/20 rounded-lg transition-colors disabled:opacity-50"
         >
           <Upload className="w-3.5 h-3.5" />
           {uploading ? 'Uploading...' : 'Upload'}
@@ -110,7 +110,7 @@ export function AttachmentList({ jobId }: { jobId: number }) {
               initial={{ opacity: 0, y: -4 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, height: 0 }}
-              className="flex items-center gap-3 px-3 py-2 rounded-lg bg-orbit-surface2 hover:bg-white/5 transition-colors group"
+              className="flex items-center gap-3 px-3 py-2 rounded-lg bg-surface2 hover:bg-white/5 transition-colors group"
             >
               <FileIcon mime={a.mime_type} />
               <div className="flex-1 min-w-0">

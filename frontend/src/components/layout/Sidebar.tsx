@@ -8,9 +8,9 @@ import { useSidebar } from '@/hooks/useSidebar'
 import type { NavItem } from '@/types'
 import { useAuth } from '@/contexts/AuthContext'
 
-function OrbitLogo({ collapsed }: { collapsed: boolean }) {
+function JobhunterLogo({ collapsed }: { collapsed: boolean }) {
   return (
-    <div className="flex items-center gap-3 px-4 py-5 border-b border-orbit-border">
+    <div className="flex items-center gap-3 px-4 py-5 border-b border-border">
       <div className="relative flex-shrink-0">
         <img src="/jobhunter.png" alt="Job Hunter" className="w-8 h-8 object-contain" />
       </div>
@@ -58,7 +58,7 @@ function NavItemLink({
           className={cn(
             'w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 group',
             isChildActive
-              ? 'text-slate-100 bg-orbit-primary/10'
+              ? 'text-slate-100 bg-primary/10'
               : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
           )}
         >
@@ -66,7 +66,7 @@ function NavItemLink({
             <item.icon
               className={cn(
                 'w-[18px] h-[18px] flex-shrink-0 transition-colors',
-                isChildActive ? 'text-orbit-primary-light' : 'text-slate-500 group-hover:text-slate-300'
+                isChildActive ? 'text-primary-light' : 'text-slate-500 group-hover:text-slate-300'
               )}
             />
           )}
@@ -98,7 +98,7 @@ function NavItemLink({
               transition={{ duration: 0.2 }}
               className="overflow-hidden"
             >
-              <div className="ml-6 mt-1 border-l border-orbit-border pl-3 space-y-0.5">
+              <div className="ml-6 mt-1 border-l border-border pl-3 space-y-0.5">
                 {item.children!.map(child => (
                   <NavLink
                     key={child.href}
@@ -108,7 +108,7 @@ function NavItemLink({
                       cn(
                         'flex items-center gap-2 px-3 py-2 rounded-md text-sm transition-colors',
                         isActive
-                          ? 'text-orbit-primary-light font-medium'
+                          ? 'text-primary-light font-medium'
                           : 'text-slate-400 hover:text-slate-200'
                       )
                     }
@@ -116,7 +116,7 @@ function NavItemLink({
                     <ChevronRight className="w-3 h-3 opacity-50" />
                     {child.label}
                     {child.badge && (
-                      <span className="ml-auto text-[10px] font-semibold bg-orbit-primary/20 text-orbit-primary-light px-1.5 py-0.5 rounded-full">
+                      <span className="ml-auto text-[10px] font-semibold bg-primary/20 text-primary-light px-1.5 py-0.5 rounded-full">
                         {child.badge}
                       </span>
                     )}
@@ -140,7 +140,7 @@ function NavItemLink({
         return cn(
           'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 group relative',
           active
-            ? 'text-slate-100 bg-orbit-primary/15 shadow-sm'
+            ? 'text-slate-100 bg-primary/15 shadow-sm'
             : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
         )
       }}
@@ -152,14 +152,14 @@ function NavItemLink({
             {active && (
               <motion.div
                 layoutId="nav-indicator"
-                className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-orbit-primary rounded-r-full"
+                className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-primary rounded-r-full"
               />
             )}
             {item.icon && (
               <item.icon
                 className={cn(
                   'w-[18px] h-[18px] flex-shrink-0 transition-colors',
-                  active ? 'text-orbit-primary-light' : 'text-slate-500 group-hover:text-slate-300'
+                  active ? 'text-primary-light' : 'text-slate-500 group-hover:text-slate-300'
                 )}
               />
             )}
@@ -176,7 +176,7 @@ function NavItemLink({
               )}
             </AnimatePresence>
             {!collapsed && item.badge && (
-              <span className="ml-auto text-[10px] font-bold bg-orbit-accent/20 text-orbit-accent-light px-1.5 py-0.5 rounded-full">
+              <span className="ml-auto text-[10px] font-bold bg-accent/20 text-accent-light px-1.5 py-0.5 rounded-full">
                 {item.badge}
               </span>
             )}
@@ -202,9 +202,9 @@ export function Sidebar() {
         x: isMobile && !mobileOpen ? '-100%' : 0,
       }}
       transition={{ duration: 0.25, ease: 'easeInOut' }}
-      className="fixed left-0 top-0 h-screen bg-orbit-surface border-r border-orbit-border flex flex-col z-40 overflow-hidden"
+      className="fixed left-0 top-0 h-screen bg-surface border-r border-border flex flex-col z-40 overflow-hidden"
     >
-      <OrbitLogo collapsed={collapsed && !isMobile} />
+      <JobhunterLogo collapsed={collapsed && !isMobile} />
 
       <nav className="flex-1 overflow-y-auto overflow-x-hidden py-4 px-3 space-y-6">
         {isAdmin && (
@@ -248,12 +248,12 @@ export function Sidebar() {
         ))}
       </nav>
 
-      <div className="border-t border-orbit-border p-3">
+      <div className="border-t border-border p-3">
         <div className={cn(
           'flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 cursor-pointer transition-colors',
           collapsed && !isMobile && 'justify-center'
         )}>
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orbit-primary to-orbit-accent flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
             {user?.name?.charAt(0).toUpperCase() ?? 'U'}
           </div>
           <AnimatePresence>

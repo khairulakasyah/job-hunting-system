@@ -59,12 +59,12 @@ export function Avatar({ src, alt, initials = '?', size = 'md', className, onlin
         <img
           src={src}
           alt={alt}
-          className={cn('rounded-full object-cover ring-2 ring-orbit-border', sizeClasses[size])}
+          className={cn('rounded-full object-cover ring-2 ring-border', sizeClasses[size])}
         />
       ) : (
         <div
           className={cn(
-            'rounded-full flex items-center justify-center text-white font-semibold bg-gradient-to-br ring-2 ring-orbit-border',
+            'rounded-full flex items-center justify-center text-white font-semibold bg-gradient-to-br ring-2 ring-border',
             sizeClasses[size],
             getGradient(initials)
           )}
@@ -75,8 +75,8 @@ export function Avatar({ src, alt, initials = '?', size = 'md', className, onlin
       {online !== undefined && (
         <span
           className={cn(
-            'absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full ring-2 ring-orbit-surface',
-            online ? 'bg-orbit-success' : 'bg-slate-500'
+            'absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full ring-2 ring-surface',
+            online ? 'bg-success' : 'bg-slate-500'
           )}
         />
       )}
@@ -91,10 +91,10 @@ export function AvatarGroup({ avatars, max = 4 }: { avatars: { initials: string;
   return (
     <div className="flex -space-x-2">
       {visible.map((a, i) => (
-        <Avatar key={i} initials={a.initials} src={a.src} size="sm" className="ring-2 ring-orbit-surface" />
+        <Avatar key={i} initials={a.initials} src={a.src} size="sm" className="ring-2 ring-surface" />
       ))}
       {overflow > 0 && (
-        <div className="w-7 h-7 rounded-full bg-orbit-surface3 border border-orbit-border flex items-center justify-center text-[10px] text-slate-400 font-medium z-10">
+        <div className="w-7 h-7 rounded-full bg-surface3 border border-border flex items-center justify-center text-[10px] text-slate-400 font-medium z-10">
           +{overflow}
         </div>
       )}

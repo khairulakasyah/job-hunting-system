@@ -104,7 +104,7 @@ export function KanbanPage() {
           </p>
         </div>
         <button onClick={openCreate}
-          className="flex items-center gap-2 px-4 py-2 bg-orbit-primary hover:bg-orbit-primary/90 text-white text-sm font-medium rounded-lg transition-colors">
+          className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 text-white text-sm font-medium rounded-lg transition-colors">
           <Plus className="w-4 h-4" /> Add Job
         </button>
       </motion.div>
@@ -150,13 +150,13 @@ function DroppableColumn({ id, label, color, jobs, loading, onView }: {
 
   return (
     <div ref={setNodeRef}
-      className={`flex-shrink-0 w-72 bg-orbit-surface border border-orbit-border rounded-xl border-t-2 ${color} flex flex-col transition-colors ${
-        isOver ? 'bg-orbit-primary/5 border-orbit-primary/30' : ''
+      className={`flex-shrink-0 w-72 bg-surface border border-border rounded-xl border-t-2 ${color} flex flex-col transition-colors ${
+        isOver ? 'bg-primary/5 border-primary/30' : ''
       }`}>
-      <div className="flex items-center justify-between px-4 py-3 border-b border-orbit-border">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-border">
         <div className="flex items-center gap-2">
           <span className="text-sm font-semibold text-slate-200">{label}</span>
-          <span className="text-[11px] font-medium text-slate-500 bg-orbit-surface2 px-1.5 py-0.5 rounded-full">
+          <span className="text-[11px] font-medium text-slate-500 bg-surface2 px-1.5 py-0.5 rounded-full">
             {jobs.length}
           </span>
         </div>
@@ -164,7 +164,7 @@ function DroppableColumn({ id, label, color, jobs, loading, onView }: {
       <div className="flex-1 overflow-y-auto p-3 space-y-2.5 min-h-[100px]">
         {loading ? (
           <div className="flex justify-center py-8">
-            <div className="w-5 h-5 border-2 border-orbit-primary border-t-transparent rounded-full animate-spin" />
+            <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin" />
           </div>
         ) : jobs.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-8 text-center">

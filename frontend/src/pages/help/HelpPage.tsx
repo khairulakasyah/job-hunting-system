@@ -13,16 +13,16 @@ const quickLinks = [
     title: 'Documentation',
     description: 'Full guide to every page, component, and configuration option',
     badge: undefined,
-    color: 'text-orbit-primary-light',
-    bg: 'bg-orbit-primary/10',
+    color: 'text-primary-light',
+    bg: 'bg-primary/10',
   },
   {
     icon: Code2,
     title: 'API Integration',
     description: 'LLM-ready docs to wire up your backend in minutes',
     badge: 'New',
-    color: 'text-orbit-accent-light',
-    bg: 'bg-orbit-accent/10',
+    color: 'text-accent-light',
+    bg: 'bg-accent/10',
   },
   {
     icon: Zap,
@@ -30,7 +30,7 @@ const quickLinks = [
     description: "What's new in the latest version of Job Hunter",
     badge: 'v1.0',
     color: 'text-amber-400',
-    bg: 'bg-orbit-warning/10',
+    bg: 'bg-warning/10',
   },
   {
     icon: MessageSquare,
@@ -38,7 +38,7 @@ const quickLinks = [
     description: 'Ask questions, share ideas, and connect with other Job Hunter users',
     badge: undefined,
     color: 'text-emerald-400',
-    bg: 'bg-orbit-success/10',
+    bg: 'bg-success/10',
   },
 ]
 
@@ -53,7 +53,7 @@ const faqs = [
   },
   {
     q: 'Can I change the primary color from violet?',
-    a: 'Yes. Open `src/index.css` and find the `--color-orbit-primary` and `--color-orbit-accent` values in the `@theme {}` block. Change them to any hex color. You can also preview this in Settings → Appearance → Accent Color (color switcher coming in a future update).',
+    a: 'Yes. Open `src/index.css` and find the `--color-primary` and `--color-accent` values in the `@theme {}` block. Change them to any hex color. You can also preview this in Settings → Appearance → Accent Color (color switcher coming in a future update).',
   },
   {
     q: 'How do I add a new page?',
@@ -85,7 +85,7 @@ function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.04 }}
-      className="border-b border-orbit-border last:border-0"
+      className="border-b border-border last:border-0"
     >
       <button
         onClick={() => setOpen(o => !o)}
@@ -154,7 +154,7 @@ export function HelpPage() {
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.07 }}
-                className="flex items-start gap-4 p-4 rounded-xl border border-orbit-border bg-orbit-surface hover:border-orbit-border2 hover:bg-orbit-surface2 transition-all text-left group"
+                className="flex items-start gap-4 p-4 rounded-xl border border-border bg-surface hover:border-border2 hover:bg-surface2 transition-all text-left group"
               >
                 <div className={cn('p-2.5 rounded-lg flex-shrink-0', link.bg)}>
                   <link.icon className={cn('w-5 h-5', link.color)} />
@@ -178,15 +178,15 @@ export function HelpPage() {
         <Card>
           <CardBody>
             <div className="flex items-start gap-3">
-              <div className="p-2 rounded-lg bg-orbit-accent/10 flex-shrink-0">
-                <Lightbulb className="w-4 h-4 text-orbit-accent-light" />
+              <div className="p-2 rounded-lg bg-accent/10 flex-shrink-0">
+                <Lightbulb className="w-4 h-4 text-accent-light" />
               </div>
               <div>
                 <p className="text-sm font-semibold text-slate-200 mb-1">Pro tip — AI-assisted integration</p>
                 <p className="text-sm text-slate-400 leading-relaxed">
-                  The <code className="text-xs bg-orbit-surface2 px-1.5 py-0.5 rounded text-orbit-accent-light font-mono">docs/api-integration/</code> folder contains structured markdown files designed to be pasted into Claude or ChatGPT. Drop{' '}
-                  <code className="text-xs bg-orbit-surface2 px-1.5 py-0.5 rounded text-orbit-accent-light font-mono">overview.md</code> +{' '}
-                  <code className="text-xs bg-orbit-surface2 px-1.5 py-0.5 rounded text-orbit-accent-light font-mono">ai-chat.md</code> into Claude and ask it to wire up your AI backend — it'll generate all the code in minutes.
+                  The <code className="text-xs bg-surface2 px-1.5 py-0.5 rounded text-accent-light font-mono">docs/api-integration/</code> folder contains structured markdown files designed to be pasted into Claude or ChatGPT. Drop{' '}
+                  <code className="text-xs bg-surface2 px-1.5 py-0.5 rounded text-accent-light font-mono">overview.md</code> +{' '}
+                  <code className="text-xs bg-surface2 px-1.5 py-0.5 rounded text-accent-light font-mono">ai-chat.md</code> into Claude and ask it to wire up your AI backend — it'll generate all the code in minutes.
                 </p>
               </div>
             </div>
@@ -228,14 +228,7 @@ export function HelpPage() {
         >
           <p className="text-sm text-slate-500">
             Still stuck?{' '}
-            <a
-              href="https://github.com/orbitdash/orbit/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-orbit-primary-light hover:text-orbit-accent transition-colors font-medium"
-            >
-              Open an issue on GitHub
-            </a>
+            <span className="text-slate-500">Contact support for help</span>
           </p>
         </motion.div>
       )}
