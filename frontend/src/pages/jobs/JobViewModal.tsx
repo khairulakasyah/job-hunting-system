@@ -33,7 +33,7 @@ export function JobViewModal({ isOpen, onClose, onEdit, onDelete, job }: JobView
   const [timelines, setTimelines] = useState<JobTimeline[]>([])
   const [tlLoading, setTlLoading] = useState(false)
   const [activeTab, setActiveTab] = useState<Tab>('details')
-  const [modalStatus, setModalStatus] = useState(job?.status ?? 'applied')
+  const [modalStatus, setModalStatus] = useState<string>(job?.status ?? 'applied')
 
   const fetchTimelines = async () => {
     if (!job) return
