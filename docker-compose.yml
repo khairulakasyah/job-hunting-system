@@ -1,13 +1,19 @@
+version: '3.8'
+
 services:
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
       - "80:80"
     depends_on:
       - backend
 
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
     environment:
@@ -26,7 +32,9 @@ services:
       - scraper
 
   scraper:
-    build: ./scraper
+    build:
+      context: ./scraper
+      dockerfile: Dockerfile
     ports:
       - "5000:5000"
 
