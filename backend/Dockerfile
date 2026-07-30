@@ -10,10 +10,11 @@ COPY . .
 
 # .env is excluded by .dockerignore, but Laravel needs one during build
 RUN cp .env.example .env \
-    && composer install --no-dev --optimize-autoloader \
-    && php artisan key:generate \
+    && composer install --no-dev --no-interaction --optimize-autoloader --no-scripts \
+    && php artisan key:generate --force \
+    && php artisan package:discover --ansi \
     && php artisan optimize \
-    && chmod -R 777 storage bootstrap/cache \
+    && chmod -R 777 storage/bootstrap/cache \
     && rm .env
 
 EXPOSE 8000
