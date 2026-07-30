@@ -9,13 +9,17 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www
 COPY . .
 
-# Run the build steps with corrected directory paths
+# Step 1 — Install Composer dependencies
 RUN cp .env.example .env \
-    && composer install --no-dev --no-interaction --optimize-autoloader --no-scripts \
-    && php artisan key:generate --force \
+    && composer install --no-dev --no-interaction --optimize-autoloader --no-scripts
+
+# Step 2 — Generate key and cache config/routes
+RUN php artisan key:generate --force \
     && php artisan package:discover --ansi \
-    && php artisan optimize \
-    && chmod -R 777 storage bootstrap/cache \
+    && php artisan optimize
+
+# Step 3 — Set permissions and remove build-only .env
+RUN chmod -R 777 storage bootstrap/cache \
     && rm .env
 
 EXPOSE 8000
