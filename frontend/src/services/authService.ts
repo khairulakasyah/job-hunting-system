@@ -9,6 +9,7 @@ export interface User {
   id: number
   name: string
   email: string
+  is_admin?: boolean
   resume_url?: string | null
   portfolio_url?: string | null
   linkedin_url?: string | null

@@ -87,12 +87,116 @@ export function Topbar() {
       <div className="ml-auto flex items-center gap-1">
 
         {/* Search */}
-        <button
-          onClick={() => setShowSearch(true)} aria-label="Open search"
-          className="p-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-colors"
-        >
-          <Search className="w-4 h-4" />
-        </button>
+        <div className="relative">
+          <button
+            onClick={() => setShowSearch(o => !o)} aria-label="Open search"
+            className="p-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-colors"
+          >
+            <Search className="w-4 h-4" />
+          </button>
+
+          <AnimatePresence>
+            {showSearch && (
+              <>
+                <div className="fixed inset-0 z-40" onClick={handleSearchClose} />
+                <motion.div
+                  initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -8, scale: 0.96 }}
+                  transition={{ duration: 0.15 }}
+                  className="absolute right-0 top-full mt-2 w-96 bg-orbit-surface2 border border-orbit-border rounded-2xl shadow-2xl z-50 overflow-hidden"
+                >
+                  <div className="flex items-center gap-3 px-4 py-4 border-b border-orbit-border">
+                    <Search className="w-5 h-5 text-slate-500 flex-shrink-0" />
+                    <input
+                      autoFocus
+                      type="text"
+                      value={searchQuery}
+                      onChange={e => setSearchQuery(e.target.value)}
+                      placeholder="Search jobs, companies..."
+                      className="flex-1 bg-transparent text-slate-200 placeholder-slate-500 outline-none text-sm"
+                    />
+                    {searchLoading && <Loader2 className="w-4 h-4 text-slate-500 animate-spin" />}
+                    <button onClick={handleSearchClose} aria-label="Close search" className="text-slate-500 hover:text-slate-300">
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                  <div className="px-4 py-3 max-h-80 overflow-y-auto">
+                    {!searchQuery.trim() ? (
+                      <>
+                        <p className="text-xs text-slate-600 uppercase tracking-wider font-medium mb-3">Quick Links</p>
+                        <div className="space-y-1">
+                          {[
+                            { label: 'Dashboard', path: '/dashboard' },
+                            { label: 'Jobs', path: '/jobs' },
+                            { label: 'Pipeline', path: '/jobs/pipeline' },
+                            { label: 'Calendar', path: '/jobs/calendar' },
+                          ].map(item => (
+                            <div key={item.path}
+                              onClick={() => { navigate(item.path); setShowSearch(false) }}
+                              className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white/5 cursor-pointer transition-colors">
+                              <span className="text-sm text-slate-300">{item.label}</span>
+                              <span className="ml-auto text-xs text-slate-600">{item.path}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </>
+                    ) : !searchResults ? null : (
+                      <div className="space-y-4">
+                        {searchResults.jobs.length > 0 && (
+                          <div>
+                            <p className="text-[10px] text-slate-600 uppercase tracking-wider font-semibold mb-2 flex items-center gap-1.5">
+                              <Briefcase className="w-3 h-3" /> Jobs
+                            </p>
+                            {searchResults.jobs.map(job => (
+                              <div key={job.id}
+                                onClick={() => { navigate('/jobs'); setShowSearch(false) }}
+                                className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/5 cursor-pointer transition-colors">
+                                <span className="text-sm text-slate-200">{job.job_title}</span>
+                                <span className="text-xs text-slate-500">@{job.company_name}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                        {searchResults.notes.length > 0 && (
+                          <div>
+                            <p className="text-[10px] text-slate-600 uppercase tracking-wider font-semibold mb-2 flex items-center gap-1.5">
+                              <StickyNote className="w-3 h-3" /> Notes
+                            </p>
+                            {searchResults.notes.map(note => (
+                              <div key={note.id}
+                                onClick={() => { navigate('/notes'); setShowSearch(false) }}
+                                className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/5 cursor-pointer transition-colors">
+                                <span className="text-sm text-slate-200">{note.title}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                        {searchResults.templates.length > 0 && (
+                          <div>
+                            <p className="text-[10px] text-slate-600 uppercase tracking-wider font-semibold mb-2 flex items-center gap-1.5">
+                              <FileText className="w-3 h-3" /> Email Templates
+                            </p>
+                            {searchResults.templates.map(t => (
+                              <div key={t.id}
+                                onClick={() => { navigate('/jobs/email-templates'); setShowSearch(false) }}
+                                className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/5 cursor-pointer transition-colors">
+                                <span className="text-sm text-slate-200">{t.name}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                        {!searchResults.jobs.length && !searchResults.notes.length && !searchResults.templates.length && (
+                          <p className="text-sm text-slate-500 text-center py-6">No results found</p>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              </>
+            )}
+          </AnimatePresence>
+        </div>
 
         {/* Notifications */}
         <div className="relative">
@@ -205,115 +309,7 @@ export function Topbar() {
         </div>
       </div>
 
-      {/* Search modal */}
-      <AnimatePresence>
-        {showSearch && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-start justify-center pt-24 px-4"
-            onClick={handleSearchClose}
-          >
-            <motion.div
-              initial={{ y: -20, opacity: 0, scale: 0.96 }}
-              animate={{ y: 0, opacity: 1, scale: 1 }}
-              exit={{ y: -20, opacity: 0, scale: 0.96 }}
-              transition={{ duration: 0.2 }}
-              role="dialog" aria-modal="true"
-              className="w-full max-w-xl bg-orbit-surface2 border border-orbit-border rounded-2xl shadow-2xl overflow-hidden"
-              onClick={e => e.stopPropagation()}
-            >
-              <div className="flex items-center gap-3 px-4 py-4 border-b border-orbit-border">
-                <Search className="w-5 h-5 text-slate-500 flex-shrink-0" />
-                <input
-                  autoFocus
-                  type="text"
-                  value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  placeholder="Search jobs, companies..."
-                  className="flex-1 bg-transparent text-slate-200 placeholder-slate-500 outline-none text-sm"
-                />
-                {searchLoading && <Loader2 className="w-4 h-4 text-slate-500 animate-spin" />}
-                <button onClick={handleSearchClose} aria-label="Close search" className="text-slate-500 hover:text-slate-300">
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-              <div className="px-4 py-3 max-h-80 overflow-y-auto">
-                {!searchQuery.trim() ? (
-                  <>
-                    <p className="text-xs text-slate-600 uppercase tracking-wider font-medium mb-3">Quick Links</p>
-                    <div className="space-y-1">
-                      {[
-                        { label: 'Dashboard', icon: null, path: '/dashboard' },
-                        { label: 'Jobs', icon: null, path: '/jobs' },
-                        { label: 'Pipeline', icon: null, path: '/jobs/pipeline' },
-                        { label: 'Calendar', icon: null, path: '/jobs/calendar' },
-                      ].map(item => (
-                        <div key={item.path}
-                          onClick={() => { navigate(item.path); setShowSearch(false) }}
-                          className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white/5 cursor-pointer transition-colors">
-                          <span className="text-sm text-slate-300">{item.label}</span>
-                          <span className="ml-auto text-xs text-slate-600">{item.path}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </>
-                ) : !searchResults ? null : (
-                  <div className="space-y-4">
-                    {searchResults.jobs.length > 0 && (
-                      <div>
-                        <p className="text-[10px] text-slate-600 uppercase tracking-wider font-semibold mb-2 flex items-center gap-1.5">
-                          <Briefcase className="w-3 h-3" /> Jobs
-                        </p>
-                        {searchResults.jobs.map(job => (
-                          <div key={job.id}
-                            onClick={() => { navigate('/jobs'); setShowSearch(false) }}
-                            className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/5 cursor-pointer transition-colors">
-                            <span className="text-sm text-slate-200">{job.job_title}</span>
-                            <span className="text-xs text-slate-500">@{job.company_name}</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                    {searchResults.notes.length > 0 && (
-                      <div>
-                        <p className="text-[10px] text-slate-600 uppercase tracking-wider font-semibold mb-2 flex items-center gap-1.5">
-                          <StickyNote className="w-3 h-3" /> Notes
-                        </p>
-                        {searchResults.notes.map(note => (
-                          <div key={note.id}
-                            onClick={() => { navigate('/notes'); setShowSearch(false) }}
-                            className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/5 cursor-pointer transition-colors">
-                            <span className="text-sm text-slate-200">{note.title}</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                    {searchResults.templates.length > 0 && (
-                      <div>
-                        <p className="text-[10px] text-slate-600 uppercase tracking-wider font-semibold mb-2 flex items-center gap-1.5">
-                          <FileText className="w-3 h-3" /> Email Templates
-                        </p>
-                        {searchResults.templates.map(t => (
-                          <div key={t.id}
-                            onClick={() => { navigate('/jobs/email-templates'); setShowSearch(false) }}
-                            className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/5 cursor-pointer transition-colors">
-                            <span className="text-sm text-slate-200">{t.name}</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                    {!searchResults.jobs.length && !searchResults.notes.length && !searchResults.templates.length && (
-                      <p className="text-sm text-slate-500 text-center py-6">No results found</p>
-                    )}
-                  </div>
-                )}
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
     </header>
   )
 }

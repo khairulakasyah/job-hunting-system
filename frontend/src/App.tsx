@@ -16,8 +16,11 @@ import { EmailTemplatesPage } from '@/pages/jobs/EmailTemplatesPage'
 import { NotesKanbanPage } from '@/pages/notes/NotesKanbanPage'
 import { ProfilePage } from '@/pages/profile/ProfilePage'
 import { OnboardingWizard } from '@/pages/auth/OnboardingWizard'
+import { AdminDashboardPage } from '@/pages/admin/AdminDashboardPage'
+import { useAuth } from '@/contexts/AuthContext'
 
 export default function App() {
+  const { isAdmin } = useAuth()
   return (
     <>
       <Toaster
@@ -56,6 +59,7 @@ export default function App() {
         <Route path="/jobs/email-templates" element={<EmailTemplatesPage />} />
         <Route path="/notes" element={<NotesKanbanPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        {isAdmin && <Route path="/admin/dashboard" element={<AdminDashboardPage />} />}
       </Route>
 
       {/* Catch all */}

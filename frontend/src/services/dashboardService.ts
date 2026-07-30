@@ -79,4 +79,9 @@ export const dashboardService = {
     const response = await api.get('/dashboard')
     return response.data.data
   },
+
+  async getAdminDashboard(): Promise<DashboardData> {
+    const response = await api.get('/admin/dashboard')
+    return response.data.data
+  },
 }

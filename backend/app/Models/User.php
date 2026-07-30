@@ -24,6 +24,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'is_admin',
         'resume_url',
         'portfolio_url',
         'linkedin_url',
@@ -55,6 +57,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_admin' => 'boolean',
             'onboarding_completed' => 'boolean',
         ];
     }
@@ -77,5 +80,10 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token): void
     {
         $this->notify(new PasswordResetNotification($token));
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->is_admin;
     }
 }

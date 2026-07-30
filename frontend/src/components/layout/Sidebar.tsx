@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronDown, ChevronRight } from 'lucide-react'
+import { ChevronDown, ChevronRight, BarChart3 } from 'lucide-react'
 import { cn } from '@/utils/cn'
 import { navigation } from '@/data/navigation'
 import { useSidebar } from '@/hooks/useSidebar'
@@ -12,13 +12,7 @@ function OrbitLogo({ collapsed }: { collapsed: boolean }) {
   return (
     <div className="flex items-center gap-3 px-4 py-5 border-b border-orbit-border">
       <div className="relative flex-shrink-0">
-        <div className="w-8 h-8 rounded-lg bg-orbit-primary flex items-center justify-center glow-primary">
-          <svg viewBox="0 0 32 32" fill="none" className="w-5 h-5">
-            <circle cx="16" cy="16" r="4" fill="white" />
-            <ellipse cx="16" cy="16" rx="11" ry="5" stroke="white" strokeWidth="1.5" strokeOpacity="0.7" transform="rotate(-30 16 16)" />
-            <circle cx="23" cy="11" r="2" fill="#0D9488" />
-          </svg>
-        </div>
+        <img src="/jobhunter.png" alt="Job Hunter" className="w-8 h-8 object-contain" />
       </div>
       <AnimatePresence>
         {!collapsed && (
@@ -194,7 +188,7 @@ function NavItemLink({
 }
 
 export function Sidebar() {
-  const { user } = useAuth()
+  const { user, isAdmin } = useAuth()
   const { collapsed, isMobile, mobileOpen, closeMobile } = useSidebar()
 
   const onNavClick = () => {
@@ -213,6 +207,19 @@ export function Sidebar() {
       <OrbitLogo collapsed={collapsed && !isMobile} />
 
       <nav className="flex-1 overflow-y-auto overflow-x-hidden py-4 px-3 space-y-6">
+        {isAdmin && (
+          <div>
+            <AnimatePresence>
+              {(!collapsed || isMobile) && (
+                <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                  className="text-[10px] font-semibold uppercase tracking-widest text-slate-600 px-3 mb-2">Admin</motion.p>
+              )}
+            </AnimatePresence>
+            <div className="space-y-0.5">
+              <NavItemLink item={{ label: 'All Users Dashboard', icon: BarChart3, href: '/admin/dashboard' }} collapsed={collapsed && !isMobile} onNavClick={onNavClick} />
+            </div>
+          </div>
+        )}
         {navigation.map(section => (
           <div key={section.title}>
             <AnimatePresence>

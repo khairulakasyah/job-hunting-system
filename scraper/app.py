@@ -5,6 +5,10 @@ from job_scraper import scrape_url
 app = Flask(__name__)
 CORS(app)
 
+@app.route('/health', methods=['GET'])
+def health():
+    return jsonify({ 'success': True, 'status': 'ok' })
+
 @app.route('/scrape', methods=['POST'])
 def scrape():
     data = request.get_json()

@@ -10,6 +10,7 @@ interface AuthContextType {
   register: (name: string, email: string, password: string) => Promise<void>
   updateUser: (user: User) => void
   isAuthenticated: boolean
+  isAdmin: boolean
 }
 
 const AuthContext = createContext<AuthContextType | null>(null)
@@ -65,6 +66,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(updatedUser)
   }
 
+  const isAdmin = user?.is_admin === true
+
   return (
     <AuthContext.Provider value={{
       user,
@@ -75,6 +78,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       register,
       updateUser,
       isAuthenticated: !!user,
+      isAdmin,
     }}>
       {children}
     </AuthContext.Provider>
