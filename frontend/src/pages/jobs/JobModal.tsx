@@ -118,7 +118,7 @@ export function JobModal({ isOpen, onClose, onSaved, job }: JobModalProps) {
         applied_date: new Date().toISOString().split('T')[0],
       })
       setStep('form')
-    } catch {
+    } catch (err: any) {
       setScrapeError(err.response?.data?.message || 'Failed to scrape. You can fill the form manually.')
       setStep('url')
     }
@@ -141,7 +141,7 @@ export function JobModal({ isOpen, onClose, onSaved, job }: JobModalProps) {
       isEditing ? await jobService.update(job.id, form) : await jobService.create(form)
       onSaved()
       onClose()
-    } catch {
+    } catch (err: any) {
       setError(err.response?.data?.message || 'Something went wrong.')
     } finally {
       setLoading(false)
@@ -338,7 +338,7 @@ export function JobModal({ isOpen, onClose, onSaved, job }: JobModalProps) {
                                         data.benefits !== 'Not specified' ? `\nBENEFITS\n${data.benefits}` : '',
                                       ].filter(Boolean).join('\n').trim() || prev.job_description,
                                     }))
-                                  } catch {
+                                  } catch (err: any) {
                                     setScrapeError(err.response?.data?.message || 'Rescrape failed.')
                                   } finally {
                                     setRescraping(false)

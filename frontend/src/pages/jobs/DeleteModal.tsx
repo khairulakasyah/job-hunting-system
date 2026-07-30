@@ -15,7 +15,7 @@ const HOLD_DURATION = 2000
 export function DeleteModal({ isOpen, onClose, onConfirm, loading, jobName }: DeleteModalProps) {
   const [holding, setHolding]     = useState(false)
   const [progress, setProgress]   = useState(0)
-  const holdRef     = useRef<number>()
+  const holdRef     = useRef<number>(0)
   const holdStarted = useRef(0)
 
   const startHold = () => {

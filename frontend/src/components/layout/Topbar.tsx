@@ -35,20 +35,20 @@ export function Topbar() {
   const [searchQuery, setSearchQuery]             = useState('')
   const [searchResults, setSearchResults]         = useState<SearchResults | null>(null)
   const [searchLoading, setSearchLoading]         = useState(false)
-  const searchTimer = useRef<ReturnType<typeof setTimeout>>()
+  const searchTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     if (!searchQuery.trim()) { setSearchResults(null); return }
     setSearchLoading(true)
-    clearTimeout(searchTimer.current)
-    searchTimer.current = setTimeout(async () => {
+    clearTimeout(searchTimer.current!)
+    searchTimer.current = window.setTimeout(async () => {
       try {
         const data = await searchService.search(searchQuery.trim())
         setSearchResults(data)
       } catch { /* silent */ }
       setSearchLoading(false)
     }, 300)
-    return () => clearTimeout(searchTimer.current)
+    return () => clearTimeout(searchTimer.current!)
   }, [searchQuery])
 
   const handleSearchClose = () => {

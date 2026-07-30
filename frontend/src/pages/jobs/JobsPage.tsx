@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
-import { Plus, Briefcase, Search, X, Eye, Download, Filter, ChevronDown, Trash2 } from 'lucide-react'
+import { Plus, Briefcase, Search, X, Eye, Download, Filter, Trash2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { jobService, Job, PaginatedJobs } from '@/services/jobService'
 import { JobModal }     from './JobModal'

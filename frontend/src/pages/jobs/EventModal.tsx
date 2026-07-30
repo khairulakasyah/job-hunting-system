@@ -85,7 +85,7 @@ export function EventModal({ isOpen, onClose, onSaved, event, prefilledDate }: E
       }
       onSaved()
       onClose()
-    } catch {
+    } catch (err: any) {
       setError(err.response?.data?.message || 'Something went wrong.')
     } finally {
       setLoading(false)

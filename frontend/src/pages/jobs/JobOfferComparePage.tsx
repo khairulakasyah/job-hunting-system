@@ -32,7 +32,7 @@ export function JobOfferComparePage() {
       try {
         const data = await jobService.getAll(1, '', 'offer', undefined, undefined, undefined, undefined, 100)
         setOffers(data.data || [])
-      } catch {
+      } catch (err: any) {
         setError(err?.response?.data?.message || err?.message || 'Failed to load offers.')
       }
       setLoading(false)

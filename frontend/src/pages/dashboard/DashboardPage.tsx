@@ -4,7 +4,7 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
 } from 'recharts'
 import { motion } from 'framer-motion'
-import { Briefcase, Clock, Trophy, XCircle, LayoutDashboard, Calendar, ExternalLink, TrendingUp, BarChart3 } from 'lucide-react'
+import { Briefcase, Clock, Trophy, XCircle, LayoutDashboard, Calendar, ExternalLink, TrendingUp } from 'lucide-react'
 import { Button, Card, CardHeader, CardBody } from '@/components/ui'
 import { cn } from '@/utils/cn'
 import { useAuth } from '@/contexts/AuthContext'
@@ -26,11 +26,6 @@ const ACTIVITY_ICONS: Record<string, string> = {
   event_scheduled: 'bg-primary',
 }
 
-const ACTIVITY_LABELS: Record<string, string> = {
-  job_created: 'Added',
-  stage_advanced: 'Moved',
-  event_scheduled: 'Scheduled',
-}
 
 function formatMonth(ym: string): string {
   const d = new Date(ym + '-01')

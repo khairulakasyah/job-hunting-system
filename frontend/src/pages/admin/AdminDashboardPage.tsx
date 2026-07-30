@@ -7,17 +7,11 @@ import { motion } from 'framer-motion'
 import { Briefcase, Clock, Trophy, XCircle, LayoutDashboard, Calendar, TrendingUp, Shield } from 'lucide-react'
 import { Card, CardHeader, CardBody } from '@/components/ui'
 import { cn } from '@/utils/cn'
-import { useAuth } from '@/contexts/AuthContext'
 import { dashboardService, DashboardData } from '@/services/dashboardService'
 import { StatusBadge } from '@/components/ui/StatusBadge'
-import { Link } from 'react-router-dom'
 
 const PLATFORM_COLORS: Record<string, string> = {
   linkedin: '#0A66C2', indeed: '#003A9B', jobstreet: '#FF6B00', hiredly: '#00BFA5',
-}
-
-const ACTIVITY_LABELS: Record<string, string> = {
-  job_created: 'Added', stage_advanced: 'Moved', event_scheduled: 'Scheduled',
 }
 
 function formatMonth(ym: string): string {
@@ -54,9 +48,8 @@ function timeAgo(dateStr: string): string {
 }
 
 export function AdminDashboardPage() {
-  const { user } = useAuth()
-  const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [, setLoading] = useState(true)
   const [dashData, setDashData] = useState<DashboardData | null>(null)
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Target, Globe, MapPin, DollarSign, ChevronRight, Check } from 'lucide-react'
+import { Target, Globe, DollarSign, ChevronRight, Check } from 'lucide-react'
 import { toast } from 'sonner'
 import { useAuth } from '@/contexts/AuthContext'
 import { authService } from '@/services/authService'

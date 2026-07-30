@@ -82,7 +82,7 @@ export function ProfilePage() {
       const updatedUser = await authService.updateProfile({ name, email })
       updateUser(updatedUser)
       setInfoState({ ...emptyFormState, success: 'Profile updated successfully.' })
-    } catch {
+    } catch (err: any) {
       setInfoState({ ...emptyFormState, error: err.response?.data?.message || 'Failed to update profile.' })
     }
   }
@@ -97,7 +97,7 @@ export function ProfilePage() {
       })
       updateUser(updatedUser)
       setLinksState({ ...emptyFormState, success: 'Links saved successfully.' })
-    } catch {
+    } catch (err: any) {
       setLinksState({ ...emptyFormState, error: err.response?.data?.message || 'Failed to save links.' })
     }
   }
@@ -113,7 +113,7 @@ export function ProfilePage() {
       })
       updateUser(updatedUser)
       setPrefsState({ ...emptyFormState, success: 'Preferences saved successfully.' })
-    } catch {
+    } catch (err: any) {
       setPrefsState({ ...emptyFormState, error: err.response?.data?.message || 'Failed to save preferences.' })
     }
   }
@@ -131,7 +131,7 @@ export function ProfilePage() {
       setCurrentPassword('')
       setNewPassword('')
       setConfirmPassword('')
-    } catch {
+    } catch (err: any) {
       setPasswordState({ ...emptyFormState, error: err.response?.data?.message || 'Failed to change password.' })
     }
   }
@@ -177,7 +177,7 @@ export function ProfilePage() {
         transition={{ delay: 0.08 }}
         className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3"
       >
-        {statCards.map((card, i) => (
+        {statCards.map((card) => (
           <div
             key={card.label}
             className="bg-surface border border-border rounded-xl p-4 flex flex-col items-center gap-2"

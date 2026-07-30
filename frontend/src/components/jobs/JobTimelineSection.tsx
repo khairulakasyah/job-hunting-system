@@ -16,8 +16,8 @@ interface Props {
   timelines: JobTimeline[]
   loading: boolean
   modalStatus: string
-  onTimelineChange: (timelines: JobTimeline[]) => void
-  onStatusChange: (status: string) => void
+  onTimelineChange: React.Dispatch<React.SetStateAction<JobTimeline[]>>
+  onStatusChange: React.Dispatch<React.SetStateAction<string>>
 }
 
 export function JobTimelineSection({ jobId, timelines, loading, modalStatus, onTimelineChange, onStatusChange }: Props) {
@@ -39,15 +39,6 @@ export function JobTimelineSection({ jobId, timelines, loading, modalStatus, onT
   const getStageDate = (key: string) => timelines.find(t => t.stage === key)?.stage_date ?? null
   const nextStageKey = !isRejected && currentMainIdx < MAIN_STAGES.length - 1 ? MAIN_STAGES[currentMainIdx + 1].key : null
   const prevStageKey = currentMainIdx > 0 ? MAIN_STAGES[currentMainIdx].key : null
-
-  const fetchTimelines = async () => {
-    try {
-      const data = await jobTimelineService.getAll(jobId)
-      onTimelineChange(data)
-    } catch {
-      toast.error('Failed to load timeline.')
-    }
-  }
 
   const handleAdvance = async (stage: string) => {
     setAdvancing(true)
