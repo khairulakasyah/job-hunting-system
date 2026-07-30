@@ -18,10 +18,7 @@ RUN cp .env.example .env \
 RUN rm -f bootstrap/cache/*.php \
     && php artisan package:discover --ansi
 
-# Step 2c — Cache config
-RUN php artisan config:cache
-
-# Step 2d — Cache events
+# Step 2c — Cache events
 RUN php artisan event:cache
 
 # Step 2e — Cache routes
