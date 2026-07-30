@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -17,14 +18,22 @@ class ScrapeController extends Controller
 
             $scraperUrl = config('services.scraper.url', 'http://scraper:5000');
 
-            $response = Http::timeout(30)->post("{$scraperUrl}/scrape", [
-                'url' => $request->url,
-            ]);
-
-            if (!$response->successful()) {
+            try {
+                $response = Http::timeout(30)->post("{$scraperUrl}/scrape", [
+                    'url' => $request->url,
+                ]);
+            } catch (ConnectionException) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Scraper failed. Make sure the Flask server is running.',
+                    'message' => 'Scraper service is not reachable. Make sure the Flask server is running.',
+                ], 503);
+            }
+
+            if (!$response->successful()) {
+                $body = $response->json();
+                return response()->json([
+                    'success' => false,
+                    'message' => $body['message'] ?? 'Scraper service returned an error.',
                 ], 422);
             }
 
