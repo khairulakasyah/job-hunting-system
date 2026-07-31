@@ -34,7 +34,7 @@ class BrevoTransport extends AbstractTransport
 
         $payload = [
             'sender' => $sender
-                ? ['email' => $sender->getAddress(), 'name' => $sender->getName()]
+                ? ['email' => $sender->getAddress(), 'name' => $sender->getName() ?: $sender->getAddress()]
                 : null,
             'to' => $to,
             'subject' => (string) $email->getSubject(),
@@ -89,7 +89,7 @@ class BrevoTransport extends AbstractTransport
         return array_map(
             fn (Address $address) => [
                 'email' => $address->getAddress(),
-                'name' => $address->getName(),
+                'name' => $address->getName() ?: $address->getAddress(),
             ],
             $addresses
         );
