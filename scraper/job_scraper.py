@@ -361,40 +361,83 @@ def detect_platform(url: str) -> str:
 
 # ── HTTP Fetch ────────────────────────────────────────────────────────────────
 
+WALL_MARKERS = [
+    "verify you are human",
+    "verify you're a human",
+    "captcha",
+    "access denied",
+    "unusual traffic",
+    "sorry, we could not verify",
+    "please sign in to view",
+    "sign in to continue",
+    "sign in or create a seek pass",
+    "log in to continue",
+]
+
+
+def detect_wall(soup: BeautifulSoup) -> str | None:
+    """Return a reason string if the page looks like an anti-bot/login wall."""
+    text = soup.get_text(" ", strip=True).lower()
+    for marker in WALL_MARKERS:
+        if marker in text:
+            return marker
+    return None
+
+
 def fetch_page(url, timeout=20, debug=False):
-    try:
-        with sync_playwright() as p:
-            browser = p.chromium.launch(
-                headless=True
-            )
+    last_error = None
+    for attempt in range(2):
+        try:
+            with sync_playwright() as p:
+                browser = p.chromium.launch(headless=True)
 
-            page = browser.new_page(
-                user_agent=HEADERS["User-Agent"],
-                viewport={"width": 1920, "height": 1080}
-            )
+                page = browser.new_page(
+                    user_agent=HEADERS["User-Agent"],
+                    viewport={"width": 1920, "height": 1080}
+                )
 
-            page.goto(
-                url,
-                wait_until="networkidle",
-                timeout=timeout * 1000
-            )
+                page.goto(
+                    url,
+                    wait_until="domcontentloaded",
+                    timeout=timeout * 1000
+                )
 
-            html = page.content()
+                # Wait for the rendered title so JS-heavy pages settle before
+                # we capture HTML. Non-job pages with no <h1> still proceed.
+                try:
+                    page.wait_for_selector("h1", timeout=8000)
+                except Exception:
+                    pass
 
-            if debug:
-                with open("debug.html", "w", encoding="utf-8") as f:
-                    f.write(html)
+                # Give client-side re-renders a moment to replace skeletons.
+                page.wait_for_timeout(500)
 
-                print(f"[DEBUG] URL : {page.url}")
-                print(f"[DEBUG] HTML Length : {len(html)}")
+                html = page.content()
 
-            browser.close()
+                if debug:
+                    with open("debug.html", "w", encoding="utf-8") as f:
+                        f.write(html)
 
-            return BeautifulSoup(html, "html.parser")
+                    print(f"[DEBUG] URL : {page.url}")
+                    print(f"[DEBUG] HTML Length : {len(html)}")
 
-    except Exception as e:
-        print(f"⚠️ {e}")
-        return None
+                browser.close()
+
+                soup = BeautifulSoup(html, "html.parser")
+                if len(soup.get_text(strip=True)) < 300:
+                    raise ValueError("Page returned almost no content (possible block).")
+
+                return soup
+
+        except Exception as e:
+            last_error = e
+            print(f"⚠️ attempt {attempt + 1} failed: {e}")
+            try:
+                browser.close()
+            except Exception:
+                pass
+
+    raise RuntimeError(f"Failed to load page: {last_error}")
 
 
 # ── Portal-Specific Extractors ────────────────────────────────────────────────
@@ -855,12 +898,36 @@ def print_job(job: dict):
 
 # ── Main ──────────────────────────────────────────────────────────────────────
 
-def scrape_url(url: str, debug: bool = False) -> dict | None:
+class ScrapeError(Exception):
+    """Raised when a URL cannot be scraped, carrying a user-facing message."""
+
+    def __init__(self, message: str):
+        super().__init__(message)
+        self.message = message
+
+
+def scrape_url(url: str, debug: bool = False) -> dict:
     print(f"\n🔍 Scraping: {url}")
-    soup = fetch_page(url, debug=debug)
+    try:
+        soup = fetch_page(url, debug=debug)
+    except RuntimeError as e:
+        raise ScrapeError(
+            "Failed to load the page. The site may be blocking automated access or the page took too long to respond."
+        ) from e
     if soup is None:
-        return None
+        raise ScrapeError("Failed to load the page. The site may be blocking automated access.")
+
+    wall = detect_wall(soup)
+    if wall:
+        raise ScrapeError(
+            f"Page is behind a login or bot-check wall ('{wall}'). Open the link manually in a browser."
+        )
+
     job = extract_job_data(url, soup, debug=debug)
+    if job["job_title"] == "N/A" or (job["job_scope"] == "Not found" and job["skill_requirements"] == "Not specified"):
+        raise ScrapeError(
+            "Could not find job details on this page. The listing may have expired, been removed, or the page failed to render."
+        )
     print_job(job)
     return job
 
@@ -899,9 +966,12 @@ def main():
     # Scrape all URLs
     results = []
     for i, url in enumerate(urls):
-        job = scrape_url(url, debug=args.debug)
-        if job:
-            results.append(job)
+        try:
+            job = scrape_url(url, debug=args.debug)
+            if job:
+                results.append(job)
+        except ScrapeError as e:
+            print(f"❌ {e}")
         if i < len(urls) - 1:
             time.sleep(args.delay)
 

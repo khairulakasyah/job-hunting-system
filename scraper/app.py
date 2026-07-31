@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from job_scraper import scrape_url
+from job_scraper import scrape_url, ScrapeError
 
 app = Flask(__name__)
 CORS(app)
@@ -23,6 +23,9 @@ def scrape():
             return jsonify({ 'success': False, 'message': 'Failed to scrape this URL.' }), 422
 
         return jsonify({ 'success': True, 'data': result })
+
+    except ScrapeError as e:
+        return jsonify({ 'success': False, 'message': str(e) }), 422
 
     except Exception as e:
         return jsonify({ 'success': False, 'message': str(e) }), 500
