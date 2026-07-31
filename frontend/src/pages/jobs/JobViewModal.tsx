@@ -74,7 +74,7 @@ export function JobViewModal({ isOpen, onClose, onEdit, onDelete, job }: JobView
             <div role="dialog" aria-modal="true" className="w-full max-w-4xl bg-surface border border-border rounded-2xl shadow-2xl pointer-events-auto flex flex-col max-h-[90vh]"
               onClick={e => e.stopPropagation()}>
 
-              <div className="flex items-start justify-between px-6 py-4 border-b border-border flex-shrink-0">
+              <div className="flex items-start justify-between px-4 sm:px-6 py-4 border-b border-border flex-shrink-0">
                 <div className="flex-1 min-w-0 pr-4">
                   <h2 className="text-base font-semibold text-slate-100 truncate">{job.job_title}</h2>
                   <p className="text-sm text-slate-400 mt-0.5">{job.company_name}</p>
@@ -85,18 +85,18 @@ export function JobViewModal({ isOpen, onClose, onEdit, onDelete, job }: JobView
                 </button>
               </div>
 
-              <div className="px-6 py-3 border-b border-border flex items-center justify-between flex-shrink-0">
+              <div className="px-4 sm:px-6 py-3 border-b border-border flex items-center justify-between flex-shrink-0">
                 <StatusBadge status={modalStatus as 'saved' | 'applied' | 'interview' | 'offer' | 'rejected'} />
                 <span className="text-xs text-slate-600">
                   Added {new Date(job.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
                 </span>
               </div>
 
-              <div className="px-6 border-b border-border flex-shrink-0">
-                <div className="flex gap-6">
+              <div className="px-4 sm:px-6 border-b border-border flex-shrink-0">
+                <div className="flex gap-4 sm:gap-6 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                   {TABS.map(tab => (
                     <button key={tab.key} onClick={() => setActiveTab(tab.key)} role="tab" aria-selected={activeTab === tab.key}
-                      className={`pb-3 pt-3 text-sm font-medium border-b-2 transition-colors ${
+                      className={`pb-3 pt-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap flex-shrink-0 ${
                         activeTab === tab.key
                           ? 'text-primary-light border-primary-light'
                           : 'text-slate-500 border-transparent hover:text-slate-300'
@@ -134,7 +134,7 @@ export function JobViewModal({ isOpen, onClose, onEdit, onDelete, job }: JobView
                 )}
               </div>
 
-              <div className="px-6 py-4 border-t border-border flex items-center gap-3 flex-shrink-0">
+              <div className="px-4 sm:px-6 py-4 border-t border-border flex items-center gap-3 flex-shrink-0">
                 <button onClick={onEdit}
                   className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-primary hover:bg-primary/90 text-white text-sm font-medium rounded-lg transition-colors">
                   <Pencil className="w-4 h-4" /> Edit

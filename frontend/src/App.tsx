@@ -17,6 +17,7 @@ import { NotesKanbanPage } from '@/pages/notes/NotesKanbanPage'
 import { ProfilePage } from '@/pages/profile/ProfilePage'
 import { OnboardingWizard } from '@/pages/auth/OnboardingWizard'
 import { AdminDashboardPage } from '@/pages/admin/AdminDashboardPage'
+import { AdminServicesPage } from '@/pages/admin/AdminServicesPage'
 import { useAuth } from '@/contexts/AuthContext'
 
 export default function App() {
@@ -59,7 +60,12 @@ export default function App() {
         <Route path="/jobs/email-templates" element={<EmailTemplatesPage />} />
         <Route path="/notes" element={<NotesKanbanPage />} />
         <Route path="/profile" element={<ProfilePage />} />
-        {isAdmin && <Route path="/admin/dashboard" element={<AdminDashboardPage />} />}
+        {isAdmin && (
+          <>
+            <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
+            <Route path="/admin/services" element={<AdminServicesPage />} />
+          </>
+        )}
       </Route>
 
       {/* Catch all */}

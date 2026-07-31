@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronDown, ChevronRight, BarChart3 } from 'lucide-react'
+import { ChevronDown, ChevronRight, BarChart3, Activity } from 'lucide-react'
 import { cn } from '@/utils/cn'
 import { navigation } from '@/data/navigation'
 import { useSidebar } from '@/hooks/useSidebar'
@@ -217,6 +217,7 @@ export function Sidebar() {
             </AnimatePresence>
             <div className="space-y-0.5">
               <NavItemLink item={{ label: 'All Users Dashboard', icon: BarChart3, href: '/admin/dashboard' }} collapsed={collapsed && !isMobile} onNavClick={onNavClick} />
+              <NavItemLink item={{ label: 'Service Status', icon: Activity, href: '/admin/services' }} collapsed={collapsed && !isMobile} onNavClick={onNavClick} />
             </div>
           </div>
         )}

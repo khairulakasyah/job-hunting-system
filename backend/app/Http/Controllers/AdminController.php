@@ -6,6 +6,10 @@ use App\Models\Job;
 use App\Models\JobTimeline;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -172,6 +176,132 @@ class AdminController extends Controller
                 'success' => false,
                 'message' => 'An error occurred: ' . $e->getMessage(),
             ], 500);
+        }
+    }
+
+    public function services(Request $request): JsonResponse
+    {
+        if (!$request->user()->isAdmin()) {
+            return response()->json(['success' => false, 'message' => 'Permission denied.'], 403);
+        }
+
+        try {
+            $services = [
+                $this->check('app', 'Laravel Backend', function () {
+                    return [
+                        'status' => 'ok',
+                        'detail' => sprintf(
+                            'env=%s, debug=%s, laravel=%s, php=%s',
+                            config('app.env'),
+                            config('app.debug') ? 'on' : 'off',
+                            app()->version(),
+                            PHP_VERSION
+                        ),
+                    ];
+                }),
+                $this->check('database', 'Database (PostgreSQL)', function () {
+                    $connection = DB::connection();
+                    $connection->select('SELECT 1');
+                    $migrations = Schema::hasTable('migrations') ? (int) DB::table('migrations')->count() : 0;
+                    return [
+                        'status' => 'ok',
+                        'detail' => sprintf(
+                            'driver=%s, database=%s, migrations=%d',
+                            $connection->getDriverName(),
+                            $connection->getDatabaseName(),
+                            $migrations
+                        ),
+                    ];
+                }),
+                $this->check('scraper', 'Job Scraper', function () {
+                    $url = rtrim((string) config('services.scraper.url', 'http://scraper:5000'), '/');
+                    $response = Http::timeout(5)->get("{$url}/health");
+                    if (!$response->successful()) {
+                        return ['status' => 'error', 'detail' => "GET {$url}/health returned HTTP {$response->status()}"];
+                    }
+                    return ['status' => 'ok', 'detail' => "GET {$url}/health OK"];
+                }),
+                $this->check('ai', 'AI Cover Letter (Groq)', function () {
+                    $apiKey = config('services.ai.key');
+                    if (!$apiKey) {
+                        return ['status' => 'unconfigured', 'detail' => 'AI_API_KEY is not configured in the environment.'];
+                    }
+                    $response = Http::withToken($apiKey)->timeout(5)->get('https://api.groq.com/openai/v1/models');
+                    if (!$response->successful()) {
+                        return ['status' => 'error', 'detail' => "Groq API returned HTTP {$response->status()}"];
+                    }
+                    $count = count($response->json('data') ?? []);
+                    return ['status' => 'ok', 'detail' => "API key valid — {$count} models available"];
+                }),
+                $this->check('mail', 'Mail (SMTP)', function () {
+                    $mailer = config('mail.default');
+                    if ($mailer === 'log') {
+                        return ['status' => 'warning', 'detail' => 'Mailer is set to log — emails are not actually sent. Set MAIL_MAILER=smtp to enable.'];
+                    }
+                    $host = config("mail.mailers.{$mailer}.host");
+                    $from = config('mail.from.address');
+                    $user = config("mail.mailers.{$mailer}.username");
+                    return [
+                        'status' => 'ok',
+                        'detail' => sprintf('mailer=%s, host=%s, from=%s, auth=%s', $mailer, $host, $from, $user ? 'yes' : 'no'),
+                    ];
+                }),
+                $this->check('frontend', 'Frontend (Vercel)', function () {
+                    $url = rtrim((string) config('app.frontend_url', 'http://localhost:5173'), '/');
+                    $response = Http::timeout(5)->get($url);
+                    return ['status' => $response->successful() ? 'ok' : 'error', 'detail' => "GET {$url} returned HTTP {$response->status()}"];
+                }),
+                $this->check('storage', 'Storage (Attachments)', function () {
+                    $testFile = 'healthcheck_' . uniqid() . '.tmp';
+                    Storage::disk('local')->put($testFile, 'ok');
+                    $exists = Storage::disk('local')->exists($testFile);
+                    Storage::disk('local')->delete($testFile);
+                    return ['status' => $exists ? 'ok' : 'error', 'detail' => 'disk=local, write test ' . ($exists ? 'passed' : 'failed')];
+                }),
+            ];
+
+            $statuses = array_column($services, 'status');
+            $overall = in_array('error', $statuses, true)
+                ? 'error'
+                : (in_array('warning', $statuses, true) || in_array('unconfigured', $statuses, true) ? 'degraded' : 'ok');
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Service status retrieved successfully.',
+                'data' => [
+                    'checked_at' => now()->toIso8601String(),
+                    'overall' => $overall,
+                    'services' => $services,
+                ],
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    private function check(string $key, string $label, callable $callback): array
+    {
+        $start = microtime(true);
+        try {
+            $result = $callback();
+            return [
+                'key' => $key,
+                'label' => $label,
+                'status' => $result['status'] ?? 'error',
+                'latency_ms' => (int) round((microtime(true) - $start) * 1000),
+                'detail' => $result['detail'] ?? null,
+            ];
+        } catch (\Throwable $e) {
+            return [
+                'key' => $key,
+                'label' => $label,
+                'status' => 'error',
+                'latency_ms' => (int) round((microtime(true) - $start) * 1000),
+                'detail' => $e->getMessage(),
+            ];
         }
     }
 

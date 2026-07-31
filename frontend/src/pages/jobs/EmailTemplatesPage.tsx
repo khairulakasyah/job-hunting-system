@@ -157,9 +157,9 @@ export function EmailTemplatesPage() {
               animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 16 }}
               transition={{ duration: 0.2 }}
               className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
-              <div role="dialog" aria-modal="true" className="w-full max-w-xl bg-surface border border-border rounded-2xl shadow-2xl pointer-events-auto"
+              <div role="dialog" aria-modal="true" className="w-full max-w-xl bg-surface border border-border rounded-2xl shadow-2xl pointer-events-auto flex flex-col max-h-[90vh]"
                 onClick={e => e.stopPropagation()}>
-                <div className="flex items-center justify-between px-6 py-4 border-b border-border">
+                <div className="flex items-center justify-between px-4 sm:px-6 py-4 border-b border-border flex-shrink-0">
                   <p className="text-sm font-semibold text-slate-200">
                     {editing ? 'Edit Template' : 'New Template'}
                   </p>
@@ -168,7 +168,7 @@ export function EmailTemplatesPage() {
                     <X className="w-4 h-4" />
                   </button>
                 </div>
-                <div className="px-6 py-5 space-y-4">
+                <div className="px-4 sm:px-6 py-5 space-y-4 overflow-y-auto">
                   <div>
                     <label className="block text-xs font-medium text-slate-400 mb-1.5">Name <span className="text-red-400">*</span></label>
                     <input type="text" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
@@ -182,9 +182,9 @@ export function EmailTemplatesPage() {
                       className="w-full bg-surface2 border border-border rounded-lg px-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-primary transition-colors" />
                   </div>
                   <div>
-                    <div className="flex items-center justify-between mb-1.5">
-                      <label className="block text-xs font-medium text-slate-400">Body <span className="text-red-400">*</span></label>
-                      <div className="flex items-center gap-1.5">
+                      <div className="flex items-center justify-between mb-1.5 gap-2">
+                        <label className="block text-xs font-medium text-slate-400 flex-shrink-0">Body <span className="text-red-400">*</span></label>
+                        <div className="flex items-center gap-1.5 flex-wrap justify-end">
                         <span className="text-[10px] text-slate-600">Insert:</span>
                         {hintVars.map(v => (
                           <button key={v} type="button" onClick={() => setForm(f => ({ ...f, body: f.body + v }))}
@@ -199,7 +199,7 @@ export function EmailTemplatesPage() {
                       className="w-full bg-surface2 border border-border rounded-lg px-3 py-2.5 text-sm text-slate-200 placeholder-slate-600 outline-none focus:border-primary transition-colors resize-none" />
                   </div>
                 </div>
-                <div className="px-6 py-4 border-t border-border flex items-center gap-3">
+                <div className="px-4 sm:px-6 py-4 border-t border-border flex items-center gap-3 flex-shrink-0">
                   <button onClick={handleSave} disabled={saving}
                     className="flex-1 py-2.5 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white text-sm font-medium rounded-lg transition-colors">
                     {saving ? 'Saving...' : editing ? 'Update Template' : 'Create Template'}

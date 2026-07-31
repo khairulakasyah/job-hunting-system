@@ -34,7 +34,7 @@ import re
 import sys
 import time
 from datetime import datetime
-from urllib.parse import urlparse, urlunparse, parse_qs, urlencode
+from urllib.parse import urlparse
 import random
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
@@ -325,28 +325,6 @@ def extract_sections_from_text(raw_text: str) -> dict:
     return result
 
 
-# ── URL Cleaner ───────────────────────────────────────────────────────────────
-
-# Query params that are purely tracking/session — safe to strip
-_TRACKING_PARAMS = {
-    # Jobstreet
-    "tracking", "sol", "ref", "rsec", "rtra", "rpos", "rtype",
-    "from", "pos", "source", "sourcesystem", "referer",
-    # General
-    "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content",
-    "fbclid", "gclid", "msclkid", "ttclid", "_ga",
-}
-
-def extract_url_from_text(raw: str) -> str:
-    """
-    If the user pastes a share message instead of a bare URL,
-    extract the actual URL from it.
-    e.g. 'Check out this job on Jobstreet: Java Developer - https://my.jobstreet.com/job/123?tracking=...'
-    """
-    match = re.search(r'https?://\S+', raw.strip())
-    return match.group(0).rstrip(".,)\"'") if match else raw.strip()
-
-
 # ── Platform Detection ────────────────────────────────────────────────────────
 
 PLATFORM_MAP = {
@@ -376,36 +354,9 @@ def detect_platform(url: str) -> str:
     for key, name in PLATFORM_MAP.items():
         if key in domain:
             return name
+    # Capitalize domain as fallback
     parts = domain.replace("www.", "").split(".")
     return parts[0].capitalize() if parts else "Unknown"
-
-
-def clean_url(url: str) -> str:
-    """
-    Strip tracking/session query parameters from a URL and return a clean version.
-    Keeps only parameters that are needed to identify the job (e.g. jk, jobId, id).
-    Also handles Jobstreet's logged-in redirect wrapper:
-      https://www.jobstreet.com.my/job/<id>?tracking=...
-    """
-    parsed = urlparse(url)
-    platform = detect_platform(url)
-
-    # Jobstreet: the clean URL is just scheme + netloc + path, no params needed
-    if platform == "Jobstreet":
-        clean = urlunparse((parsed.scheme, parsed.netloc, parsed.path, "", "", ""))
-        if clean != url:
-            print(f"  ℹ️  Jobstreet tracking URL stripped → {clean}")
-        return clean
-
-    # All other platforms: drop known tracking params, keep the rest
-    params = parse_qs(parsed.query, keep_blank_values=True)
-    filtered = {k: v for k, v in params.items() if k.lower() not in _TRACKING_PARAMS}
-    clean_query = urlencode(filtered, doseq=True)
-    clean = urlunparse((parsed.scheme, parsed.netloc, parsed.path,
-                        parsed.params, clean_query, ""))
-    if clean != url:
-        print(f"  ℹ️  Tracking params stripped → {clean}")
-    return clean
 
 
 # ── HTTP Fetch ────────────────────────────────────────────────────────────────
@@ -905,8 +856,6 @@ def print_job(job: dict):
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def scrape_url(url: str, debug: bool = False) -> dict | None:
-    url = extract_url_from_text(url)
-    url = clean_url(url)
     print(f"\n🔍 Scraping: {url}")
     soup = fetch_page(url, debug=debug)
     if soup is None:
