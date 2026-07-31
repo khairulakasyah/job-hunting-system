@@ -383,18 +383,30 @@ def detect_platform(url: str) -> str:
 def clean_url(url: str) -> str:
     """
     Strip tracking/session query parameters from a URL and return a clean version.
-    Keeps only parameters that are needed to identify the job (e.g. jk, jobId, id).
-    Also handles Jobstreet's logged-in redirect wrapper:
-      https://www.jobstreet.com.my/job/<id>?tracking=...
+    Also remaps Jobstreet mobile/share subdomains to the scrapeable web domain:
+      my.jobstreet.com  → www.jobstreet.com.my
+      sg.jobstreet.com  → www.jobstreet.com.sg
+      th.jobstreet.com  → www.jobstreet.co.th
+      id.jobstreet.com  → www.jobstreet.co.id
+      ph.jobstreet.com  → www.jobstreet.com.ph
     """
     parsed = urlparse(url)
     platform = detect_platform(url)
 
-    # Jobstreet: the clean URL is just scheme + netloc + path, no params needed
     if platform == "Jobstreet":
-        clean = urlunparse((parsed.scheme, parsed.netloc, parsed.path, "", "", ""))
+        # Remap mobile share subdomain → scrapeable web domain
+        domain = parsed.netloc.lower()
+        JOBSTREET_DOMAIN_MAP = {
+            "my.jobstreet.com": "www.jobstreet.com.my",
+            "sg.jobstreet.com": "www.jobstreet.com.sg",
+            "th.jobstreet.com": "www.jobstreet.co.th",
+            "id.jobstreet.com": "www.jobstreet.co.id",
+            "ph.jobstreet.com": "www.jobstreet.com.ph",
+        }
+        netloc = JOBSTREET_DOMAIN_MAP.get(domain, parsed.netloc)
+        clean = urlunparse((parsed.scheme, netloc, parsed.path, "", "", ""))
         if clean != url:
-            print(f"  ℹ️  Jobstreet tracking URL stripped → {clean}")
+            print(f"  ℹ️  Jobstreet URL normalised → {clean}")
         return clean
 
     # All other platforms: drop known tracking params, keep the rest
