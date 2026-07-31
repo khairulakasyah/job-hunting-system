@@ -25,7 +25,8 @@ RUN php artisan event:cache
 RUN php artisan route:cache
 
 # Step 3 — Set permissions and remove build-only .env
-RUN chmod -R 777 storage bootstrap/cache \
+RUN mkdir -p storage/framework/views storage/framework/cache/data storage/framework/sessions storage/logs \
+    && chmod -R 777 storage bootstrap/cache \
     && rm .env
 
 EXPOSE 8000
