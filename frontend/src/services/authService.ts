@@ -10,6 +10,7 @@ export interface User {
   name: string
   email: string
   is_admin?: boolean
+  email_verified_at?: string | null
   resume_url?: string | null
   portfolio_url?: string | null
   linkedin_url?: string | null
@@ -98,5 +99,9 @@ export const authService = {
 
   async resetPassword(data: ResetPasswordData): Promise<void> {
     await api.post('/reset-password', data)
+  },
+
+  async resendVerificationEmail(): Promise<void> {
+    await api.post('/email/verification-notification')
   },
 }

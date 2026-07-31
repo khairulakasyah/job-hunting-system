@@ -86,11 +86,13 @@ class AuthController extends Controller
                 'password' => bcrypt($request->password),
             ]);
 
+            $user->sendEmailVerificationNotification();
+
             $token = $user->createToken('auth_token')->plainTextToken;
 
             return response()->json([
                 'success' => true,
-                'message' => 'Account created successfully.',
+                'message' => 'Account created successfully. A verification email has been sent.',
                 'data' => [
                     'user' => $user,
                     'token' => $token,
@@ -161,17 +163,12 @@ class AuthController extends Controller
         try {
             $status = Password::sendResetLink($request->only('email'));
 
-            if ($status === Password::RESET_LINK_SENT) {
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Password reset link sent to your email.',
-                ]);
-            }
-
             return response()->json([
-                'success' => false,
-                'message' => 'Failed to send reset link. Please try again.',
-            ], 500);
+                'success' => true,
+                'message' => $status === Password::RESET_LINK_SENT
+                    ? 'Password reset link sent to your email.'
+                    : 'If that email is registered, a password reset link has been sent.',
+            ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -203,6 +200,98 @@ class AuthController extends Controller
                 'success' => false,
                 'message' => 'Invalid or expired reset token.',
             ], 400);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function verifyEmail(Request $request, string $id, string $hash): \Illuminate\Http\Response
+    {
+        $user = User::findOrFail($id);
+
+        if (! hash_equals((string) sha1($user->getEmailForVerification()), (string) $hash)) {
+            abort(403, 'Invalid verification link.');
+        }
+
+        if (! $user->hasVerifiedEmail()) {
+            $user->markEmailAsVerified();
+        }
+
+        $frontendUrl = config('app.frontend_url', 'http://localhost:5173');
+
+        $html = <<<HTML
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Email Verified - Job Hunter</title>
+            <meta http-equiv="refresh" content="5; url={$frontendUrl}">
+            <style>
+                * { margin: 0; padding: 0; box-sizing: border-box; }
+                body {
+                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+                    background: #0B1120; color: #E2E8F0;
+                    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+                }
+                .card { text-align: center; padding: 48px 32px; max-width: 400px; }
+                .icon {
+                    width: 64px; height: 64px; margin: 0 auto 24px; border-radius: 20px;
+                    background: rgba(16, 185, 129, 0.15); display: flex; align-items: center; justify-content: center;
+                }
+                .icon svg { width: 32px; height: 32px; stroke: #34D399; }
+                h1 { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
+                p { color: #94A3B8; font-size: 14px; line-height: 1.6; margin-bottom: 32px; }
+                a.button {
+                    display: inline-block; background: #6366F1; color: #fff; text-decoration: none;
+                    padding: 12px 24px; border-radius: 12px; font-size: 14px; font-weight: 600;
+                    transition: background 0.15s;
+                }
+                a.button:hover { background: #4F46E5; }
+                .note { margin-top: 20px; font-size: 12px; color: #64748B; }
+            </style>
+        </head>
+        <body>
+            <div class="card">
+                <div class="icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                        <polyline points="22 4 12 14.01 9 11.01"/>
+                    </svg>
+                </div>
+                <h1>Email verified</h1>
+                <p>Your email address has been successfully verified. You're all set to continue.</p>
+                <a class="button" href="{$frontendUrl}">Continue to Job Hunter</a>
+                <div class="note">You'll be redirected in a few seconds…</div>
+            </div>
+        </body>
+        </html>
+        HTML;
+
+        return response($html)->header('Content-Type', 'text/html');
+    }
+
+    public function resendVerificationEmail(Request $request): JsonResponse
+    {
+        try {
+            $user = $request->user();
+
+            if ($user->hasVerifiedEmail()) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Your email is already verified.',
+                ]);
+            }
+
+            $user->sendEmailVerificationNotification();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Verification email sent. Check your inbox.',
+            ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,

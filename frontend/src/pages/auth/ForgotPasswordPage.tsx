@@ -70,7 +70,7 @@ export function ForgotPasswordPage() {
             </div>
             <h1 className="text-2xl font-bold text-slate-100 mb-2">Check your inbox</h1>
             <p className="text-slate-500 text-sm mb-8">
-              We've sent a password reset link to your email. It expires in 30 minutes.
+              We've sent a password reset link to your email. It expires in 60 minutes.
             </p>
           </motion.div>
         )}

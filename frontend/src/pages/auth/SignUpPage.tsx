@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { Mail, Lock, User, ArrowRight, Eye, EyeOff } from 'lucide-react'
 import { Button, Input } from '@/components/ui'
 import { useAuth } from '@/contexts/AuthContext'
+import { toast } from 'sonner'
 
 export function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false)
@@ -23,6 +24,7 @@ export function SignUpPage() {
 
     try {
       await register(name, email, password)
+      toast.success(`Account created. We've sent a verification link to ${email}.`)
       navigate('/dashboard')
     } catch (err: any) {
       const message = err.response?.data?.message || 'Registration failed. Please try again.'
