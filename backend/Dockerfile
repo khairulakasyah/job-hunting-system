@@ -21,9 +21,6 @@ RUN rm -f bootstrap/cache/*.php \
 # Step 2c — Cache events
 RUN php artisan event:cache
 
-# Step 2e — Cache routes
-RUN php artisan route:cache
-
 # Step 3 — Set permissions and remove build-only .env
 RUN mkdir -p storage/framework/views storage/framework/cache/data storage/framework/sessions storage/logs \
     && chmod -R 777 storage bootstrap/cache \
