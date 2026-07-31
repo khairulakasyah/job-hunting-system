@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -20,6 +19,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Mail::extend('brevo', fn (array $config) => new \App\Mail\BrevoTransport($config['key'] ?? ''));
+        //
     }
 }

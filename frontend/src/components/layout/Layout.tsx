@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Sidebar } from './Sidebar'
 import { Topbar } from './Topbar'
 import { Footer } from './Footer'
-import { EmailVerificationBanner } from './EmailVerificationBanner'
 import { SidebarContext, useSidebarState } from '@/hooks/useSidebar'
 
 export function Layout() {
@@ -40,7 +39,6 @@ export function Layout() {
           className="flex flex-col flex-1 min-w-0 h-screen overflow-hidden"
         >
           <Topbar />
-          <EmailVerificationBanner />
 
           {/* Each page manages its own padding and scroll */}
           <main className="flex-1 min-h-0 overflow-hidden flex flex-col">
