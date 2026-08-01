@@ -136,6 +136,9 @@ export function SignInPage() {
                 <input type="checkbox" className="rounded border-border bg-surface2 text-primary w-3.5 h-3.5" />
                 <span className="text-xs text-slate-500">Remember me</span>
               </label>
+              <Link to="/forgot-password" className="text-xs text-primary-light hover:text-accent transition-colors">
+                Forgot password?
+              </Link>
             </div>
 
             <Button

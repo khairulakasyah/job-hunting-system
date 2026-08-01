@@ -24,7 +24,7 @@ export function SignUpPage() {
 
     try {
       await register(name, email, password)
-      toast.success('Account created successfully.')
+      toast.success(`Account created. We've sent a verification link to ${email}.`)
       navigate('/dashboard')
     } catch (err: any) {
       const message = err.response?.data?.message || 'Registration failed. Please try again.'

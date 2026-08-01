@@ -7,6 +7,8 @@ import { DashboardPage } from '@/pages/dashboard/DashboardPage'
 import { JobOfferComparePage } from '@/pages/jobs/JobOfferComparePage'
 import { SignInPage } from '@/pages/auth/SignInPage'
 import { SignUpPage } from '@/pages/auth/SignUpPage'
+import { ForgotPasswordPage } from '@/pages/auth/ForgotPasswordPage'
+import { ResetPasswordPage } from '@/pages/auth/ResetPasswordPage'
 import { JobsPage } from '@/pages/jobs/JobsPage'
 import { KanbanPage } from '@/pages/jobs/KanbanPage'
 import { CalendarPage } from '@/pages/jobs/CalendarPage'
@@ -37,6 +39,8 @@ export default function App() {
       {/* Public routes */}
       <Route path="/sign-in" element={<SignInPage />} />
       <Route path="/sign-up" element={<SignUpPage />} />
+      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+      <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
       <Route path="/onboarding" element={<ProtectedRoute><OnboardingWizard /></ProtectedRoute>} />
 
       {/* Protected routes � must be logged in */}

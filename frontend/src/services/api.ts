@@ -22,7 +22,7 @@ api.interceptors.response.use(
     const method = response.config.method?.toLowerCase()
     const url = response.config.url || ''
     const isMutation = ['post', 'put', 'patch', 'delete'].includes(method || '')
-    const isAuthRoute = /^\/(login|register|logout|user|profile|change-password)/.test(url)
+    const isAuthRoute = /^\/(login|register|logout|user|profile|change-password|email\/verification-notification)/.test(url)
     if (isMutation && !isAuthRoute && response.status >= 200 && response.status < 300) {
       motivate()
     }

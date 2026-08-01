@@ -10,6 +10,7 @@ export interface User {
   name: string
   email: string
   is_admin?: boolean
+  email_verified_at?: string | null
   resume_url?: string | null
   portfolio_url?: string | null
   linkedin_url?: string | null
@@ -56,6 +57,13 @@ export interface ChangePasswordData {
   new_password_confirmation: string
 }
 
+export interface ResetPasswordData {
+  token: string
+  email: string
+  password: string
+  password_confirmation: string
+}
+
 export const authService = {
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
     const response = await api.post('/login', credentials)
@@ -83,5 +91,17 @@ export const authService = {
 
   async changePassword(data: ChangePasswordData): Promise<void> {
     await api.put('/change-password', data)
+  },
+
+  async forgotPassword(email: string): Promise<void> {
+    await api.post('/forgot-password', { email })
+  },
+
+  async resetPassword(data: ResetPasswordData): Promise<void> {
+    await api.post('/reset-password', data)
+  },
+
+  async resendVerificationEmail(): Promise<void> {
+    await api.post('/email/verification-notification')
   },
 }
